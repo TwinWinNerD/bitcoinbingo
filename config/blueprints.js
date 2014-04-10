@@ -128,7 +128,7 @@ module.exports.blueprints = {
    *
    * By default, no prefix is used.
    */
-  prefix: '',
+  prefix: '/api',
 
 
 
@@ -147,6 +147,9 @@ module.exports.blueprints = {
    * PUT    /foos/:id?
    * DELETE /foos/:id?
    */
-  pluralize: false
+  pluralize: false,
+
+
+    autoWatch: true
 
 };

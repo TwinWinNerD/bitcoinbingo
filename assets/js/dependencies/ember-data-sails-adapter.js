@@ -211,7 +211,12 @@
                     obj[model] = message.data;
                     message.data = obj;
                 }
-                var record = serializer.extractSingle(store, type, message.data);
+
+                message.data[model].id = message.id;
+
+                message = message.data;
+
+                var record = serializer.extractSingle(store, type, message);
                 store.push(socketModel, record);
             }
 

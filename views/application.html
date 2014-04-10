@@ -9,7 +9,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/font-awesome.min.css" rel="stylesheet">
     <link href="/css/ball-roll.css" rel="stylesheet">
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/dependencies/sails.io.js"></script>
 </head>
 <body>
 <script type="text/x-handlebars">
@@ -79,13 +79,13 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {{#each game in controller}}
+                                {{#each}}
                                 <tr>
                                     <td>{{id}}</td>
-                                    <td>{{amountOfCards}} / {{game.table.maximumPlayers}}</td>
-                                    <td>{{game.table.cardPrice}}</td>
-                                    <td>{{prizePool}}</td>
-                                    <td>{{#link-to 'game' game.id}}Join{{/link-to}}</td>
+                                    <td>{{table.id}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
                                 </tr>
                                 {{/each}}
                                 </tbody>
@@ -244,7 +244,7 @@
     <br>
     <div class="row">
         <div id="h-cards" data-container="body" data-toggle="popover" data-placement="top" data-content="Displays all of the cards you have bought. Fields marked in grey are the pattern that is currently required. Fields marked in red are fields that have been drawn." class="col-sm-6 card-box">
-            {{amountOfCards}}
+            {{id}}
             {{#each bingoCard in bingoCards}}
             <div class="col-sm-6"><span class="label label-primary">Card</span>
                 <table class="table table-bordered table-card">
@@ -319,6 +319,7 @@
 
 <script src="/js/dependencies/jquery-1.10.2.js"></script>
 <script src="/js/dependencies/handlebars-1.1.2.js"></script>
+<script src="/js/dependencies/underscore-min.js"></script>
 <script src="/js/dependencies/ember-1.5.0.js"></script>
 <script src="/js/dependencies/ember-data.js"></script>
 <script src="/js/dependencies/ember-data-sails-adapter.js"></script>
