@@ -17,7 +17,7 @@ module.exports = {
             type: 'INTEGER'
         },
 
-        status: {
+        tableStatus: {
             type: 'STRING'
         },
 

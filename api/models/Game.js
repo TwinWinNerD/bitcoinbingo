@@ -14,7 +14,7 @@ module.exports = {
             notNull: true
         },
 
-        status: {
+        gameStatus: {
             type: 'STRING'
         },
 
