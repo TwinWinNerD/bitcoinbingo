@@ -21,6 +21,7 @@ App.Game = DS.Model.extend({
     serverSeed: DS.attr(),
     createdAt: DS.attr(),
     updatedAt: DS.attr(),
+    gameStatus: DS.attr(),
     table: DS.belongsTo('table'),
     bingoCards: DS.hasMany('bingoCard')
 });
@@ -40,6 +41,27 @@ App.GamesRoute = Ember.Route.extend({
     model: function () {
         return this.store.find('game');
     }
+});
+
+App.GamesController = Ember.ArrayController.extend({
+    itemController: 'game'
+});
+
+App.GameController = Ember.ObjectController.extend({
+
+    idle: function () {
+        if(this.get('model.gameStatus') === 'idle') {
+            return true;
+        }
+        return false;
+    }.property('model.gameStatus'),
+
+    playing: function () {
+        if(this.get('model.gameStatus') === 'playing') {
+            return true;
+        }
+        return false;
+    }.property('model.gameStatus')
 });
 
 
