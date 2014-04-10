@@ -10,8 +10,6 @@ App.ApplicationAdapter = DS.SailsSocketAdapter.extend({
     log: true
 });
 
-//App.ApplicationSerializer = DS.RESTSerializer.extend({});
-
 App.Router.map(function () {
     this.resource('games', { path: '/' });
     this.resource('game', { path: '/game/:game_id' });
