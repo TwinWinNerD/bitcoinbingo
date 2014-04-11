@@ -183,11 +183,8 @@ App.GameController = Ember.ObjectController.extend({
                             delete payload[key][i];
                         }
                     }
-
                 }
             }
-
-            console.log(payload);
 
             return this._super(store, type, payload, id, requestType);
         },

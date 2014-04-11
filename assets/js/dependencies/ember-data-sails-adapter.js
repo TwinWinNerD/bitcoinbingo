@@ -2,6 +2,7 @@
     /*global Ember*/
     /*global DS*/
     /*global socket*/
+    /*global _*/
     'use strict';
 
     var RSVP = Ember.RSVP;
