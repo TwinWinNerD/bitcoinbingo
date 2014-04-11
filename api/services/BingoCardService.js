@@ -1,6 +1,43 @@
-var crypto;
+var crypto, Q;
 
 crypto = require('crypto');
+Q = require('q');
+
+exports.calculateTotalPrice = function (gameId, amountOfCards) {
+
+    var deferred;
+
+    deferred = Q.defer();
+
+    Game.findOne(gameId).populate('table').exec( function (error, result) {
+        if(error) {
+            deferred.reject(error);
+        } else {
+            var totalPrice = result.table.cardPrice * amountOfCards;
+            deferred.resolve(totalPrice);
+        }
+    });
+
+    return deferred.promise;
+};
+
+exports.countCards = function (whereStatement) {
+
+    var queryObject, deferred;
+
+    queryObject = new QueryService(whereStatement);
+    deferred = Q.defer();
+
+    BingoCard.count(queryObject).exec( function(error, result) {
+        if(error) {
+            deferred.reject(error);
+        } else {
+            deferred.resolve(result);
+        }
+    });
+
+    return deferred.promise;
+};
 
 exports.generateSquares = function (serverSeed, clientSeed, nonce) {
 
