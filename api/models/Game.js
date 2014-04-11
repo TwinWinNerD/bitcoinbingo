@@ -25,6 +25,11 @@ module.exports = {
 
         table: {
             model: 'table'
+        },
+
+        winners: {
+            collection: 'winner',
+            via: 'game'
         }
 
 	}

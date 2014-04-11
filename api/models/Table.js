@@ -17,6 +17,10 @@ module.exports = {
             type: 'INTEGER'
         },
 
+        cardPrice: {
+            type: 'INTEGER'
+        },
+
         tableStatus: {
             type: 'STRING'
         },

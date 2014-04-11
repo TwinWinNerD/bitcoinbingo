@@ -33,8 +33,17 @@ module.exports = {
         deposits: {
             collection: 'deposit',
             via: 'player'
-        }
+        },
 
+        withdrawals: {
+            collection: 'withdrawal',
+            via: 'player'
+        },
+
+        winners: {
+            collection: 'winner',
+            via: 'player'
+        }
 	}
 
 };

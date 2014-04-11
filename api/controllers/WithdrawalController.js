@@ -1,5 +1,5 @@
 /**
- * BingoCardController.js 
+ * WithdrawalController.js 
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
