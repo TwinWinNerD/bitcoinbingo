@@ -6,5 +6,13 @@
  */
 
 module.exports = {
-	
+
+    play: function(req, res) {
+
+        BingoService.settleRound(1, false).then( function (result) {
+            res.ok(result);
+        });
+
+    }
+
 };
