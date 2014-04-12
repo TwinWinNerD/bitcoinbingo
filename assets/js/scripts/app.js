@@ -59,6 +59,13 @@ App.GameController = Ember.ObjectController.extend({
             return true;
         }
         return false;
+    }.property('model.gameStatus'),
+
+    finished: function () {
+        if(this.get('model.gameStatus') === 'finished') {
+            return true;
+        }
+        return false;
     }.property('model.gameStatus')
 });
 

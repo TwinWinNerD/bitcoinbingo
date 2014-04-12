@@ -55,7 +55,7 @@
                     <br>
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-font">
-                            <h3 class="panel-title"><b>Available Bingo Tables</b></h3>
+                            <h3 class="panel-title"><b>Available Bingo Games</b></h3>
                         </div>
                         <div class="panel-font">
                             <table class="table table-hover">
@@ -99,7 +99,7 @@
                     </div>
                     <div class="panel panel-primary">
                         <div class="panel-heading panel-font">
-                            <h3 class="panel-title"><b>BusyBingo Tables</b></h3>
+                            <h3 class="panel-title"><b>Playing Bingo Games</b></h3>
                         </div>
                         <div class="panel-font">
                             <table class="table table-hover">
@@ -139,6 +139,50 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+
+                        <div class="panel panel-primary">
+                            <div class="panel-heading panel-font">
+                                <h3 class="panel-title"><b>Finished Bingo Games</b></h3>
+                            </div>
+                            <div class="panel-font">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            #
+                                        </th>
+                                        <th>
+                                            Players
+                                        </th>
+                                        <th>
+                                            Price Per Card
+                                        </th>
+                                        <th>
+                                            Prize Pool
+                                        </th>
+                                        <th>Status</th>
+                                        <th>
+                                            Join
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{#each}}
+                                    {{#if finished}}
+                                    <tr>
+                                        <td>{{id}}</td>
+                                        <td>{{table.id}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>{{gameStatus}}</td>
+                                        <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
+                                    </tr>
+                                    {{/if}}
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
 
                     </div>
                 </div>

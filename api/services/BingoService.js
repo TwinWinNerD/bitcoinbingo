@@ -4,6 +4,26 @@ Q = require('q');
 _ = require('lodash');
 async = require('async');
 
+exports.updateGameStatus = function (gameId, status) {
+    var deferred;
+
+    deferred = Q.defer();
+
+    Game.findOne(gameId)
+        .exec(function (error, game) {
+            Game.update(gameId, { gameStatus: status }).exec( function(error, result) {
+                if(error) {
+                    deferred.reject(error);
+                } else {
+                    deferred.resolve();
+                    Game.publishUpdate(gameId, { gameStatus: status, updatedAt: result.updatedAt }, null,{ previous: game.toJSON() });
+                }
+            });
+        });
+
+    return deferred.promise;
+}
+
 exports.settleRound = function (gameId, instant) {
 
     var awardPrizes, deferred;
@@ -11,30 +31,31 @@ exports.settleRound = function (gameId, instant) {
     deferred = Q.defer();
     awardPrizes = false;
 
-    Game.findById(gameId)
+    Game.findOne(gameId)
         .populate('bingoCards')
         .populate('table')
-        .exec(function (error, result) {
+        .exec(function (error, game) {
 
         if(error) {
             deferred.reject(error);
         } else {
-            var game = result[0];
 
             if(game.gameStatus === "idle") {
                 awardPrizes = true;
                 instant = false;
+
+                exports.updateGameStatus(gameId, "playing");
+
             }
 
             exports.runSimulation(game, instant).then( function (winners) {
 
                 if(awardPrizes) {
-                    console.log("award prizes");
                     rewardWinners(game, winners).then( function (result) {
                         if(result) {
-
-                            deferred.resolve(winners);
-
+                            exports.updateGameStatus(gameId, "finished").then( function () {
+                                deferred.resolve(winners);
+                            });
                         }
                     });
                 } else {
