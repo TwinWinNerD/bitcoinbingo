@@ -166,13 +166,13 @@ function checkForWinners (type, cards, drawnNumbers) {
         }
 
         if(bingoCount === numbersForBingo) {
-            cards[x].type = "bingo";
+            cards[x].won = "bingo";
 
             winners.push(cards[x]);
         }
 
         if(patternCount === numbersForPattern) {
-            cards[x].type = "pattern";
+            cards[x].won = "pattern";
             winners.push(cards[x]);
         }
     }
