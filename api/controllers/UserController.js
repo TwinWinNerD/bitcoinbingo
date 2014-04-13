@@ -6,5 +6,9 @@
  */
 
 module.exports = {
-	
+
+    session: function (req, res) {
+        res.ok(req.user);
+    }
+
 };
