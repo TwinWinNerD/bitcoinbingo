@@ -65,10 +65,15 @@ var AuthController = {
    * @param {Object} req
    * @param {Object} res
    */
-  logout: function (req, res) {
-    req.logout();
-    res.redirect('/');
-  },
+    logout: function (req, res) {
+        req.logout();
+
+        if(req.isSocket) {
+          res.ok();
+        } else {
+          res.redirect('/');
+        }
+    },
 
   /**
    * Render the registration page
@@ -123,12 +128,12 @@ var AuthController = {
         // If an error was thrown, redirect the user to the login which should
         // take care of rendering the error messages.
         if (err) {
-          res.redirect('/login');
+          res.ok({error: err });
         }
         // Upon successful login, send the user to the homepage were req.user
         // will available.
         else {
-          res.redirect('/');
+          res.ok({ user: user} );
         }
       });
     });
