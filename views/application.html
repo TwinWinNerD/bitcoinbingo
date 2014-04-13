@@ -1,25 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Bitcoin Bingo</title>
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/ball-roll.css" rel="stylesheet">
-    <script src="/js/dependencies/sails.io.js"></script>
-</head>
-<body>
 <script type="text/x-handlebars">
     <nav role="navigation" class="navbar navbar-fixed-bottom navbar-default">
         <div class="container">
             <div class="navbar-header">
                 {{#if session.isAuthenticated}}
-                    <a {{ action 'invalidateSession' }} class="btn btn-danger navbar-btn navbar-right">Logout</a>
+                <a {{ action 'invalidateSession' }} class="btn btn-danger navbar-btn navbar-right">Logout</a>
                 {{else}}
-                   {{#link-to 'login' class="btn btn-success navbar-btn navbar-right"}}Login{{/link-to}}
+                {{#link-to 'login' class="btn btn-success navbar-btn navbar-right"}}Login{{/link-to}}
                 {{/if}}
                 <button type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
                 {{#link-to 'games' class="navbar-brand"}}Bitcoin Bingo{{/link-to}}
@@ -426,15 +412,3 @@
 <script type="text/x-handlebars" data-template-name="loading">
     <h3>Loading Data ... </h3>
 </script>
-
-<script src="/js/dependencies/jquery-1.10.2.js"></script>
-<script src="/js/dependencies/handlebars-1.1.2.js"></script>
-<script src="/js/dependencies/underscore-min.js"></script>
-<script src="/js/dependencies/ember-1.5.0.js"></script>
-<script src="/js/dependencies/ember-data.js"></script>
-<script src="/js/dependencies/ember-data-sails-adapter.js"></script>
-<script src="/js/dependencies/ember-simple-auth.js"></script>
-<script src="/js/dependencies/bootstrap.min.js"></script>
-<script src="/js/scripts/app.js"></script>
-</body>
-</html>

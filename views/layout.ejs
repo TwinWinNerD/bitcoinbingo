@@ -1,37 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>New Sails App</title>
-
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    
-    <!--  
-        Stylesheets and Preprocessors
-        ==============================
-
-        You can always bring in CSS files manually with `<link>` tags, or asynchronously
-        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
-        of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-        By default, stylesheets from your `assets/linker/styles` folder are included
-        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-        are supported. In production, your styles will be minified and concatenated into
-        a single file.
-        
-        To customize any part of the built-in behavior, just edit your Gruntfile.
-        For example, here are a few things you could do:
-            
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
-
-    <!--STYLES-->
-    <link rel="stylesheet" href="/styles/importer.css">
-    <!--STYLES END-->
-  </head>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bitcoin Bingo</title>
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/css/ball-roll.css" rel="stylesheet">
+</head>
+<body>
 
   <body>
     <%- body %>
@@ -88,16 +67,28 @@
     -->
 
     <!--SCRIPTS-->
-    <script src="/js/dependencies/bootstrap.min.js"></script>
-    <script src="/js/dependencies/ember-1.5.0.js"></script>
-    <script src="/js/dependencies/ember-data-sails-adapter.js"></script>
-    <script src="/js/dependencies/ember-data.js"></script>
-    <script src="/js/dependencies/ember-simple-auth.js"></script>
-    <script src="/js/dependencies/handlebars-1.1.2.js"></script>
     <script src="/js/dependencies/jquery-1.10.2.js"></script>
     <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/dependencies/handlebars-1.1.2.js"></script>
+    <script src="/js/dependencies/ember-1.5.0.js"></script>
+    <script src="/js/dependencies/ember-data.js"></script>
+    <script src="/js/dependencies/bootstrap.min.js"></script>
+    <script src="/js/dependencies/ember-data-sails-adapter.js"></script>
+    <script src="/js/dependencies/ember-simple-auth.js"></script>
     <script src="/js/dependencies/underscore-min.js"></script>
+    <script src="/js/scripts/adapters/ApplicationAdapter.js"></script>
     <script src="/js/scripts/app.js"></script>
+    <script src="/js/scripts/controllers/GameController.js"></script>
+    <script src="/js/scripts/controllers/GamesController.js"></script>
+    <script src="/js/scripts/controllers/LoginController.js"></script>
+    <script src="/js/scripts/models/BingoCardModel.js"></script>
+    <script src="/js/scripts/models/GameModel.js"></script>
+    <script src="/js/scripts/models/TableModel.js"></script>
+    <script src="/js/scripts/models/UserModel.js"></script>
+    <script src="/js/scripts/routes/ApplicationRoute.js"></script>
+    <script src="/js/scripts/routes/GamesRoute.js"></script>
+    <script src="/js/scripts/routes/LoginRoute.js"></script>
+    <script src="/js/scripts/serializers/ApplicationSerializer.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>
