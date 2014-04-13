@@ -21,8 +21,8 @@ module.exports = {
             type: 'STRING'
         },
 
-        player: {
-            model: 'player'
+        user: {
+            model: 'user'
         }
 
 	}

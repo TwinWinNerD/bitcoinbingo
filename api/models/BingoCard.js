@@ -17,8 +17,8 @@ module.exports = {
             model: 'game'
         },
 
-        player: {
-            model: 'player'
+        user: {
+            model: 'user'
         }
 
 	}
