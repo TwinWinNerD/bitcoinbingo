@@ -10,13 +10,14 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.0.box"
   config.ssh.forward_agent = true
 
-  config.vm.network :forwarded_port, guest: 3000, host: 5555
+  config.vm.network :forwarded_port, guest: 1337, host: 1337
 
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ["cookbooks"]
     chef.add_recipe :apt
     chef.add_recipe 'redis'
-    chef.add_recipe 'mongodb::default'
+    chef.add_recipe "mongodb::10gen_repo"
+    chef.add_recipe "mongodb"
     chef.add_recipe 'nodejs'
     chef.add_recipe 'git'
     chef.json = {

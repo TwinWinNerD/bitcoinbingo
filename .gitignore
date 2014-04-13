@@ -115,4 +115,10 @@ npm-debug.log
 nbproject
 .idea
 .node_history
+
+#
+# vagrant and chef
 tmp
+cookbooks
+Cheffile.lock
+.vagrant
