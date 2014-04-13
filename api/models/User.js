@@ -21,10 +21,6 @@ module.exports = {
             type: 'STRING'
         },
 
-        password: {
-            type: 'STRING'
-        },
-
         clientSeed: {
             type: 'STRING'
         },
@@ -52,28 +48,6 @@ module.exports = {
         passports : {
             collection: 'Passport',
             via: 'user'
-        },
-
-        toJSON: function () {
-            var obj = this.toObject();
-
-            delete obj.password;
-
-            return obj;
-        },
-
-        beforeCreate: function (user, cb) {
-            bcrypt.genSalt(10, function (error, salt) {
-                bcrypt.hash(user.password, salt, function (error, hash) {
-                    if(error) {
-                        console.log(error);
-                        cb(error);
-                    } else {
-                        user.password = hash;
-                        cb(null, user);
-                    }
-                });
-            });
         }
     }
 

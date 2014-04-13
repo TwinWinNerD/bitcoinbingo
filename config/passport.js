@@ -20,36 +20,36 @@ module.exports.passport = {
   // set this to false and remove any related routes and endpoints.
   local: true,
 
-  twitter: {
-    name: 'Twitter',
-    protocol: 'oauth',
-    options: {
-      consumerKey: 'your-consumer-key',
-      consumerSecret: 'your-consumer-secret'
-    }
-  },
-
-  github: {
-    name: 'GitHub',
-    protocol: 'oauth2',
-    options: {
-      clientID: 'your-client-id',
-      clientSecret: 'your-client-secret'
-    }
-  },
-
-  facebook: {
-    name: 'Facebook',
-    protocol: 'oauth2',
-    options: {
-      clientID: 'your-client-id',
-      clientSecret: 'your-client-secret'
-    }
-  },
-
-  google: {
-    name: 'Google',
-    protocol: 'openid'
-  }
+//  twitter: {
+//    name: 'Twitter',
+//    protocol: 'oauth',
+//    options: {
+//      consumerKey: 'your-consumer-key',
+//      consumerSecret: 'your-consumer-secret'
+//    }
+//  },
+//
+//  github: {
+//    name: 'GitHub',
+//    protocol: 'oauth2',
+//    options: {
+//      clientID: 'your-client-id',
+//      clientSecret: 'your-client-secret'
+//    }
+//  },
+//
+//  facebook: {
+//    name: 'Facebook',
+//    protocol: 'oauth2',
+//    options: {
+//      clientID: 'your-client-id',
+//      clientSecret: 'your-client-secret'
+//    }
+//  },
+//
+//  google: {
+//    name: 'Google',
+//    protocol: 'openid'
+//  }
 
 };
