@@ -49,6 +49,11 @@ module.exports = {
             via: 'user'
         },
 
+        passports : {
+            collection: 'Passport',
+            via: 'user'
+        },
+
         toJSON: function () {
             var obj = this.toObject();
 
