@@ -1,9 +1,62 @@
 socket = io.connect();
 
+var BingoAuthenticator = Ember.SimpleAuth.Authenticators.Base.extend({
+
+    restore: function (data) {
+        return new Ember.RSVP.Promise(function (resolve, reject) {
+            if (!Ember.isEmpty(data)) {
+                resolve(data);
+            } else {
+                reject();
+            }
+        });
+    },
+
+    authenticate: function(credentials) {
+
+        return new Ember.RSVP.Promise(function (resolve, reject) {
+            socket.post('/auth/local', {
+                identifier: credentials.identification,
+                password: credentials.password,
+                provider: "local"
+        }, function(response) {
+                Ember.run(function() {
+                    if(response.error) {
+                        reject(response.error);
+                    } else if(response.user) {
+                        resolve(response.user);
+                    }
+                });
+            });
+        });
+    },
+
+    invalidate: function() {
+        return new Ember.RSVP.Promise(function(resolve) {
+            socket.get('/logout', function () {
+                resolve();
+            });
+        });
+    },
+});
+
+Ember.Application.initializer({
+    name: 'authentication',
+    initialize: function(container, application) {
+        container.register('authenticator:custom', BingoAuthenticator);
+        Ember.SimpleAuth.setup(container, application, {
+            authorizerFactory: 'authorizer:custom',
+            routeAfterAuthentication: 'games'
+        });
+    }
+});
+
 window.App = Ember.Application.create({
     LOG_TRANSITIONS: true,
     LOG_TRANSITIONS_INTERNAL: true
 });
+
+App.ApplicationRoute = Ember.Route.extend(Ember.SimpleAuth.ApplicationRouteMixin);
 
 App.ApplicationAdapter = DS.SailsSocketAdapter.extend({
     namespace: '/api',
@@ -11,8 +64,33 @@ App.ApplicationAdapter = DS.SailsSocketAdapter.extend({
 });
 
 App.Router.map(function () {
+    this.route('login');
     this.resource('games', { path: '/' });
     this.resource('game', { path: '/game/:game_id' });
+});
+
+App.LoginRoute = Ember.Route.extend({
+    // clear a potentially stale error message from previous login attempts
+    setupController: function(controller, model) {
+        controller.set('errorMessage', null);
+    },
+    actions: {
+        // display an error when authentication fails
+        sessionAuthenticationFailed: function(message) {
+            this.controller.set('errorMessage', message);
+        }
+    }
+});
+
+App.LoginController = Ember.Controller.extend(Ember.SimpleAuth.LoginControllerMixin, {
+    authenticatorFactory: 'authenticator:custom'
+});
+
+
+App.User = DS.Model.extend({
+    username: DS.attr(),
+    email: DS.attr(),
+    bingoCards: DS.hasMany('bingoCard')
 });
 
 App.Game = DS.Model.extend({
@@ -32,7 +110,8 @@ App.Table = DS.Model.extend({
 
 App.BingoCard = DS.Model.extend({
     clientSeed: DS.attr(),
-    game: DS.belongsTo('game')
+    game: DS.belongsTo('game'),
+    user: DS.belongsTo('user')
 });
 
 App.GamesRoute = Ember.Route.extend({

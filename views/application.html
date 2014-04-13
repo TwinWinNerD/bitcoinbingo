@@ -16,12 +16,20 @@
     <nav role="navigation" class="navbar navbar-fixed-bottom navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a href="index.html" class="navbar-brand">Bitcoin Bingo</a>
+                {{#if session.isAuthenticated}}
+                    <a {{ action 'invalidateSession' }} class="btn btn-danger navbar-btn navbar-right">Logout</a>
+                {{else}}
+                   {{#link-to 'login' class="btn btn-success navbar-btn navbar-right"}}Login{{/link-to}}
+                {{/if}}
+                <button type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+                {{#link-to 'games' class="navbar-brand"}}Bitcoin Bingo{{/link-to}}
             </div>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a><i class="fa fa-user"></i><span id="user-name">{{userName}}</span></a></li>
-                    <li><a><i class="fa fa-btc"></i><span id="user-balance">{{balance}}</span>mBTC</a></li>
+                    {{#if session.isAuthenticated}}
+                    <li><a><i class="fa fa-user"></i><span id="user-name">{{session.username}}</span></a></li>
+                    <li><a><i class="fa fa-btc"></i><span id="user-balance"></span>mBTC</a></li>
+                    {{/if}}
                 </ul>
             </div>
         </div>
@@ -406,6 +414,15 @@
 </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="login">
+    <h3>Login </h3>
+    <form role="form" {{action 'authenticate' on='submit'}}>
+        {{input id='identification' name='identification' placeholder='Enter Login' class='form-control' value=identification}}
+        {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
+        <button type="submit">Sign in</button>
+    </form>
+</script>
+
 <script type="text/x-handlebars" data-template-name="loading">
     <h3>Loading Data ... </h3>
 </script>
@@ -416,6 +433,7 @@
 <script src="/js/dependencies/ember-1.5.0.js"></script>
 <script src="/js/dependencies/ember-data.js"></script>
 <script src="/js/dependencies/ember-data-sails-adapter.js"></script>
+<script src="/js/dependencies/ember-simple-auth.js"></script>
 <script src="/js/dependencies/bootstrap.min.js"></script>
 <script src="/js/scripts/app.js"></script>
 </body>
