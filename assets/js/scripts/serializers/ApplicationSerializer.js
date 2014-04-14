@@ -53,7 +53,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             var related = recordJSON[key], // The record at this relationship
                 type = relationship.type;  // belongsTo or hasMany
 
-            if (related){
+            if (typeof related === "object" && related !== null){
 
                 // One-to-one
                 if (relationship.kind == "belongsTo") {
@@ -129,12 +129,16 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             typeKeyPlural = typeKey.pluralize(),
             newPayload = {};
 
-        if(!payload[typeKey]) {
+        console.log(payload);
+
+
+        if(payload[typeKey]) {
             newPayload[typeKey] = payload;
             payload = newPayload;
+            console.log(payload);
 
 
-            if (typeof payload[typeKey] != "undefined"){
+            if (typeof payload[typeKey] === "object"){
                 this.extractRelationships(payload, payload[typeKey], type);
 
                 delete payload[typeKeyPlural];

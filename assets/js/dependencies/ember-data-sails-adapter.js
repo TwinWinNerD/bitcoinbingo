@@ -207,15 +207,21 @@
                 var serializer = store.serializerFor(type.typeKey);
                 // Messages from 'created' don't seem to be wrapped correctly,
                 // however messages from 'updated' are, so need to double check here.
-                if(!(model in message.data)) {
-                    var obj = {};
-                    obj[model] = message.data;
-                    message.data = obj;
-                }
+//                if(!(model in message.data)) {
+//                    var obj = {};
+//                    obj[model] = message.data;
+//                    message.data = obj;
+//                }
 
-                var data = {};
+                // TODO: fix this for created, addedTo
 
-                data[model] = _.extend(message.previous, message.data[model]);
+//                if(message.verb === "updated") {
+                    var data = {};
+
+                    data[model] = _.extend(message.previous, message.data[model]);
+//                }
+
+
 
                 var record = serializer.extractSingle(store, type, data);
                 store.push(socketModel, record);
@@ -233,7 +239,7 @@
             var eventName = Ember.String.camelize(model).toLowerCase();
             socket.on(eventName, function (message) {
                 // Left here to help further debugging.
-                //console.log("Got message on Socket : " + JSON.stringify(message));
+                console.log("Got message on Socket : " + JSON.stringify(message));
                 if (message.verb === 'created') {
                     // Run later to prevent creating duplicate records when calling store.createRecord
                     Ember.run.later(null, pushMessage, message, 50);
