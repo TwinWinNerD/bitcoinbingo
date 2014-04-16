@@ -200,7 +200,7 @@
             <h3 class="panel-title"><b>Game information:</b></h3>
         </div>
         <div class="panel-body panel-font">
-            <i class="fa fa-flag"></i>Status: <br>
+            <i class="fa fa-flag"></i>Status: {{gameStatus}}<br>
             <i class="fa fa-user"></i>Active players:<br>
             <i class="fa fa-home"></i>House edge: 1%<br>
             <i class="fa fa-calendar"></i>Card price: {{ game.table.cardPrice }} mBTC<br>
@@ -332,20 +332,21 @@
     <div class="row">
         <div id="h-cards" data-container="body" data-toggle="popover" data-placement="top" data-content="Displays all of the cards you have bought. Fields marked in grey are the pattern that is currently required. Fields marked in red are fields that have been drawn." class="col-sm-6 card-box">
             {{id}}
+
             {{#each bingoCard in bingoCards}}
-            <div class="col-sm-6"><span class="label label-primary">Card</span>
-                <table class="table table-bordered table-card">
-                    <tbody>
-                    {{#each row in bingoCard.squares}}
-                    <tr>
-                        {{#each number in row}}
-                        <td>{{number}}</td>
-                        {{/each}}
-                    </tr>
-                    {{/each}}
-                    </tbody>
-                </table>
-            </div>
+                    <div class="col-sm-6"><span class="label label-primary">Card {{bingoCard.id}}</span>
+                        <table class="table table-bordered table-card">
+                            <tbody>
+                            {{#each row in bingoCard.squares}}
+                            <tr>
+                                {{#each number in row}}
+                                <td>{{number}}</td>
+                                {{/each}}
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
             {{/each}}
         </div>
         <div id="h-chat" data-container="body" data-toggle="popover" data-placement="top" data-content="Here you can chat with other players currently playing the game." class="col-sm-6">
