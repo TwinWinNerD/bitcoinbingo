@@ -208,7 +208,9 @@
             <i class="fa fa-clock-o"></i>Game starts in:<span id="timer"></span><br>
         </div>
     </div>
-    <button {{action 'buyCard' }} id="buy-cards" type="button" data-toggle="tooltip" data-placement="bottom" title="Join the game! Buy some cards and be the first one to yell BINGO!" class="btn btn-success btn-block buy-cards">Buy more cards</button>
+    {{#if session.isAuthenticated}}
+        <button {{action 'buyCard' }} id="buy-cards" type="button" data-toggle="tooltip" data-placement="bottom" title="Join the game! Buy some cards and be the first one to yell BINGO!" class="btn btn-success btn-block buy-cards">Buy more cards</button>
+    {{/if}}
     <div id="buy-cards-modal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -402,14 +404,41 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="login">
-    <h3>Login </h3>
-    <form role="form" {{action 'authenticate' on='submit'}}>
-        {{input id='identification' name='identification' placeholder='Enter Login' class='form-control' value=identification}}
-        {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
-        <button type="submit">Sign in</button>
-    </form>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <br>
+                {{#link-to 'games'}}
+                <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
+                {{/link-to}}
+                <br>
+            </div>
+            <div class="col-sm-9">
+                <h3>Login </h3>
+                <form role="form" {{action 'authenticate' on='submit'}}>
+                {{input id='identification' name='identification' placeholder='Enter Login' class='form-control' value=identification}}
+                {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
+                <button type="submit">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="loading">
-    <h3>Loading Data ... </h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <br>
+                {{#link-to 'games'}}
+                <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
+                {{/link-to}}
+                <br>
+            </div>
+            <div class="col-sm-9">
+                <h3>Loading Data ... </h3>
+            </div>
+        </div>
+    </div>
 </script>
