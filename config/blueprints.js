@@ -150,6 +150,6 @@ module.exports.blueprints = {
   pluralize: false,
 
 
-    autoWatch: true
+    autoWatch: false
 
 };
