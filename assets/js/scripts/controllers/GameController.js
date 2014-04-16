@@ -25,16 +25,24 @@ App.GameController = Ember.ObjectController.extend({
         return false;
     }.property('model.gameStatus'),
 
+    bingoCards: function () {
+        var gameId, userId;
+        gameId = this.get('id');
+        gameId = this.get('session.content').id;
+
+        return this.get('store').filter('bingoCard', function (bingoCard) {
+            return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === gameId);
+        });
+    }.property('model.bingoCards'),
+
     actions: {
 
         buyCard: function () {
-            var store, game, bingoCard;
-
-
+            var store, game, bingoCard, bingoCards;
 
             store = this.store;
             game = this.get('model');
-
+            bingoCards = this.get('bingoCards');
 
             bingoCard = store.createRecord('bingoCard', {
                 clientSeed: "12345",
@@ -42,8 +50,6 @@ App.GameController = Ember.ObjectController.extend({
             });
 
             bingoCard.save();
-
         }
-
     }
 });
