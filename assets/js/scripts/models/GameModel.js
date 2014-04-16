@@ -4,5 +4,6 @@ App.Game = DS.Model.extend({
     updatedAt: DS.attr(),
     gameStatus: DS.attr(),
     table: DS.belongsTo('table'),
-    bingoCards: DS.hasMany('bingoCard')
+    bingoCards: DS.hasMany('bingoCard', {async: true}),
+    winners: DS.hasMany('winner')
 });
