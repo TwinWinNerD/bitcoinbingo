@@ -14,8 +14,8 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
      @param {subclass of DS.Model} type   The DS.Model class of the item to be sideloaded
      @param {Object} item JSON object   representing the record to sideload to the payload
      */
-    sideloadItem: function(payload, type, item){
-        var sideloadKey = type.typeKey.pluralize(),     // The key for the sideload array
+    sideloadItem: function(payload, type, item, pluralize){
+        var sideloadKey = pluralize ? type.typeKey.pluralize() : type.typeKey, // The key for the sideload array
             sideloadArr = payload[sideloadKey] || [],   // The sideload array for this item
             primaryKey = Ember.get(this, 'primaryKey'), // the key to this record's ID
             id = item[primaryKey];
@@ -32,7 +32,11 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
         }
 
         // Add to sideloaded array
-        sideloadArr.push(item);
+        if(pluralize) {
+            sideloadArr.push(item);
+        } else {
+            sideloadArr = item;
+        }
         payload[sideloadKey] = sideloadArr;
         return payload;
     },
@@ -55,10 +59,12 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
             if (typeof related === "object" && related !== null){
 
+                console.log(relationship.kind);
+
                 // One-to-one
                 if (relationship.kind == "belongsTo") {
                     // Sideload the object to the payload
-                    this.sideloadItem(payload, type, related);
+                    this.sideloadItem(payload, type, related, false);
 
                     // Replace object with ID
                     recordJSON[key] = related.id;
@@ -74,7 +80,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
                     related.forEach(function(item, index){
 
                         // Sideload the object to the payload
-                        this.sideloadItem(payload, type, item);
+                        this.sideloadItem(payload, type, item, true);
 
                         // Replace object with ID
                         related[index] = item.id;
@@ -103,13 +109,15 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
         payload = newPayload;
 
+        console.log(payload);
+
+
         // Many items (findMany, findAll)
         if (typeof payload[typeKeyPlural] != "undefined"){
             payload[typeKeyPlural].forEach(function(item, index){
                 this.extractRelationships(payload, item, type);
             }, this);
         }
-
 
         for(var key in payload) {
             if(key === typeKeyPlural) {
@@ -129,21 +137,24 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             typeKeyPlural = typeKey.pluralize(),
             newPayload = {};
 
-        console.log(payload);
-
-
-        if(payload[typeKey]) {
+        if(typeof payload[typeKey] !== "object") {
             newPayload[typeKey] = payload;
             payload = newPayload;
-            console.log(payload);
 
-
-            if (typeof payload[typeKey] === "object"){
-                this.extractRelationships(payload, payload[typeKey], type);
-
-                delete payload[typeKeyPlural];
+            if(payload[typeKey] instanceof Array) {
+                payload[typeKey] = payload[typeKey][0];
             }
         }
+
+
+        if (typeof payload[typeKey] === "object"){
+            this.extractRelationships(payload, payload[typeKey], type);
+
+            delete payload[typeKeyPlural];
+        }
+
+        console.log(payload);
+
 
         return this._super(store, type, payload, id, requestType);
     }
