@@ -205,26 +205,37 @@
             function pushMessage(message) {
                 var type = store.modelFor(socketModel);
                 var serializer = store.serializerFor(type.typeKey);
-                // Messages from 'created' don't seem to be wrapped correctly,
-                // however messages from 'updated' are, so need to double check here.
-//                if(!(model in message.data)) {
-//                    var obj = {};
-//                    obj[model] = message.data;
-//                    message.data = obj;
-//                }
 
-                // TODO: fix this for created, addedTo
+                var data, record;
 
-//                if(message.verb === "updated") {
-                    var data = {};
+                data = {};
 
-                    data[model] = _.extend(message.previous, message.data[model]);
-//                }
+                // TODO: push the new record into store
+                if(message.verb === "addedTo") {
+                    // message = {"id":1,"verb":"adde
+
+                    var addedModel = Ember.Inflector.inflector.singularize(message.attribute);
+
+                    var added = store.find(addedModel, message.addedId).then(function (resolve) {
+//                        store.push(addedModel, resolve);
+                    }, function (reject) {
+
+                    });
 
 
+                }
 
-                var record = serializer.extractSingle(store, type, data);
-                store.push(socketModel, record);
+                if(message.verb === "created") {
+                    // message = {"verb":"created","data":{"clientSeed":"12345","game":1,"user":null,"createdAt":"2014-04-15T07:55:00.459Z","updatedAt":"2014-04-15T07:55:00.459Z","id":34},"id":34}
+
+                }
+
+                if(message.verb === "updated") {
+                    data[model] = _.extend(message.previous, message.data);
+                    console.log('updated');
+                    record = serializer.extractSingle(store, type, data);
+                    store.push(socketModel, record);
+                }
             }
 
             function destroy(message) {
@@ -240,9 +251,8 @@
             socket.on(eventName, function (message) {
                 // Left here to help further debugging.
                 console.log("Got message on Socket : " + JSON.stringify(message));
-                if (message.verb === 'created') {
-                    // Run later to prevent creating duplicate records when calling store.createRecord
-                    Ember.run.later(null, pushMessage, message, 50);
+                if (message.verb === 'addedTo') {
+                    pushMessage(message);
                 }
                 if (message.verb === 'updated') {
                     pushMessage(message);
