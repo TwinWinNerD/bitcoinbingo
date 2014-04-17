@@ -15,7 +15,7 @@ module.exports = {
             required: true
         },
 
-        type: {
+        depositType: {
             type: 'STRING',
             alpha: true,
             required: true

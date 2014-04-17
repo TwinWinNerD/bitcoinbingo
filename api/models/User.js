@@ -20,13 +20,14 @@ module.exports = {
 
         email: {
             type: 'STRING',
-            email: true
+            email: true,
+            required: false
         },
 
         clientSeed: {
             type: 'STRING',
             alphanumeric: true,
-            required: true
+            required: false
         },
 
         bingoCards: {

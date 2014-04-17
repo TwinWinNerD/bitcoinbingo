@@ -11,7 +11,8 @@ module.exports = {
 
         recipientAddress: {
             type: 'STRING',
-            alphanumeric: true
+            alphanumeric: true,
+            required: false
         },
 
         amount: {
