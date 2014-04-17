@@ -13,6 +13,30 @@ module.exports = {
             res.ok(result);
         });
 
+    },
+
+    testData: function(req, res) {
+
+        Table.create({
+            "minimumPlayers": 2,
+            "maximumPlayers": 100,
+            "cardPrice": 1000,
+            "tableStatus": "idle"
+        }).exec(function (err, table) {
+
+                Game.create({
+                    table: table.id,
+                    gameStatus: "idle",
+                    serverSeed: SeedService.generateServerSeed(),
+                }).exec(function (err, game) {
+                        console.log(err);
+                        console.log(game);
+                        res.ok();
+                });
+
+
+            });
+
     }
 
 };
