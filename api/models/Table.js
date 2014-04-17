@@ -10,19 +10,27 @@ module.exports = {
 	attributes: {
 
         minimumPlayers: {
-            type: 'INTEGER'
+            type: 'INTEGER',
+            integer: true,
+            required: true
         },
 
         maximumPlayers: {
-            type: 'INTEGER'
+            type: 'INTEGER',
+            integer: true,
+            required: true
         },
 
         cardPrice: {
-            type: 'INTEGER'
+            type: 'INTEGER',
+            integer: true,
+            required: true
         },
 
         tableStatus: {
-            type: 'STRING'
+            type: 'STRING',
+            alpha: true,
+            required: true
         },
 
         games: {

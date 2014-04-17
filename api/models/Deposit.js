@@ -10,15 +10,20 @@ module.exports = {
 	attributes: {
 
         amount: {
-            type: 'INTEGER'
+            type: 'INTEGER',
+            integer: true,
+            required: true
         },
 
         type: {
-            type: 'STRING'
+            type: 'STRING',
+            alpha: true,
+            required: true
         },
 
         user: {
-            model: 'user'
+            model: 'user',
+            required: true
         }
 
 	}

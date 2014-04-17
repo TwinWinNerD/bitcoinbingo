@@ -10,19 +10,24 @@ module.exports = {
 	attributes: {
 
         recipientAddress: {
-            type: 'STRING'
+            type: 'STRING',
+            alphanumeric: true
         },
 
         amount: {
-            type: 'INTEGER'
+            type: 'INTEGER',
+            integer: true,
+            required: true
         },
 
         withdrawalType: {
-            type: 'STRING'
+            type: 'STRING',
+            required: true
         },
 
         user: {
-            model: 'user'
+            model: 'user',
+            required: true
         }
 
 	}

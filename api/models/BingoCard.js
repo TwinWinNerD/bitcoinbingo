@@ -10,15 +10,19 @@ module.exports = {
 	attributes: {
 
         clientSeed: {
-            type: 'STRING'
+            type: 'STRING',
+            alphanumeric: true,
+            notNull: true
         },
 
         game: {
-            model: 'game'
+            model: 'game',
+            required: true
         },
 
         user: {
-            model: 'user'
+            model: 'user',
+            required: true
         }
 
 	}

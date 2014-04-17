@@ -14,15 +14,19 @@ module.exports = {
     attributes: {
 
         username: {
-            type: 'STRING'
+            type: 'STRING',
+            required: true
         },
 
         email: {
-            type: 'STRING'
+            type: 'STRING',
+            email: true
         },
 
         clientSeed: {
-            type: 'STRING'
+            type: 'STRING',
+            alphanumeric: true,
+            required: true
         },
 
         bingoCards: {

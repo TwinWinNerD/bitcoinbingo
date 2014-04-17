@@ -10,19 +10,19 @@ module.exports = {
 	attributes: {
 
         winnerType: {
-            type: 'STRING'
+            type: 'STRING',
+            alpha: true,
+            required: true
         },
 
         game: {
-            model: 'game'
+            model: 'game',
+            required: true
         },
 
         user: {
-            model: 'user'
+            model: 'user',
+            required: true
         }
-
-
-
 	}
-
 };

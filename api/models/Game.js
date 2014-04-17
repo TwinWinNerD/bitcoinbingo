@@ -11,11 +11,14 @@ module.exports = {
 
         serverSeed: {
             type: 'STRING',
-            notNull: true
+            notNull: true,
+            required: true
         },
 
         gameStatus: {
-            type: 'STRING'
+            type: 'STRING',
+            alpha: true,
+            required: true
         },
 
         bingoCards: {
@@ -24,7 +27,8 @@ module.exports = {
         },
 
         table: {
-            model: 'table'
+            model: 'table',
+            required: true
         },
 
         winners: {
