@@ -209,7 +209,7 @@
         </div>
     </div>
     {{#if session.isAuthenticated}}
-        <button {{action 'buyCard' }} id="buy-cards" type="button" data-toggle="tooltip" data-placement="bottom" title="Join the game! Buy some cards and be the first one to yell BINGO!" class="btn btn-success btn-block buy-cards">Buy more cards</button>
+        <button id="buy-cards" type="button" data-toggle="tooltip" data-placement="bottom" title="Join the game! Buy some cards and be the first one to yell BINGO!" class="btn btn-success btn-block buy-cards">Buy more cards</button>
     {{/if}}
     <div id="buy-cards-modal" class="modal fade">
         <div class="modal-dialog">
@@ -224,7 +224,7 @@
                     </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">No, close this</button><button type="button" id="confirm-buying-cards" class="btn btn-primary">Yes, buy it</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-default">No, close this</button><button {{action 'buyCard' }} type="button" id="confirm-buying-cards" class="btn btn-primary">Yes, buy it</button>
                 </div>
             </div>
         </div>
