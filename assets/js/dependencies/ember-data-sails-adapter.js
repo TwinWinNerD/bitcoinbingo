@@ -210,19 +210,10 @@
 
                 data = {};
 
-                // TODO: push the new record into store
                 if(message.verb === "addedTo") {
-                    // message = {"id":1,"verb":"adde
-
                     var addedModel = Ember.Inflector.inflector.singularize(message.attribute);
 
-                    var added = store.find(addedModel, message.addedId).then(function (resolve) {
-//                        store.push(addedModel, resolve);
-                    }, function (reject) {
-
-                    });
-
-
+                    var added = store.find(addedModel, message.addedId);
                 }
 
                 if(message.verb === "created") {
@@ -231,7 +222,7 @@
                 }
 
                 if(message.verb === "updated") {
-                    data[model] = _.extend(message.previous, message.data);
+                    data[model] = Ember.merge(message.previous, message.data);
                     console.log('updated');
                     record = serializer.extractSingle(store, type, data);
                     store.push(socketModel, record);
