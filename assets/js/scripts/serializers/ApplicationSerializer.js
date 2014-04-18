@@ -26,13 +26,16 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             item[primaryKey] = id;
         }
 
-        // Don't add if already side loaded
-        if (sideloadArr.findBy("id", id) != undefined){
-            return payload;
-        }
+
 
         // Add to sideloaded array
         if(pluralize) {
+
+            // Don't add if already side loaded
+            if (sideloadArr.findBy("id", id) != undefined){
+                return payload;
+            }
+
             sideloadArr.push(item);
         } else {
             sideloadArr = item;
