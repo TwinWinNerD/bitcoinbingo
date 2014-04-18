@@ -219,9 +219,10 @@
                     <h4 class="modal-title">Buy cards</h4>
                 </div>
                 <div class="modal-body">
-                    <label>Amount of cards<input type="number" value="0" id="amount-of-cards"></label>
-                    <p id="total-card-costs">
-                    </p>
+                    <p>If you don't change any values, the placeholders will be used</p>
+                    <label>Amount of Cards {{input type="number" placeholder=1 value=amountOfCards id="amountOfCards" action='buyCard'}}</label>
+                    <label>ClientSeed {{input type="text" placeholder=session.clientSeed value=clientSeed id="clientSeed" action='buyCard'}}</label>
+                    <p id="total-card-costs"></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-default">No, close this</button><button {{action 'buyCard' }} type="button" id="confirm-buying-cards" class="btn btn-primary">Yes, buy it</button>

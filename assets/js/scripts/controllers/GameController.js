@@ -28,28 +28,38 @@ App.GameController = Ember.ObjectController.extend({
     bingoCards: function () {
         var gameId, userId;
         gameId = this.get('id');
-        gameId = this.get('session.content').id;
+        userId = this.get('session.content').id;
+
+        // TODO: when coming from the #games view this is empty
 
         return this.get('store').filter('bingoCard', function (bingoCard) {
-            return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === gameId);
+            return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === userId);
         });
     }.property('model.bingoCards'),
 
     actions: {
 
         buyCard: function () {
-            var store, game, bingoCard, bingoCards;
+            var store, game, clientSeed, amountOfCards, bingoCard, bingoCards;
 
             store = this.store;
             game = this.get('model');
             bingoCards = this.get('bingoCards');
 
-            bingoCard = store.createRecord('bingoCard', {
-                clientSeed: "12345",
-                game: game
-            });
+            // if no new clientSeed is set, use the one saved in the session
+            clientSeed = this.get('clientSeed') ? this.get('clientSeed') : this.get('session.clientSeed');
+            amountOfCards = this.get('amountOfCards') ? this.get('amountOfCards') : 1;
 
-            bingoCard.save();
+            for(var i = 1; i <= amountOfCards; i++) {
+                bingoCard = store.createRecord('bingoCard', {
+                    clientSeed: clientSeed,
+                    game: game
+                });
+
+                bingoCard.save();
+            }
+
+            $('#buy-cards-modal').modal('hide');
         }
     }
 });
