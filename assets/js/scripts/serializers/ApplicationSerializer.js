@@ -66,8 +66,9 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
                 // One-to-one
                 if (relationship.kind == "belongsTo") {
+                    // TODO: figure out when we need to only sideload 1 item we don't need to pluralize
                     // Sideload the object to the payload
-                    this.sideloadItem(payload, type, related, false);
+                    this.sideloadItem(payload, type, related, true);
 
                     // Replace object with ID
                     recordJSON[key] = related.id;
