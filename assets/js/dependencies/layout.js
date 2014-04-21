@@ -158,3 +158,7 @@ function toggleHelpMode() {
         helpMode = 0;
     }
 }
+
+function satoshiToMBTC(satoshi) {
+    return satoshi / 100000;
+}
