@@ -23,6 +23,16 @@ module.exports = {
         user: {
             model: 'user',
             required: true
+        },
+
+        toJSON: function() {
+            var obj;
+
+            obj = this.toObject();
+
+            obj.squares = BingoCardService.generateSquares(obj.game.serverSeed, obj.clientSeed, obj.id);
+
+            return obj;
         }
 
 	}
