@@ -25,6 +25,17 @@ App.GameController = Ember.ObjectController.extend({
         return false;
     }.property('model.gameStatus'),
 
+    cardPrice: function () {
+        return satoshiToMBTC(this.get('model.table.cardPrice'));
+    }.property('model.table.cardPrice'),
+
+    prizePool: function () {
+
+        console.log(this.get('model.bingoCards'));
+
+        return satoshiToMBTC(this.get('model.bingoCards.content.length') * this.get('model.table.cardPrice'));
+    }.property('model.bingoCards', 'model.bingoCards.content', 'model.table.cardPrice'),
+
     bingoCards: function () {
         var gameId, userId;
         gameId = this.get('id');

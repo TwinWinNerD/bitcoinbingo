@@ -80,7 +80,7 @@
                                     <td>{{id}}</td>
                                     <td>{{table.id}}</td>
                                     <td></td>
-                                    <td></td>
+                                    <td>{{prizePool}} mBTC</td>
                                     <td>{{gameStatus}}</td>
                                     <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
                                 </tr>
@@ -168,7 +168,7 @@
                                         <td>{{id}}</td>
                                         <td>{{table.id}}</td>
                                         <td></td>
-                                        <td></td>
+                                        <td>{{prizePool}}</td>
                                         <td>{{gameStatus}}</td>
                                         <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
                                     </tr>
@@ -203,8 +203,8 @@
             <i class="fa fa-flag"></i>Status: {{gameStatus}}<br>
             <i class="fa fa-user"></i>Active players:<br>
             <i class="fa fa-home"></i>House edge: 1%<br>
-            <i class="fa fa-calendar"></i>Card price: {{ game.table.cardPrice }} mBTC<br>
-            <i class="fa fa-trophy"></i>Winner gets:<br>
+            <i class="fa fa-calendar"></i>Card price: {{cardPrice}} mBTC<br>
+            <i class="fa fa-trophy"></i>Winner gets: {{prizePool}} mBTC<br>
             <i class="fa fa-clock-o"></i>Game starts in:<span id="timer"></span><br>
         </div>
     </div>
@@ -334,8 +334,6 @@
     <br>
     <div class="row">
         <div id="h-cards" data-container="body" data-toggle="popover" data-placement="top" data-content="Displays all of the cards you have bought. Fields marked in grey are the pattern that is currently required. Fields marked in red are fields that have been drawn." class="col-sm-6 card-box">
-            {{id}}
-
             {{#each bingoCard in bingoCards}}
                     <div class="col-sm-6"><span class="label label-primary">Card {{bingoCard.id}}</span>
                         <table class="table table-bordered table-card">
@@ -343,7 +341,11 @@
                             {{#each row in bingoCard.squares}}
                             <tr>
                                 {{#each number in row}}
-                                <td>{{number}}</td>
+                                    {{#if number}}
+                                        <td data-number="{{number}}">{{number}}</td>
+                                    {{else}}
+                                        <td>X</td>
+                                    {{/if}}
                                 {{/each}}
                             </tr>
                             {{/each}}
