@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     {{#if session.isAuthenticated}}
-                    <li><a><i class="fa fa-user"></i><span id="user-name">{{session.username}}</span></a></li>
+                    <li><a><i class="fa fa-user"></i><span id="user-name">{{controllers.currentUser.username}}</span></a></li>
                     <li><a><i class="fa fa-btc"></i><span id="user-balance"></span>mBTC</a></li>
                     {{/if}}
                 </ul>
