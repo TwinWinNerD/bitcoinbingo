@@ -21,6 +21,14 @@ module.exports = {
             required: true
         },
 
+        numbers: {
+            type: 'array'
+        },
+
+        rolledNumbers: {
+            type: 'array'
+        },
+
         bingoCards: {
             collection: 'bingoCard',
             via: 'game'
