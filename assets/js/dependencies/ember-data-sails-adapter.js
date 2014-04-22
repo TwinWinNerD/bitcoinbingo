@@ -1,7 +1,7 @@
 (function() {
     /*global Ember*/
     /*global DS*/
-    /*global socket*/
+    /*global io*/
     /*global _*/
     'use strict';
 
@@ -58,7 +58,7 @@
     });
 
     DS.SailsSocketAdapter = DS.SailsAdapter = DS.Adapter.extend(SailsAdapterMixin, {
-        defaultSerializer: '-rest',
+        defaultSerializer: '-default',
         prefix: '',
         camelize: true,
         log: false,
@@ -68,7 +68,7 @@
         init: function () {
             this._super();
             if(this.useCSRF) {
-                socket.get('/csrfToken', function response(tokenObject) {
+                io.socket.get('/csrfToken', function response(tokenObject) {
                     this.CSRFToken = tokenObject._csrf;
                 }.bind(this));
             }
@@ -154,7 +154,7 @@
             if(method !== 'get')
                 this.checkCSRF(data);
             return new RSVP.Promise(function(resolve, reject) {
-                socket[method](url, data, function (data) {
+                io.socket[method](url, data, function (data) {
                     if (isErrorObject(data)) {
                         adapter._log('error:', data);
                         if (data.errors) {
@@ -239,7 +239,7 @@
             }
 
             var eventName = Ember.String.camelize(model).toLowerCase();
-            socket.on(eventName, function (message) {
+            io.socket.on(eventName, function (message) {
                 // Left here to help further debugging.
                 console.log("Got message on Socket : " + JSON.stringify(message));
                 if (message.verb === 'addedTo') {
