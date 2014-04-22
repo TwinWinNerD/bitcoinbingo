@@ -67,7 +67,10 @@ App.GameController = Ember.ObjectController.extend({
                     game: game
                 });
 
-                bingoCard.save();
+                bingoCard.save().then(function (newBingoCard) {
+                    game.get('bingoCards').pushObject(newBingoCard);
+                    game.reload();
+                });
             }
 
             $('#buy-cards-modal').modal('hide');
