@@ -78,8 +78,8 @@
                                 {{#if idle}}
                                 <tr>
                                     <td>{{id}}</td>
-                                    <td>{{table.id}}</td>
                                     <td></td>
+                                    <td>{{cardPrice}}</td>
                                     <td>{{prizePool}} mBTC</td>
                                     <td>{{gameStatus}}</td>
                                     <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
@@ -334,7 +334,7 @@
     <br>
     <div class="row">
         <div id="h-cards" data-container="body" data-toggle="popover" data-placement="top" data-content="Displays all of the cards you have bought. Fields marked in grey are the pattern that is currently required. Fields marked in red are fields that have been drawn." class="col-sm-6 card-box">
-            {{#each bingoCard in bingoCards}}
+            {{#each bingoCard in ownBingoCards}}
                     <div class="col-sm-6"><span class="label label-primary">Card {{bingoCard.id}}</span>
                         <table class="table table-bordered table-card">
                             <tbody>
