@@ -14,8 +14,8 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
      @param {subclass of DS.Model} type   The DS.Model class of the item to be sideloaded
      @param {Object} item JSON object   representing the record to sideload to the payload
      */
-    sideloadItem: function(payload, type, item, pluralize){
-        var sideloadKey = pluralize ? type.typeKey.pluralize() : type.typeKey, // The key for the sideload array
+    sideloadItem: function(payload, type, item){
+        var sideloadKey = type.typeKey.pluralize(), // The key for the sideload array
             sideloadArr = payload[sideloadKey] || [],   // The sideload array for this item
             primaryKey = Ember.get(this, 'primaryKey'), // the key to this record's ID
             id = item[primaryKey];
@@ -26,20 +26,14 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
             item[primaryKey] = id;
         }
 
-
+        // Don't add if already side loaded
+        if (sideloadArr.findBy("id", id) != undefined){
+            return payload;
+        }
 
         // Add to sideloaded array
-        if(pluralize) {
+        sideloadArr.push(item);
 
-            // Don't add if already side loaded
-            if (sideloadArr.findBy("id", id) != undefined){
-                return payload;
-            }
-
-            sideloadArr.push(item);
-        } else {
-            sideloadArr = item;
-        }
         payload[sideloadKey] = sideloadArr;
         return payload;
     },
@@ -62,13 +56,11 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
             if (typeof related === "object" && related !== null){
 
-                console.log(relationship.kind);
-
                 // One-to-one
                 if (relationship.kind == "belongsTo") {
                     // TODO: figure out when we need to only sideload 1 item we don't need to pluralize
                     // Sideload the object to the payload
-                    this.sideloadItem(payload, type, related, true);
+                    this.sideloadItem(payload, type, related);
 
                     // Replace object with ID
                     recordJSON[key] = related.id;
@@ -84,7 +76,7 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
                     related.forEach(function(item, index){
 
                         // Sideload the object to the payload
-                        this.sideloadItem(payload, type, item, true);
+                        this.sideloadItem(payload, type, item);
 
                         // Replace object with ID
                         related[index] = item.id;
