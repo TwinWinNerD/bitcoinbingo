@@ -37,13 +37,14 @@ App.GameController = Ember.ObjectController.extend({
     }.property('model.bingoCards', 'model.bingoCards.content', 'model.table.cardPrice'),
 
     drawnNumbers: function () {
-        var drawnNumbers;
+        var drawnNumbers, lastNumber;
 
         drawnNumbers = this.get('model.drawnNumbers');
+        lastNumber = drawnNumbers[drawnNumbers.length - 1];
 
-        $("")
-
-        console.log(drawnNumbers[drawnNumbers.length - 1]);
+        // TODO: fix problem whenever we get a new number the bingoCards get rerenderd so only the newest number is marked
+        $("#h-cards td.number[data-number='" + lastNumber + "']").addClass('marked');
+        $("#h-drawn-numbers .number[data-number='" + lastNumber + "']").addClass('active');
 
     }.observes('model.drawnNumbers'),
 
