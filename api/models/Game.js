@@ -25,7 +25,7 @@ module.exports = {
             type: 'array'
         },
 
-        rolledNumbers: {
+        drawnNumbers: {
             type: 'array'
         },
 

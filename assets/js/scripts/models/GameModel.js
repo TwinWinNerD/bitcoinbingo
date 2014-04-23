@@ -1,7 +1,7 @@
 App.Game = DS.Model.extend({
     serverSeed: DS.attr(),
     numbers: DS.attr(),
-    rolledNumbers: DS.attr(),
+    drawnNumbers: DS.attr(),
     gameStatus: DS.attr(),
     table: DS.belongsTo('table'),
     bingoCards: DS.hasMany('bingoCard', {async: true}),
