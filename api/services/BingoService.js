@@ -16,7 +16,7 @@ exports.updateGameStatus = function (gameId, status) {
                     deferred.reject(error);
                 } else {
                     deferred.resolve();
-                    Game.publishUpdate(gameId, { gameStatus: status, updatedAt: result.updatedAt }, null,{ previous: game.toJSON() });
+                    Game.publishUpdate(gameId, { gameStatus: status, updatedAt: result[0].updatedAt }, null,{ previous: game.toJSON() });
                 }
             });
         });
@@ -75,11 +75,11 @@ exports.runSimulation = function (game, instant) {
     deferred = Q.defer();
 
     // create all cards
-    for(var i = 0; i < game.bingoCards.length; i++) {
-        var bingoCard = game.bingoCards[i];
-
-        bingoCard.squares = BingoCardService.generateSquares(game.serverseed, bingoCard.clientSeed, bingoCard.id);
-    }
+//    for(var i = 0; i < game.bingoCards.length; i++) {
+//        var bingoCard = game.bingoCards[i];
+//
+//        bingoCard.squares = BingoCardService.generateSquares(game.serverseed, bingoCard.clientSeed, bingoCard.id);
+//    }
 
     var bingoNumbers, masterSeed, bingoWinners, patternWinners, winners, turn, drawnNumbers;
 
@@ -94,6 +94,7 @@ exports.runSimulation = function (game, instant) {
     drawnNumbers = [];
     turn = 0;
 
+    game.drawnNumbers = drawnNumbers;
     if(!instant) {
 
         var playTurn = function () {
@@ -101,11 +102,21 @@ exports.runSimulation = function (game, instant) {
 
                 drawnNumbers.push(number);
 
-                // using cloneDeep to prevent the pattern check overwriting the bingo check
-                bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
-                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+                Game.update(game.id, {
+                    drawnNumbers: drawnNumbers
+                }).exec(function (error, result) {
+                    if(result) {
+                        Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: game.toJSON() });
+                    }
+                });
 
                 console.log(number);
+
+
+//                // using cloneDeep to prevent the pattern check overwriting the bingo check
+//                bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
+//                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+
 
                 if (bingoWinners.length > 0) {
                     winners.push(bingoWinners);
@@ -161,7 +172,7 @@ function drawNumber(bingoNumbers, turn) {
         if (typeof bingoNumbers[turn] !== 'undefined') {
             deferred.resolve(bingoNumbers[turn]);
         }
-    }, 100);
+    }, 4000);
 
     return deferred.promise;
 }

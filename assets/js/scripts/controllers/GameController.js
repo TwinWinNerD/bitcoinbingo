@@ -36,6 +36,17 @@ App.GameController = Ember.ObjectController.extend({
         return satoshiToMBTC(this.get('model.bingoCards.content.length') * this.get('model.table.cardPrice'));
     }.property('model.bingoCards', 'model.bingoCards.content', 'model.table.cardPrice'),
 
+    drawnNumbers: function () {
+        var drawnNumbers;
+
+        drawnNumbers = this.get('model.drawnNumbers');
+
+        $("")
+
+        console.log(drawnNumbers[drawnNumbers.length - 1]);
+
+    }.observes('model.drawnNumbers'),
+
     ownBingoCards: function () {
         var gameId, userId;
         gameId = this.get('id');
