@@ -39,7 +39,9 @@ exports.generateMasterSeed = function (game) {
     masterSeed.update(game.serverSeed);
 
     for(var i = 0; i < game.bingoCards.length; i++) {
-        masterSeed.update(game.bingoCards[i].clientSeed);
+        if(typeof game.bingoCards[i].client !== "undefined") {
+            masterSeed.update(game.bingoCards[i].clientSeed);
+        }
     }
 
     return parseInt(masterSeed.digest('hex'), 16);
