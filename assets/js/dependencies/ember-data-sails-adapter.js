@@ -222,10 +222,12 @@
                 }
 
                 if(message.verb === "updated") {
-                    data[model] = Ember.merge(message.previous, message.data);
-                    console.log('updated');
+                    data[model] = Ember.merge({ id: message.id } , message.data);
+
                     record = serializer.extractSingle(store, type, data);
-                    store.push(socketModel, record);
+
+//                    store.push(socketModel, record, true);
+                    store.update(socketModel, record);
                 }
             }
 
