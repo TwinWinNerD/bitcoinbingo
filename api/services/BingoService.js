@@ -44,7 +44,9 @@ exports.settleRound = function (gameId, instant) {
                 awardPrizes = true;
                 instant = false;
 
-                exports.updateGameStatus(gameId, "playing");
+                exports.updateGameStatus(gameId, "playing").then(function (resolve) {
+                    game.gameStatus = "playing";
+                });
 
             }
 
@@ -54,6 +56,8 @@ exports.settleRound = function (gameId, instant) {
                     rewardWinners(game, winners).then( function (result) {
                         if(result) {
                             exports.updateGameStatus(gameId, "finished").then( function () {
+                                game.gameStatus = "finished";
+
                                 deferred.resolve(winners);
                             });
                         }
@@ -62,6 +66,24 @@ exports.settleRound = function (gameId, instant) {
                     deferred.resolve(winners);
                 }
 
+            }, function (error) {
+                // error
+            }, function (drawnNumbers) {
+
+                Game.update(game.id, {
+                    drawnNumbers: drawnNumbers
+                }).exec(function (error, result) {
+                        if(result) {
+
+                            // don't send this to the frontend again
+                            var gameData = _.cloneDeep(game);
+
+                            delete gameData.bingoCards;
+                            delete gameData.table;
+
+                            Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: gameData });
+                        }
+                    });
             });
         }
     });
@@ -75,11 +97,11 @@ exports.runSimulation = function (game, instant) {
     deferred = Q.defer();
 
     // create all cards
-//    for(var i = 0; i < game.bingoCards.length; i++) {
-//        var bingoCard = game.bingoCards[i];
-//
-//        bingoCard.squares = BingoCardService.generateSquares(game.serverseed, bingoCard.clientSeed, bingoCard.id);
-//    }
+    for(var i = 0; i < game.bingoCards.length; i++) {
+        var bingoCard = game.bingoCards[i];
+
+        bingoCard.squares = BingoCardService.generateSquares(game.serverseed, bingoCard.clientSeed, bingoCard.id);
+    }
 
     var bingoNumbers, masterSeed, bingoWinners, patternWinners, winners, turn, drawnNumbers;
 
@@ -102,20 +124,13 @@ exports.runSimulation = function (game, instant) {
 
                 drawnNumbers.push(number);
 
-                Game.update(game.id, {
-                    drawnNumbers: drawnNumbers
-                }).exec(function (error, result) {
-                    if(result) {
-                        Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: game.toJSON() });
-                    }
-                });
-
-                console.log(number);
-
+                deferred.notify(drawnNumbers);
 
 //                // using cloneDeep to prevent the pattern check overwriting the bingo check
-//                bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
-//                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+                bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
+                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+
+                console.log(number);
 
 
                 if (bingoWinners.length > 0) {
