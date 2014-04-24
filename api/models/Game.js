@@ -26,7 +26,8 @@ module.exports = {
         },
 
         drawnNumbers: {
-            type: 'array'
+            type: 'array',
+            defaultsTo: []
         },
 
         bingoCards: {
