@@ -29,12 +29,6 @@ App.GameController = Ember.ObjectController.extend({
         return satoshiToMBTC(this.get('model.table.cardPrice'));
     }.property('model.table.cardPrice'),
 
-    prizePool: function () {
-
-        console.log(this.get('model.bingoCards'));
-
-        return satoshiToMBTC(this.get('model.bingoCards.content.length') * this.get('model.table.cardPrice'));
-    }.property('model.bingoCards', 'model.bingoCards.content', 'model.table.cardPrice'),
 
     drawnNumbers: function () {
         var drawnNumbers, lastNumber;
@@ -51,9 +45,7 @@ App.GameController = Ember.ObjectController.extend({
     ownBingoCards: function () {
         var gameId, userId;
         gameId = this.get('id');
-        userId = this.get('session.content').id;
-
-        // TODO: when coming from the #games view this is empty
+        userId = this.get('session.content.id');
 
         return this.get('store').filter('bingoCard', function (bingoCard) {
             return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === userId);
