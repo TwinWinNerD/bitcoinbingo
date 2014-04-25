@@ -44,7 +44,7 @@ exports.settleRound = function (gameId, instant) {
                 awardPrizes = true;
                 instant = false;
 
-                exports.updateGameStatus(gameId, "playing").then(function (resolve) {
+                exports.updateGameStatus(gameId, "playing").then(function () {
                     game.gameStatus = "playing";
                 });
 
@@ -57,6 +57,16 @@ exports.settleRound = function (gameId, instant) {
                         if(result) {
                             exports.updateGameStatus(gameId, "finished").then( function () {
                                 game.gameStatus = "finished";
+
+                                Game.create({
+                                    minimumPlayers: game.minimumPlayers,
+                                    maximumPlayers: game.maximumPlayers,
+                                    table: game.table.id,
+                                    gameStatus: "idle",
+                                    serverSeed: SeedService.generateServerSeed(),
+                                }).exec(function (error, result) {
+                                        Game.publishCreate(result);
+                                    });
 
                                 deferred.resolve(winners);
                             });
