@@ -12,7 +12,12 @@ exports.getBalance = function (userId) {
         deposits: function (done) {
             Deposit.find().where( {user: userId }).sum('amount').exec(function (error, sum) {
                 if(!error) {
-                    done(null, sum[0].amount);
+                    if(sum.length > 0) {
+                        console.log(sum);
+                        done(null, sum[0].amount);
+                    } else {
+                        done(null, 0);
+                    }
                 } else {
                     done(error);
                 }
@@ -21,7 +26,11 @@ exports.getBalance = function (userId) {
         withdrawals: function (done) {
             Withdrawal.find().where( {user: userId }).sum('amount').exec(function (error, sum) {
                 if(!error) {
-                    done(null, sum[0].amount);
+                    if(sum.length > 0) {
+                        done(null, sum[0].amount);
+                    } else {
+                        done(null, 0);
+                    }
                 } else {
                     done(error);
                 }
