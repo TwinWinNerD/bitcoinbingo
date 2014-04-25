@@ -1,8 +1,6 @@
 App.GameController = Ember.ObjectController.extend({
 
-    setupController: function (controller, model) {
-        controller.set('model', model);
-    },
+
 
     idle: function () {
         if(this.get('model.gameStatus') === 'idle') {
