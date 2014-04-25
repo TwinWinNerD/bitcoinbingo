@@ -1,6 +1,5 @@
 App.Game = DS.Model.extend({
     serverSeed: DS.attr(),
-    numbers: DS.attr(),
     drawnNumbers: DS.attr(),
     gameStatus: DS.attr(),
     table: DS.belongsTo('table'),

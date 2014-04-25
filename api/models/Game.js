@@ -21,10 +21,6 @@ module.exports = {
             required: true
         },
 
-        numbers: {
-            type: 'array'
-        },
-
         drawnNumbers: {
             type: 'array',
             defaultsTo: []
