@@ -40,7 +40,7 @@ var jsFilesToInject = [
 	'js/scripts/routes/*.js',
 	'js/scripts/models/*.js',
 	'js/scripts/controllers/*.js',
-	'js/**/*.js'
+	'js/scripts/**/*.js'
 ];
 
 
