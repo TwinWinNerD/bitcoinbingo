@@ -1,5 +1,4 @@
 var historyElements = [];
-var helpMode = 0;
 
 function getBallColor(num) {
     switch (num) {
@@ -124,39 +123,6 @@ function RollInHistoryBall(num) {
             }
         }, 3000);
     }, 500);
-}
-
-function SetClockTimer(time) {
-    $('#timer').text(time);
-}
-
-function toggleHelpModeFocus(object, actionId) {
-    if (actionId == 0) {
-        $(object).popover('show');
-    }
-    else {
-        $(object).popover('destroy');
-    }
-}
-
-function toggleHelpMode() {
-    $('#h-players').popover({
-        html: true,
-        placement: 'top',
-        content: "Here are all the players currently in this room. Players who bought cards and are playing are marked with <span class='glyphicon glyphicon-expand'></span>, and the ones that are only watching the game with <span class='glyphicon glyphicon-eye-open'></span>."
-    });
-    toggleHelpModeFocus('#h-room-information', helpMode);
-    toggleHelpModeFocus('#h-latest-ball', helpMode);
-    toggleHelpModeFocus('#h-ball-history', helpMode);
-    toggleHelpModeFocus('#h-players', helpMode);
-    toggleHelpModeFocus('#h-chat', helpMode);
-    toggleHelpModeFocus('#h-cards', helpMode);
-    toggleHelpModeFocus('#h-drawn-numbers', helpMode);
-    if (helpMode === 0) {
-        helpMode = 1;
-    } else {
-        helpMode = 0;
-    }
 }
 
 function satoshiToMBTC(satoshi) {
