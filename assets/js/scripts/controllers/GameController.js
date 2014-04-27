@@ -48,7 +48,7 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('store').filter('bingoCard', function (bingoCard) {
             return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === userId);
         });
-    }.property('model.bingoCards'),
+    }.property('model.bingoCards', 'session.content'),
 
     actions: {
 
