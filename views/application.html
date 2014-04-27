@@ -1,447 +1,473 @@
 <script type="text/x-handlebars">
-    <nav role="navigation" class="navbar navbar-fixed-bottom navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                {{#if session.isAuthenticated}}
-                <a {{ action 'invalidateSession' }} class="btn btn-danger navbar-btn navbar-right">Logout</a>
-                {{else}}
-                {{#link-to 'login' class="btn btn-success navbar-btn navbar-right"}}Login{{/link-to}}
-                {{/if}}
-                <button type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-                {{#link-to 'games' class="navbar-brand"}}Bitcoin Bingo{{/link-to}}
-            </div>
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav">
-                    {{#if session.isAuthenticated}}
-                    <li><a><i class="fa fa-user"></i><span id="user-name">{{controllers.currentUser.username}}</span></a></li>
-                    <li><a><i class="fa fa-btc"></i><span id="user-balance"></span>mBTC</a></li>
-                    {{/if}}
+
+    <nav class="navbar-top" role="navigation">
+
+    <!-- begin BRAND HEADING -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".sidebar-collapse">
+            <i class="fa fa-bars"></i> Menu
+        </button>
+        <!--<div class="navbar-brand">-->
+            <!--<a href="index.html">Bitcoin Bingo</a>-->
+        <!--</div>-->
+    </div>
+    <!-- end BRAND HEADING -->
+
+    <div class="nav-top">
+
+    <!-- begin LEFT SIDE WIDGETS -->
+    <ul class="nav navbar-left">
+
+    </ul>
+    <!-- end LEFT SIDE WIDGETS -->
+
+    <!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+    <ul class="nav navbar-right">
+
+    <!-- begin ALERTS DROPDOWN -->
+    <li class="dropdown">
+        <a href="#" class="alerts-link dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-bell"></i>
+            <span class="number">9</span><i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-scroll dropdown-alerts">
+
+            <!-- Alerts Dropdown Heading -->
+            <li class="dropdown-header">
+                <i class="fa fa-bell"></i> 9 New Alerts
+            </li>
+
+            <!-- Alerts Dropdown Body - This is contained within a SlimScroll fixed height box. You can change the height using the SlimScroll jQuery features. -->
+            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><li id="alertScroll" style="overflow: hidden; width: auto; height: 200px;">
+                <ul class="list-unstyled">
+
                 </ul>
-            </div>
-        </div>
+            </li><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+
+            <!-- Alerts Dropdown Footer -->
+            <li class="dropdown-footer">
+                <a href="#">View All Alerts</a>
+            </li>
+
+        </ul>
+        <!-- /.dropdown-menu -->
+    </li>
+    <!-- /.dropdown -->
+    <!-- end ALERTS DROPDOWN -->
+
+    <!-- begin USER ACTIONS DROPDOWN -->
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li>
+                <a href="#">
+                    <i class="fa fa-gear"></i> Settings
+                </a>
+            </li>
+            <li>
+                <a class="logout_open" href="#logout">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+        </ul>
+        <!-- /.dropdown-menu -->
+    </li>
+    <!-- /.dropdown -->
+    <!-- end USER ACTIONS DROPDOWN -->
+
+    </ul>
+    <!-- /.nav -->
+    <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+
+    </div>
+    <!-- /.nav-top -->
     </nav>
-    {{outlet}}
+
+    <nav class="navbar-side" role="navigation">
+    <div class="navbar-collapse sidebar-collapse collapse">
+    <ul id="side" class="nav navbar-nav side-nav">
+
+    <!-- begin DASHBOARD LINK -->
+    <li>
+        {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Home{{/link-to}}
+    </li>
+    </ul>
+    <!-- /.side-nav -->
+    </div>
+    <!-- /.navbar-collapse -->
+    </nav>
+
+
+    <div id="page-wrapper">
+        {{outlet}}
+    </div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="games">
-    <div id="tableList">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3">
-                    <br>
-                    {{#link-to 'games'}}
-                    <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
-                    {{/link-to}}
-                    <br>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-font">
-                            <h3 class="panel-title"><b>Overview</b></h3>
-                        </div>
-                        <div class="panel-body panel-font">
-                            <i class="fa fa-gamepad"></i>Active games:<br>
-                            <i class="fa fa-user"></i>Total players:<br>
-                            <i class="fa fa-trophy"></i>Total prize pool:<i class="fa fa-btc"></i><br>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-9">
-                    <br>
-                    <br>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-font">
-                            <h3 class="panel-title"><b>Available Bingo Games</b></h3>
-                        </div>
-                        <div class="panel-font">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        Players
-                                    </th>
-                                    <th>
-                                        Price Per Card
-                                    </th>
-                                    <th>
-                                        Prize Pool
-                                    </th>
-                                    <th>Status</th>
-                                    <th>
-                                        Join
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{#each}}
-                                {{#if idle}}
-                                <tr>
-                                    <td>{{id}}</td>
-                                    <td></td>
-                                    <td>{{cardPrice}}</td>
-                                    <td>{{prizePool}} mBTC</td>
-                                    <td>{{gameStatus}}</td>
-                                    <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
-                                </tr>
-                                {{/if}}
-                                {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
 
-                    </div>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading panel-font">
-                            <h3 class="panel-title"><b>Playing Bingo Games</b></h3>
-                        </div>
-                        <div class="panel-font">
-                            <table class="table table-hover">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        Players
-                                    </th>
-                                    <th>
-                                        Price Per Card
-                                    </th>
-                                    <th>
-                                        Prize Pool
-                                    </th>
-                                    <th>Status</th>
-                                    <th>
-                                        Join
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{#each}}
-                                {{#if playing}}
-                                <tr>
-                                    <td>{{id}}</td>
-                                    <td>{{table.id}}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>{{gameStatus}}</td>
-                                    <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
-                                </tr>
-                                {{/if}}
-                                {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+<div class="page-content page-content-ease-in">
 
-                        <div class="panel panel-primary">
-                            <div class="panel-heading panel-font">
-                                <h3 class="panel-title"><b>Finished Bingo Games</b></h3>
-                            </div>
-                            <div class="panel-font">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>
-                                            #
-                                        </th>
-                                        <th>
-                                            Players
-                                        </th>
-                                        <th>
-                                            Price Per Card
-                                        </th>
-                                        <th>
-                                            Prize Pool
-                                        </th>
-                                        <th>Status</th>
-                                        <th>
-                                            Join
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {{#each}}
-                                    {{#if finished}}
-                                    <tr>
-                                        <td>{{id}}</td>
-                                        <td>{{table.id}}</td>
-                                        <td></td>
-                                        <td>{{prizePool}}</td>
-                                        <td>{{gameStatus}}</td>
-                                        <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
-                                    </tr>
-                                    {{/if}}
-                                    {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</script>
-
-<script type="text/x-handlebars" data-template-name="game">
-<div id="game">
-<div class="container">
+<!-- begin PAGE TITLE ROW -->
 <div class="row">
-<div class="col-sm-3">
-    <br>
-    {{#link-to 'games'}}
-    <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
-    {{/link-to}}
-    <br>
-    <div id="h-room-information" data-container="body" data-toggle="popover" data-placement="top" data-content="Shows information about the room you are currently playing in." class="panel panel-primary">
-        <div class="panel-heading panel-font">
-            <h3 class="panel-title"><b>Game information:</b></h3>
-        </div>
-        <div class="panel-body panel-font">
-            <i class="fa fa-flag"></i>Status: {{gameStatus}}<br>
-            <i class="fa fa-user"></i>Active players:<br>
-            <i class="fa fa-home"></i>House edge: 1%<br>
-            <i class="fa fa-calendar"></i>Card price: {{cardPrice}} mBTC<br>
-            <i class="fa fa-trophy"></i>Winner gets: {{prizePool}} mBTC<br>
-            <i class="fa fa-clock-o"></i>Game starts in:<span id="timer"></span><br>
+    <div class="col-lg-12">
+        <div class="page-title">
+            <h1>Bitcoin Bingo
+                <small>Games</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><i class="fa fa-dashboard"></i>  {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
+                </li>
+                <li class="active">Games</li>
+            </ol>
         </div>
     </div>
-    {{#if session.isAuthenticated}}
-        <button id="buy-cards" type="button" data-toggle="tooltip" data-placement="bottom" title="Join the game! Buy some cards and be the first one to yell BINGO!" class="btn btn-success btn-block buy-cards">Buy more cards</button>
-    {{/if}}
-    <div id="buy-cards-modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-                    <h4 class="modal-title">Buy cards</h4>
-                </div>
-                <div class="modal-body">
-                    <p>If you don't change any values, the placeholders will be used</p>
-                    <label>Amount of Cards {{input type="number" placeholder=1 value=amountOfCards id="amountOfCards" action='buyCard'}}</label>
-                    <label>ClientSeed {{input type="text" placeholder=session.clientSeed value=clientSeed id="clientSeed" action='buyCard'}}</label>
-                    <p id="total-card-costs"></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">No, close this</button><button {{action 'buyCard' }} type="button" id="confirm-buying-cards" class="btn btn-primary">Yes, buy it</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-8">
-            <button id="help-button" type="button" data-toggle="tooltip" data-placement="bottom" title="Click this button to show explanation windows for each element! You turn them back off simply by clicking this button once again." class="btn btn-info btn-block">Help!</button>
-        </div>
-    </div>
+    <!-- /.col-lg-12 -->
 </div>
-<div class="col-sm-9">
-    <br>
-    <div class="row">
-        <div id="h-latest-ball" data-container="body" data-toggle="popover" data-placement="left" data-content="Displays the latest drawn ball." class="col-sm-12 hide-outside">
-            <div id="latest-ball" class="ball-start">
-                1
+<!-- /.row -->
+<!-- end PAGE TITLE ROW -->
+
+
+<div class="row">
+    <div class="col-lg-4 col-sm-6">
+        <div class="circle-tile">
+            <div class="circle-tile-heading dark-blue">
+                <i class="fa fa-users fa-fw fa-3x"></i>
+            </div>
+            <div class="circle-tile-content dark-blue">
+                <div class="circle-tile-description text-faded">
+                    Users
+                </div>
+                <div class="circle-tile-number text-faded">
+                    43
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div id="h-ball-history" data-container="body" data-toggle="popover" data-placement="left" data-content="Displays 10 last drawn bingo balls." class="col-sm-12 hide-outside">
-            <div id="ball-history">
+    <div class="col-lg-4 col-sm-6">
+        <div class="circle-tile">
+            <div class="circle-tile-heading green">
+                <i class="fa fa-btc fa-fw fa-3x"></i>
+            </div>
+            <div class="circle-tile-content green">
+                <div class="circle-tile-description text-faded">
+                    Total Wagered
+                </div>
+                <div class="circle-tile-number text-faded">
+                    <i class="fa fa-btc"></i>1.23
+                </div>
             </div>
         </div>
     </div>
-    <div class="row drawn-numbers">
-        <h3>Drawn numbers:</h3>
-        <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in RED have already been drawn." class="pagination">
-            <li data-number="1" class="number"><a>01</a></li>
-            <li data-number="2" class="number"><a>02</a></li>
-            <li data-number="3" class="number"><a>03</a></li>
-            <li data-number="4" class="number"><a>04</a></li>
-            <li data-number="5" class="number"><a>05</a></li>
-            <li data-number="6" class="number"><a>06</a></li>
-            <li data-number="7" class="number"><a>07</a></li>
-            <li data-number="8" class="number"><a>08</a></li>
-            <li data-number="9" class="number"><a>09</a></li>
-            <li data-number="10" class="number"><a>10</a></li>
-            <li data-number="11" class="number"><a>11</a></li>
-            <li data-number="12" class="number"><a>12</a></li>
-            <li data-number="13" class="number"><a>13</a></li>
-            <li data-number="14" class="number"><a>14</a></li>
-            <li data-number="15" class="number"><a>15</a></li>
-            <li data-number="16" class="number"><a>16</a></li>
-            <li data-number="17" class="number"><a>17</a></li>
-            <li data-number="18" class="number"><a>18</a></li>
-            <li data-number="19" class="number"><a>19</a></li>
-            <li data-number="20" class="number"><a>20</a></li>
-            <li data-number="21" class="number"><a>21</a></li>
-            <li data-number="22" class="number"><a>22</a></li>
-            <li data-number="23" class="number"><a>23</a></li>
-            <li data-number="24" class="number"><a>24</a></li>
-            <li data-number="25" class="number"><a>25</a></li>
-            <li data-number="26" class="number"><a>26</a></li>
-            <li data-number="27" class="number"><a>27</a></li>
-            <li data-number="28" class="number"><a>28</a></li>
-            <li data-number="29" class="number"><a>29</a></li>
-            <li data-number="30" class="number"><a>30</a></li>
-            <li data-number="31" class="number"><a>31</a></li>
-            <li data-number="32" class="number"><a>32</a></li>
-            <li data-number="33" class="number"><a>33</a></li>
-            <li data-number="34" class="number"><a>34</a></li>
-            <li data-number="35" class="number"><a>35</a></li>
-            <li data-number="36" class="number"><a>36</a></li>
-            <li data-number="37" class="number"><a>37</a></li>
-            <li data-number="38" class="number"><a>38</a></li>
-            <li data-number="39" class="number"><a>39</a></li>
-            <li data-number="40" class="number"><a>40</a></li>
-            <li data-number="41" class="number"><a>41</a></li>
-            <li data-number="42" class="number"><a>42</a></li>
-            <li data-number="43" class="number"><a>43</a></li>
-            <li data-number="44" class="number"><a>44</a></li>
-            <li data-number="45" class="number"><a>45</a></li>
-            <li data-number="46" class="number"><a>46</a></li>
-            <li data-number="47" class="number"><a>47</a></li>
-            <li data-number="48" class="number"><a>48</a></li>
-            <li data-number="49" class="number"><a>49</a></li>
-            <li data-number="50" class="number"><a>50</a></li>
-            <li data-number="51" class="number"><a>51</a></li>
-            <li data-number="52" class="number"><a>52</a></li>
-            <li data-number="53" class="number"><a>53</a></li>
-            <li data-number="54" class="number"><a>54</a></li>
-            <li data-number="55" class="number"><a>55</a></li>
-            <li data-number="56" class="number"><a>56</a></li>
-            <li data-number="57" class="number"><a>57</a></li>
-            <li data-number="58" class="number"><a>58</a></li>
-            <li data-number="59" class="number"><a>59</a></li>
-            <li data-number="60" class="number"><a>60</a></li>
-            <li data-number="61" class="number"><a>61</a></li>
-            <li data-number="62" class="number"><a>62</a></li>
-            <li data-number="63" class="number"><a>63</a></li>
-            <li data-number="64" class="number"><a>64</a></li>
-            <li data-number="65" class="number"><a>65</a></li>
-            <li data-number="66" class="number"><a>66</a></li>
-            <li data-number="67" class="number"><a>67</a></li>
-            <li data-number="68" class="number"><a>68</a></li>
-            <li data-number="69" class="number"><a>69</a></li>
-            <li data-number="70" class="number"><a>70</a></li>
-            <li data-number="71" class="number"><a>71</a></li>
-            <li data-number="72" class="number"><a>72</a></li>
-            <li data-number="73" class="number"><a>73</a></li>
-            <li data-number="74" class="number"><a>74</a></li>
-            <li data-number="75" class="number"><a>75</a></li>
-        </ul>
+
+    <div class="col-lg-4 col-sm-6">
+        <div class="circle-tile">
+            <div class="circle-tile-heading blue">
+                <i class="fa fa-tasks fa-fw fa-3x"></i>
+            </div>
+            <div class="circle-tile-content blue">
+                <div class="circle-tile-description text-faded">
+                    Games played
+                </div>
+                <div class="circle-tile-number text-faded">
+                    10
+                </div>
+            </div>
+        </div>
     </div>
-    <br>
-    <div class="row">
-        <div id="h-cards" data-container="body" data-toggle="popover" data-placement="top" data-content="Displays all of the cards you have bought. Fields marked in grey are the pattern that is currently required. Fields marked in red are fields that have been drawn." class="col-sm-6 card-box">
-            {{#each bingoCard in ownBingoCards}}
-                    <div class="col-sm-6"><span class="label label-primary">Card {{bingoCard.id}}</span>
-                        <table class="table table-bordered table-card">
-                            <tbody>
-                            {{#each row in bingoCard.squares}}
+
+
+</div>
+
+<div class="row">
+
+    <!-- Basic Responsive Table -->
+    <div class="col-lg-12">
+        <div class="portlet portlet-default">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>Available games</h4>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Card price</th>
+                            <th>Players</th>
+                            <th>Prize Pool</th>
+                            <th>Status</th>
+                            <th>Join</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {{#each}}
+                            {{#if idle}}
                             <tr>
-                                {{#each number in row}}
-                                    {{#if number}}
-                                        <td class="number" data-number="{{number}}">{{number}}</td>
-                                    {{else}}
-                                        <td>X</td>
-                                    {{/if}}
-                                {{/each}}
+                                <td>{{id}}</td>
+                                <td>{{cardPrice}} mBTC</td>
+                                <td></td>
+                                <td>{{prizePool}} mBTC</td>
+                                <td>{{gameStatus}}</td>
+                                <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
                             </tr>
+                            {{/if}}
+                            {{/each}}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.portlet -->
+    </div>
+    <!-- /.col-lg-6 -->
+
+</div>
+
+<div class="row">
+        <!-- Basic Responsive Table -->
+        <div class="col-lg-12">
+            <div class="portlet portlet-default">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>In progress games</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Card price</th>
+                                <th>Players</th>
+                                <th>Prize Pool</th>
+                                <th>Status</th>
+                                <th>Watch</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each}}
+                            {{#if playing}}
+                            <tr>
+                                <td>{{id}}</td>
+                                <td>{{cardPrice}} mBTC</td>
+                                <td></td>
+                                <td>{{prizePool}} mBTC</td>
+                                <td>{{gameStatus}}</td>
+                                <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
+                            </tr>
+                            {{/if}}
                             {{/each}}
                             </tbody>
                         </table>
                     </div>
-            {{/each}}
-        </div>
-        <div id="h-chat" data-container="body" data-toggle="popover" data-placement="top" data-content="Here you can chat with other players currently playing the game." class="col-sm-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading panel-font">
-                    <h3 class="panel-title"><b>Room chat</b></h3>
-                </div>
-                <div id="room-content" class="panel-body panel-font room-chat-content">
-                </div>
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input type="text" class="form-control"><span class="input-group-btn"><button type="button" class="btn btn-success">Send</button></span>
-                    </div>
                 </div>
             </div>
+            <!-- /.portlet -->
         </div>
-    </div>
-    <div class="row">
-        <div id="h-players" class="col-sm-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading panel-font">
-                    <h3 class="panel-title"><b>Players</b></h3>
-                </div>
-                <div class="panel-body panel-font panel-nopad">
-                    <div class="col-sm-3">
-                        <ul class="fa-ul">
-                        </ul>
-                    </div>
-                    <div class="col-sm-3">
-                        <ul class="fa-ul">
-                        </ul>
-                    </div>
-                    <div class="col-sm-3">
-                        <ul class="fa-ul">
-                        </ul>
-                    </div>
-                    <div class="col-sm-3">
-                        <ul class="fa-ul">
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <!-- /.col-lg-6 -->
 </div>
+
 </div>
-</div>
-<br>
-<br>
-<br>
-<br>
-</div>
+<!-- /.page-content -->
+
 </script>
 
-<script type="text/x-handlebars" data-template-name="login">
 
-    <div class="container">
+<script type="text/x-handlebars" data-template-name="game">
+
+    <div class="page-content page-content-ease-in">
+
+        <!-- begin PAGE TITLE ROW -->
         <div class="row">
-            <div class="col-sm-3">
-                <br>
-                {{#link-to 'games'}}
-                <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
-                {{/link-to}}
-                <br>
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>
+                        Game
+                        <small>{{id}}</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
+                        </li>
+                        <li class="active">Game</li>
+                    </ol>
+                </div>
             </div>
-            <div class="col-sm-9">
-                <h3>Login </h3>
-                <form role="form" {{action 'authenticate' on='submit'}}>
-                {{input id='identification' name='identification' placeholder='Enter Login' class='form-control' value=identification}}
-                {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
-                <button type="submit">Sign in</button>
-                </form>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <!-- end PAGE TITLE ROW -->
+
+        <div class="row">
+            <div id="h-latest-ball" data-container="body" data-toggle="popover" data-placement="left" data-content="Displays the latest drawn ball." class="col-sm-12 hide-outside">
+                <div id="latest-ball" class="ball-start">
+                    1
+                </div>
             </div>
         </div>
-    </div>
-</script>
-
-<script type="text/x-handlebars" data-template-name="loading">
-    <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <br>
-                {{#link-to 'games'}}
-                <img src="/img/logo.png" alt="Bitcoin bingo" class="img-responsive">
-                {{/link-to}}
-                <br>
-            </div>
-            <div class="col-sm-9">
-                <h3>Loading Data ... </h3>
+            <div id="h-ball-history" data-container="body" data-toggle="popover" data-placement="left" data-content="Displays 10 last drawn bingo balls." class="col-sm-12 hide-outside">
+                <div id="ball-history">
+                </div>
             </div>
         </div>
+
+        <div class="row drawn-numbers">
+            <h3>Drawn numbers:</h3>
+            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in RED have already been drawn." class="pagination">
+                <li data-number="1" class="number"><a>01</a></li>
+                <li data-number="2" class="number"><a>02</a></li>
+                <li data-number="3" class="number"><a>03</a></li>
+                <li data-number="4" class="number"><a>04</a></li>
+                <li data-number="5" class="number"><a>05</a></li>
+                <li data-number="6" class="number"><a>06</a></li>
+                <li data-number="7" class="number"><a>07</a></li>
+                <li data-number="8" class="number"><a>08</a></li>
+                <li data-number="9" class="number"><a>09</a></li>
+                <li data-number="10" class="number"><a>10</a></li>
+                <li data-number="11" class="number"><a>11</a></li>
+                <li data-number="12" class="number"><a>12</a></li>
+                <li data-number="13" class="number"><a>13</a></li>
+                <li data-number="14" class="number"><a>14</a></li>
+                <li data-number="15" class="number"><a>15</a></li>
+                <li data-number="16" class="number"><a>16</a></li>
+                <li data-number="17" class="number"><a>17</a></li>
+                <li data-number="18" class="number"><a>18</a></li>
+                <li data-number="19" class="number"><a>19</a></li>
+                <li data-number="20" class="number"><a>20</a></li>
+                <li data-number="21" class="number"><a>21</a></li>
+                <li data-number="22" class="number"><a>22</a></li>
+                <li data-number="23" class="number"><a>23</a></li>
+                <li data-number="24" class="number"><a>24</a></li>
+                <li data-number="25" class="number"><a>25</a></li>
+                <li data-number="26" class="number"><a>26</a></li>
+                <li data-number="27" class="number"><a>27</a></li>
+                <li data-number="28" class="number"><a>28</a></li>
+                <li data-number="29" class="number"><a>29</a></li>
+                <li data-number="30" class="number"><a>30</a></li>
+                <li data-number="31" class="number"><a>31</a></li>
+                <li data-number="32" class="number"><a>32</a></li>
+                <li data-number="33" class="number"><a>33</a></li>
+                <li data-number="34" class="number"><a>34</a></li>
+                <li data-number="35" class="number"><a>35</a></li>
+                <li data-number="36" class="number"><a>36</a></li>
+                <li data-number="37" class="number"><a>37</a></li>
+                <li data-number="38" class="number"><a>38</a></li>
+                <li data-number="39" class="number"><a>39</a></li>
+                <li data-number="40" class="number"><a>40</a></li>
+                <li data-number="41" class="number"><a>41</a></li>
+                <li data-number="42" class="number"><a>42</a></li>
+                <li data-number="43" class="number"><a>43</a></li>
+                <li data-number="44" class="number"><a>44</a></li>
+                <li data-number="45" class="number"><a>45</a></li>
+                <li data-number="46" class="number"><a>46</a></li>
+                <li data-number="47" class="number"><a>47</a></li>
+                <li data-number="48" class="number"><a>48</a></li>
+                <li data-number="49" class="number"><a>49</a></li>
+                <li data-number="50" class="number"><a>50</a></li>
+                <li data-number="51" class="number"><a>51</a></li>
+                <li data-number="52" class="number"><a>52</a></li>
+                <li data-number="53" class="number"><a>53</a></li>
+                <li data-number="54" class="number"><a>54</a></li>
+                <li data-number="55" class="number"><a>55</a></li>
+                <li data-number="56" class="number"><a>56</a></li>
+                <li data-number="57" class="number"><a>57</a></li>
+                <li data-number="58" class="number"><a>58</a></li>
+                <li data-number="59" class="number"><a>59</a></li>
+                <li data-number="60" class="number"><a>60</a></li>
+                <li data-number="61" class="number"><a>61</a></li>
+                <li data-number="62" class="number"><a>62</a></li>
+                <li data-number="63" class="number"><a>63</a></li>
+                <li data-number="64" class="number"><a>64</a></li>
+                <li data-number="65" class="number"><a>65</a></li>
+                <li data-number="66" class="number"><a>66</a></li>
+                <li data-number="67" class="number"><a>67</a></li>
+                <li data-number="68" class="number"><a>68</a></li>
+                <li data-number="69" class="number"><a>69</a></li>
+                <li data-number="70" class="number"><a>70</a></li>
+                <li data-number="71" class="number"><a>71</a></li>
+                <li data-number="72" class="number"><a>72</a></li>
+                <li data-number="73" class="number"><a>73</a></li>
+                <li data-number="74" class="number"><a>74</a></li>
+                <li data-number="75" class="number"><a>75</a></li>
+            </ul>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-8">
+
+                <div class="portlet portlet-default">
+                    <div class="portlet-heading">
+                        <div class="portlet-title">
+                            <h4>Bingo Cards</h4>
+                        </div>
+                        <div class="portlet-widgets">
+                            <span class="divider"></span>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#cards"><i class="fa fa-chevron-down"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="cards" class="panel-collapse collapse in">
+                        <br>
+                        {{#each bingoCard in ownBingoCards}}
+                        <div class="col-sm-4"><span class="label label-primary">Card {{bingoCard.id}}</span>
+                            <table class="table table-bordered table-card">
+                                <tbody>
+                                {{#each row in bingoCard.squares}}
+                                <tr>
+                                    {{#each number in row}}
+                                    {{#if number}}
+                                    <td class="number" data-number="{{number}}">{{number}}</td>
+                                    {{else}}
+                                    <td>X</td>
+                                    {{/if}}
+                                    {{/each}}
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="portlet portlet-default">
+                    <div class="portlet-heading">
+                        <div class="portlet-title">
+                            <h4><i class="fa fa-circle text-green"></i> Game specific chat</h4>
+                        </div>
+                        <div class="portlet-widgets">
+                            <span class="divider"></span>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#chat"><i class="fa fa-chevron-down"></i></a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="chat" class="panel-collapse collapse in">
+                        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 300px;"><div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
+                            <!-- chat messages here -->
+                        </div><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 7px; position: absolute; top: 92px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; height: 208.33333333333331px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+                        <div class="portlet-footer">
+                            <div class="input-group">
+                                <input type="text" class="form-control"><span class="input-group-btn"><button type="button" class="btn btn-success">Send</button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.col-lg-4 -->
+        </div>
+        <!-- /.row -->
+
     </div>
+    <!-- /.page-content -->
+
+
 </script>

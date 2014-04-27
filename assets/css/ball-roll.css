@@ -1,3 +1,14 @@
+#latest-ball {
+    font-size:  55px;
+    padding-top:  24px;
+    color:  #575757;
+    padding-left:  3px;
+    text-align:  center;
+    height: 128px;
+    width: 128px;
+    background-image: url("../img/bingo-balls/1.png");
+}
+
 .hide-outside {
 	overflow: hidden;
 }
