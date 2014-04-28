@@ -196,8 +196,9 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Type</th>
                             <th>Card price</th>
+                            <th>Maximum cards</th>
                             <th>Players</th>
                             <th>Prize Pool</th>
                             <th>Status</th>
@@ -208,8 +209,9 @@
                             {{#each}}
                             {{#if idle}}
                             <tr>
-                                <td>{{id}}</td>
+                                <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
+                                <td>{{table.maximumCards}}</td>
                                 <td></td>
                                 <td>{{prizePool}} mBTC</td>
                                 <td>{{gameStatus}}</td>
@@ -243,24 +245,26 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Type</th>
                                 <th>Card price</th>
+                                <th>Maximum cards</th>
                                 <th>Players</th>
                                 <th>Prize Pool</th>
                                 <th>Status</th>
-                                <th>Watch</th>
+                                <th>Join</th>
                             </tr>
                             </thead>
                             <tbody>
                             {{#each}}
                             {{#if playing}}
                             <tr>
-                                <td>{{id}}</td>
+                                <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
+                                <td>{{table.maximumCards}}</td>
                                 <td></td>
                                 <td>{{prizePool}} mBTC</td>
                                 <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id}}Watch{{/link-to}}</td>
+                                <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
                             </tr>
                             {{/if}}
                             {{/each}}
@@ -401,7 +405,10 @@
         <br>
 
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-2">
+                Menu
+            </div>
+            <div class="col-lg-6">
 
                 <div class="portlet portlet-default">
                     <div class="portlet-heading">
