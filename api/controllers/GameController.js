@@ -20,8 +20,9 @@ module.exports = {
         Table.create({
             "minimumPlayers": 2,
             "maximumPlayers": 100,
+            "maximumCards": 10,
             "cardPrice": 1000,
-            "tableStatus": "idle"
+            "tableType": "Beginner"
         }).exec(function (err, table) {
 
                 Game.create({

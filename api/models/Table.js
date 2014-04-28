@@ -21,13 +21,19 @@ module.exports = {
             required: true
         },
 
+        maximumCards: {
+            type: 'INTEGER',
+            integer: true,
+            required: true
+        },
+
         cardPrice: {
             type: 'INTEGER',
             integer: true,
             required: true
         },
 
-        tableStatus: {
+        tableType: {
             type: 'STRING',
             alpha: true,
             required: true
