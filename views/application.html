@@ -191,7 +191,7 @@
 
     <!-- Basic Responsive Table -->
     <div class="col-lg-12">
-        <div class="portlet portlet-default">
+        <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
                     <h4>Available games</h4>
@@ -222,7 +222,7 @@
                                 <td></td>
                                 <td>{{prizePool}} mBTC</td>
                                 <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
+                                <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
                             </tr>
                             {{/if}}
                             {{/each}}
@@ -240,7 +240,7 @@
 <div class="row">
         <!-- Basic Responsive Table -->
         <div class="col-lg-12">
-            <div class="portlet portlet-default">
+            <div class="portlet portlet-orange">
                 <div class="portlet-heading">
                     <div class="portlet-title">
                         <h4>In progress games</h4>
@@ -258,7 +258,7 @@
                                 <th>Players</th>
                                 <th>Prize Pool</th>
                                 <th>Status</th>
-                                <th>Join</th>
+                                <th>Watch</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -271,7 +271,7 @@
                                 <td></td>
                                 <td>{{prizePool}} mBTC</td>
                                 <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id}}Join{{/link-to}}</td>
+                                <td>{{#link-to 'game' id btn btn-orange}}Watch{{/link-to}}</td>
                             </tr>
                             {{/if}}
                             {{/each}}
