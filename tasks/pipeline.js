@@ -30,9 +30,12 @@ var jsFilesToInject = [
     'js/dependencies/handlebars-1.1.2.js',
     'js/dependencies/ember-1.5.0.js',
     'js/dependencies/ember-data.js',
+    'js/plugins/slimscroll/jquery.slimscroll.min.js',
 	'js/dependencies/**/*.js',
 
-	// All of the rest of your client-side js files
+
+
+    // All of the rest of your client-side js files
 	// will be injected here in no particular order.
 	'js/scripts/app.js',
 	'js/scripts/adapters/*.js',
