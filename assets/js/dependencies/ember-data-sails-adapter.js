@@ -11,36 +11,30 @@
     var useOldDefaultSerializer = DS.VERSION.match(/beta/) && parseInt(DS.VERSION.match(/1.0.0-beta.(\d)/)[1]) < 6;
 
     var SailsAdapterMixin = Ember.Mixin.create({
-        defaultSerializer: useOldDefaultSerializer? '_default': '-default',
         /*
          Sails error objects look something like this:
 
-         {"status":500,
-         "errors":[{"ValidationError":{"endDate":[{"data":"Mon, 02 Jan 2012 02:00:00 GMT",
-         "message":"Validation error: \"Mon, 02 Jan 2012 02:00:00 GMT\" Rule \"after(Wed, 01 Jan 2014 01:00:00 GMT)\" failed.",
-         "rule":"after",
-         "args":["Wed, 01 Jan 2014 01:00:00 GMT"]}]}}]}
+         error: "E_VALIDATION",
+         model: "User",
+         summary: "1 attribute is invalid",
+         status: 400,
+         invalidAttributes: {
+         name: [
+         {
+         rule: "minLength",
+         message: "Validation error: "bar" Rule "minLength(10)" failed."
+         }
+         ]
+         }
 
-         Ember wants the error object to look like this:
-
-         {endDate: "Validation error: ..."}
          */
         formatError: function(error) {
-            var memo = {};
-            error.errors.forEach(function(errorGroup) {
-                Object.keys(errorGroup).forEach(function(errorName) {
-                    // {'ValidationError': {}}
-                    var errorType = errorGroup[errorName];
-                    Object.keys(errorType).forEach(function(propName) {
-                        var newMessages = errorType[propName].map(function(error) {
-                            return error.message;
-                        });
-                        var messages = memo[propName] || [];
-                        memo[propName] = [].concat(messages, newMessages);
-                    });
+            return Object.keys(error.invalidAttributes).reduce(function(memo, property) {
+                memo[property] = error.invalidAttributes[property].map(function(err) {
+                    return err.message;
                 });
-            });
-            return Ember.Object.create(memo);
+                return memo;
+            }, {});
         }
     });
 
@@ -143,7 +137,7 @@
         },
 
         isErrorObject: function(data) {
-            return !!data.status;
+            return !!(data.error);
         },
 
         socket: function(url, method, data ) {
@@ -158,7 +152,7 @@
                     if (isErrorObject(data)) {
                         adapter._log('error:', data);
                         if (data.errors) {
-                            reject(new DS.InvalidError(adapter.formatError(data)));
+                            reject(new DS.InvalidError(data.error));
                         } else {
                             reject(data);
                         }
