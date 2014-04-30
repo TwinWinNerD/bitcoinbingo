@@ -12,5 +12,9 @@ App.GameView = Ember.View.extend({
         for (var i = 2; i <= 5; i++) {
             $('<img/>')[0].src = 'img/bingo-balls/' + i + '.png';
         }
+
+        Ladda.bind('.ladda-button', {
+            timeout: 2000
+        });
     }
 });

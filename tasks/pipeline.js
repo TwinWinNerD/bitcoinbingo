@@ -31,6 +31,8 @@ var jsFilesToInject = [
     'js/dependencies/ember-1.5.0.js',
     'js/dependencies/ember-data.js',
     'js/plugins/slimscroll/jquery.slimscroll.min.js',
+    'js/plugins/ladda/spin.min.js',
+    'js/plugins/ladda/ladda.min.js',
 	'js/dependencies/**/*.js',
 
 
