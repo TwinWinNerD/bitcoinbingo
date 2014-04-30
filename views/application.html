@@ -422,7 +422,15 @@
             </ul>
         </div>
         <br>
-
+        <div class="row">
+            <div class="col-lg-12">
+                {{#if errorMessage}}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong> {{errorMessage}}
+                </div>
+                {{/if}}
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-2">
                 {{#if session.isAuthenticated}}
@@ -536,6 +544,11 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="portlet-body">
+                        {{#if errorMessage}}
+                        <div class="alert alert-danger">
+                            <strong>Login failed:</strong> {{errorMessage}}
+                        </div>
+                        {{/if}}
                         <form accept-charset="UTF-8" role="form" {{action 'authenticate' on='submit'}}>
                             <fieldset>
                                 <div class="form-group">
