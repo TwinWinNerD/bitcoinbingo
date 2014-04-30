@@ -1,7 +1,8 @@
-var crypto, Q;
+var crypto, Q, async;
 
 crypto = require('crypto');
 Q = require('q');
+async = require('async');
 
 exports.calculateTotalPrice = function (gameId, amountOfCards) {
 
@@ -20,6 +21,45 @@ exports.calculateTotalPrice = function (gameId, amountOfCards) {
 
     return deferred.promise;
 };
+
+exports.isUserAllowedToBuyCards = function (game, user) {
+
+    var deferred;
+
+    deferred = Q.defer();
+
+    async.parallel({
+        amountOfCards: function (done) {
+           BingoCardService.countCards({
+               game: game,
+               user: user
+           }).then(function (amount) {
+                   done(null, amount);
+           });
+        },
+        maximumCards: function (done) {
+            Game.findOne({ id: game}).populate('table').exec( function (error, result) {
+               if(error) {
+                   done(error);
+               } else {
+                   console.log(result.table);
+                   done(null, result.table.maximumCards);
+               }
+            });
+        }
+    }, function (error, result) {
+        if(!error) {
+            if(result.amountOfCards >= result.maximumCards) {
+                deferred.resolve(false);
+            } else {
+                deferred.resolve(true);
+            }
+        }
+    });
+
+    return deferred.promise;
+};
+
 
 exports.countCards = function (whereStatement) {
 
