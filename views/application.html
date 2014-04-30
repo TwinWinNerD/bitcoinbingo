@@ -25,53 +25,56 @@
     <ul class="nav navbar-right">
 
     <!-- begin ALERTS DROPDOWN -->
-    <li class="dropdown">
-        <a href="#" class="alerts-link dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-bell"></i>
-            <span class="number">9</span><i class="fa fa-caret-down"></i>
-        </a>
-        <ul class="dropdown-menu dropdown-scroll dropdown-alerts">
+    <!--<li class="dropdown">-->
+        <!--<a href="#" class="alerts-link dropdown-toggle" data-toggle="dropdown">-->
+            <!--<i class="fa fa-bell"></i>-->
+            <!--<span class="number">9</span><i class="fa fa-caret-down"></i>-->
+        <!--</a>-->
+        <!--<ul class="dropdown-menu dropdown-scroll dropdown-alerts">-->
 
-            <!-- Alerts Dropdown Heading -->
-            <li class="dropdown-header">
-                <i class="fa fa-bell"></i> 9 New Alerts
-            </li>
+            <!--&lt;!&ndash; Alerts Dropdown Heading &ndash;&gt;-->
+            <!--<li class="dropdown-header">-->
+                <!--<i class="fa fa-bell"></i> 9 New Alerts-->
+            <!--</li>-->
 
-            <!-- Alerts Dropdown Body - This is contained within a SlimScroll fixed height box. You can change the height using the SlimScroll jQuery features. -->
-            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><li id="alertScroll" style="overflow: hidden; width: auto; height: 200px;">
-                <ul class="list-unstyled">
+            <!--&lt;!&ndash; Alerts Dropdown Body - This is contained within a SlimScroll fixed height box. You can change the height using the SlimScroll jQuery features. &ndash;&gt;-->
+            <!--<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><li id="alertScroll" style="overflow: hidden; width: auto; height: 200px;">-->
+                <!--<ul class="list-unstyled">-->
 
-                </ul>
-            </li><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>
+                <!--</ul>-->
+            <!--</li><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>-->
 
-            <!-- Alerts Dropdown Footer -->
-            <li class="dropdown-footer">
-                <a href="#">View All Alerts</a>
-            </li>
+            <!--&lt;!&ndash; Alerts Dropdown Footer &ndash;&gt;-->
+            <!--<li class="dropdown-footer">-->
+                <!--<a href="#">View All Alerts</a>-->
+            <!--</li>-->
 
-        </ul>
-        <!-- /.dropdown-menu -->
-    </li>
+        <!--</ul>-->
+        <!--&lt;!&ndash; /.dropdown-menu &ndash;&gt;-->
+    <!--</li>-->
     <!-- /.dropdown -->
     <!-- end ALERTS DROPDOWN -->
 
     <!-- begin USER ACTIONS DROPDOWN -->
     <li class="dropdown">
+        {{#if session.isAuthenticated}}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-user"></i>  <i class="fa fa-caret-down"></i>
+            <i class="fa fa-user"></i> {{controllers.currentUser.username}} <i class="fa fa-caret-down"></i>
         </a>
+
         <ul class="dropdown-menu dropdown-user">
-            <li>
-                <a href="#">
-                    <i class="fa fa-gear"></i> Settings
-                </a>
-            </li>
-            <li>
-                <a class="logout_open" href="#logout">
-                    <i class="fa fa-sign-out"></i> Logout
-                </a>
-            </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-gear"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
+                </li>
         </ul>
+        {{else}}
+            {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
+        {{/if}}
         <!-- /.dropdown-menu -->
     </li>
     <!-- /.dropdown -->
@@ -413,7 +416,7 @@
 
         <div class="row">
             <div class="col-lg-2">
-                Menu
+                <button class='btn btn-red btn-block' {{action 'buyCard'}}>Buy Card</button>
             </div>
             <div class="col-lg-6">
 
@@ -494,6 +497,49 @@
 
     </div>
     <!-- /.page-content -->
+</script>
 
-
+<script type="text/x-handlebars" data-template-name="login">
+    <div class="page-content page-content-ease-in">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>Bitcoin Bingo
+                        <small>Login</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
+                        <li class="active">Login</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="portlet portlet-green">
+                    <div class="portlet-heading login-heading">
+                        <div class="portlet-title">
+                            <h4><strong>Login to Bitcoin Bingo!</strong></h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="portlet-body">
+                        <form accept-charset="UTF-8" role="form" {{action 'authenticate' on='submit'}}>
+                            <fieldset>
+                                <div class="form-group">
+                                    {{input id='identification' name='identification' placeholder='Enter Login' class='form-control' value=identification}}
+                                </div>
+                                <div class="form-group">
+                                    {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-lg btn-green btn-block">Sign in</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </script>
