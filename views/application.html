@@ -91,6 +91,14 @@
     <nav class="navbar-side" role="navigation">
     <div class="navbar-collapse sidebar-collapse collapse">
     <ul id="side" class="nav navbar-nav side-nav">
+        {{#if session.isAuthenticated}}
+        <li class="side-user hidden-xs">
+            <p class="name tooltip-sidebar-logout">
+                {{controllers.currentUser.username}}
+                <a style="color: inherit" href="#" data-toggle="tooltip" data-placement="top" title="Logout" data-popup-ordinal="1" {{ action 'invalidateSession' }}><i class="fa fa-sign-out"></i></a>
+            </p>
+        </li>
+        {{/if}}
         <li>
             {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
         </li>
@@ -104,6 +112,7 @@
             {{#link-to '' }} <i class="fa fa-envelope"></i> Contact{{/link-to}}
         </li>
     </ul>
+
     <!-- /.side-nav -->
     </div>
     <!-- /.navbar-collapse -->
@@ -416,7 +425,9 @@
 
         <div class="row">
             <div class="col-lg-2">
-                <button class='btn btn-red btn-block' {{action 'buyCard'}}>Buy Card</button>
+                {{#if session.isAuthenticated}}
+                    <button class='btn btn-red btn-block' {{action 'buyCard'}}>Buy Card</button>
+                {{/if}}
             </div>
             <div class="col-lg-6">
 

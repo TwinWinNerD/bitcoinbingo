@@ -1,7 +1,7 @@
 App.GameView = Ember.View.extend({
     didInsertElement: function () {
         $('.chat-widget').slimScroll({
-            start: 'bottom',
+            start: 'top',
             height: '300px',
             alwaysVisible: true,
             disableFadeOut: true,
