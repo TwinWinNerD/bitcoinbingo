@@ -29,10 +29,14 @@ module.exports = {
                     table: table.id,
                     gameStatus: "idle",
                     serverSeed: SeedService.generateServerSeed(),
-                }).exec(function (err, game) {
-                        console.log(err);
-                        console.log(game);
+                }).exec(function (error, game) {
+                    if(!error) {
+
+                        Game.publishCreate(game);
+
                         res.ok();
+
+                    }
                 });
 
 
