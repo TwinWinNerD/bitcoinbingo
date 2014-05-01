@@ -1,7 +1,4 @@
 App.GameController = Ember.ObjectController.extend({
-
-
-
     idle: function () {
         if(this.get('model.gameStatus') === 'idle') {
             return true;
@@ -72,15 +69,11 @@ App.GameController = Ember.ObjectController.extend({
                 bingoCard.save().then(function (newBingoCard) {
                     game.set('errorMessage', null);
                     bingoCards.pushObject(newBingoCard);
-                    game.reload();
-
                     $('#buy-cards-modal').modal('hide');
                 }, function (error) {
                     game.set('errorMessage', error.error);
                 });
             }
-
-
         }
     }
 });
