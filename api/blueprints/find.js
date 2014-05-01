@@ -46,6 +46,11 @@ module.exports = function findRecords (req, res) {
         .sort( actionUtil.parseSort(req) );
     // TODO: .populateEach(req.options);
 //    query = actionUtil.populateEach(query, req.options);
+
+    if(req.options.model === 'game') {
+        query.populate('table');
+    }
+
     query.exec(function found(err, matchingRecords) {
         if (err) return res.serverError(err);
 
@@ -54,6 +59,13 @@ module.exports = function findRecords (req, res) {
         if (req._sails.hooks.pubsub && req.isSocket) {
             Model.subscribe(req, matchingRecords);
             if (req.options.autoWatch) { Model.watch(req); }
+
+            // subscribe users to new game instances
+            if(req.options.model === 'game') {
+                console.log("subscribing to game");
+                Model.watch(req);
+            }
+
             // Also subscribe to instances of all associated models
             _.each(matchingRecords, function (record) {
                 actionUtil.subscribeDeep(req, record);
