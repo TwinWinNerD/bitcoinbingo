@@ -335,3 +335,35 @@ function calculatePrizePool(game) {
 
     return (cardPrice * amountOfCards) * 0.95;
 }
+
+exports.minimumPlayersReached = function (gameId) {
+
+    var deferred;
+
+    deferred = Q.defer();
+
+    Game.findOne(gameId).populate('bingoCards').populate('table').exec(function (error, result) {
+
+        if(!error) {
+
+            if(result) {
+
+                var uniquePlayers;
+                uniquePlayers = _.uniq(result.bingoCards, function (bingoCard) {
+                    return bingoCard.user;
+                });
+
+                if(uniquePlayers.length >= result.table.minimumPlayers) {
+                    deferred.resolve(true);
+                } else {
+                    deferred.resolve(false);
+                }
+            }
+
+        } else {
+           deferred.reject(error);
+        }
+    });
+
+    return deferred.promise;
+};
