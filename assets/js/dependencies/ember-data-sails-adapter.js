@@ -213,6 +213,10 @@
                 if(message.verb === "created") {
                     // message = {"verb":"created","data":{"clientSeed":"12345","game":1,"user":null,"createdAt":"2014-04-15T07:55:00.459Z","updatedAt":"2014-04-15T07:55:00.459Z","id":34},"id":34}
 
+                    data[model] = message.data;
+
+                    record = serializer.extractSingle(store, type, data);
+                    store.push(socketModel, record);
                 }
 
                 if(message.verb === "updated") {
@@ -238,6 +242,10 @@
             io.socket.on(eventName, function (message) {
                 // Left here to help further debugging.
                 console.log("Got message on Socket : " + JSON.stringify(message));
+                if (message.verb === 'created') {
+                    pushMessage(message);
+                }
+
                 if (message.verb === 'addedTo') {
                     pushMessage(message);
                 }
