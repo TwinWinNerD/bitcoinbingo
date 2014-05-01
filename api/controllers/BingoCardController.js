@@ -95,25 +95,35 @@ module.exports = {
                                         });
                                     }
                                 }, function(error, results) {
-                                    console.log(error);
-                                    console.log(results);
 
                                     if(!error) {
+
+                                        BingoService.minimumPlayersReached(data.game).then( function (result) {
+
+                                            if(result) {
+                                                // start the game
+                                            } else {
+                                                // nope not yet
+                                            }
+
+                                        });
+
                                         res.status(201);
                                         res.ok(results.cards.toJSON());
                                     }
+
                                 });
                             }  else {
+
                                 res.json(500, { error: "Not enough balance" });
                             }
                         }
                     });
                 } else {
+
                     res.json(500, { error: "You have exceeded the maximum amount of cards for this game"});
                 }
             }, function (error) {});
-
-
 
         } else {
             res.json(500, { error: "Need to be logged in to buy cards" });
