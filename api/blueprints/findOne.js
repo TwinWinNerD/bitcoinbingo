@@ -27,7 +27,11 @@ module.exports = function findOneRecord (req, res) {
     var pk = actionUtil.requirePk(req);
 
     var query = Model.findOne(pk);
-    query = actionUtil.populateEach(query, req.options);
+
+    if(req.options.model === 'game') {
+        query = actionUtil.populateEach(query, req.options);
+    }
+
     query.exec(function found(err, matchingRecord) {
         if (err) return res.serverError(err);
         if(!matchingRecord) return res.notFound('No record found with the specified `id`.');
