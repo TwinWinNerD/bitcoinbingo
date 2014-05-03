@@ -33,7 +33,7 @@ App.GameController = Ember.ObjectController.extend({
 
         // TODO: fix problem whenever we get a new number the bingoCards get rerenderd so only the newest number is marked
         $("#h-cards td.number[data-number='" + lastNumber + "']").addClass('marked');
-        $("#h-drawn-numbers .number[data-number='" + lastNumber + "']").addClass('active');
+        $(".number[data-number='" + lastNumber + "']").addClass('active');
 
     }.observes('model.drawnNumbers'),
 
