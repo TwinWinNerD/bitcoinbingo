@@ -1,4 +1,6 @@
 App.GameController = Ember.ObjectController.extend({
+    needs: ['number'],
+
     idle: function () {
         if(this.get('model.gameStatus') === 'idle') {
             return true;
@@ -24,18 +26,6 @@ App.GameController = Ember.ObjectController.extend({
         return satoshiToMBTC(this.get('model.table.cardPrice'));
     }.property('model.table.cardPrice'),
 
-
-    drawnNumbers: function () {
-        var drawnNumbers, lastNumber;
-
-        drawnNumbers = this.get('model.drawnNumbers');
-        lastNumber = drawnNumbers[drawnNumbers.length - 1];
-
-        // TODO: fix problem whenever we get a new number the bingoCards get rerenderd so only the newest number is marked
-        $("#h-cards td.number[data-number='" + lastNumber + "']").addClass('marked');
-        $(".number[data-number='" + lastNumber + "']").addClass('active');
-
-    }.observes('model.drawnNumbers'),
 
     ownBingoCards: function () {
         var gameId, userId;
@@ -76,4 +66,17 @@ App.GameController = Ember.ObjectController.extend({
             }
         }
     }
+});
+
+App.NumberController = Ember.ObjectController.extend({
+    needs: ['game'],
+    drawnNumbers: Ember.computed.alias('controllers.game.drawnNumbers'),
+    isActive: function () {
+        var item = this.get('model'),
+            drawnNumbers = this.get('drawnNumbers');
+
+        console.log(drawnNumbers.indexOf(item)>=0);
+
+        return drawnNumbers.indexOf(item)>=0;
+    }.property('model', 'drawnNumbers')
 });
