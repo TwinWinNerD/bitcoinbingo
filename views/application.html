@@ -344,81 +344,10 @@
         <div class="row drawn-numbers">
             <h3>Drawn numbers:</h3>
             <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in RED have already been drawn." class="pagination">
-                <li data-number="1" class="number"><a>01</a></li>
-                <li data-number="2" class="number"><a>02</a></li>
-                <li data-number="3" class="number"><a>03</a></li>
-                <li data-number="4" class="number"><a>04</a></li>
-                <li data-number="5" class="number"><a>05</a></li>
-                <li data-number="6" class="number"><a>06</a></li>
-                <li data-number="7" class="number"><a>07</a></li>
-                <li data-number="8" class="number"><a>08</a></li>
-                <li data-number="9" class="number"><a>09</a></li>
-                <li data-number="10" class="number"><a>10</a></li>
-                <li data-number="11" class="number"><a>11</a></li>
-                <li data-number="12" class="number"><a>12</a></li>
-                <li data-number="13" class="number"><a>13</a></li>
-                <li data-number="14" class="number"><a>14</a></li>
-                <li data-number="15" class="number"><a>15</a></li>
-                <li data-number="16" class="number"><a>16</a></li>
-                <li data-number="17" class="number"><a>17</a></li>
-                <li data-number="18" class="number"><a>18</a></li>
-                <li data-number="19" class="number"><a>19</a></li>
-                <li data-number="20" class="number"><a>20</a></li>
-                <li data-number="21" class="number"><a>21</a></li>
-                <li data-number="22" class="number"><a>22</a></li>
-                <li data-number="23" class="number"><a>23</a></li>
-                <li data-number="24" class="number"><a>24</a></li>
-                <li data-number="25" class="number"><a>25</a></li>
-                <li data-number="26" class="number"><a>26</a></li>
-                <li data-number="27" class="number"><a>27</a></li>
-                <li data-number="28" class="number"><a>28</a></li>
-                <li data-number="29" class="number"><a>29</a></li>
-                <li data-number="30" class="number"><a>30</a></li>
-                <li data-number="31" class="number"><a>31</a></li>
-                <li data-number="32" class="number"><a>32</a></li>
-                <li data-number="33" class="number"><a>33</a></li>
-                <li data-number="34" class="number"><a>34</a></li>
-                <li data-number="35" class="number"><a>35</a></li>
-                <li data-number="36" class="number"><a>36</a></li>
-                <li data-number="37" class="number"><a>37</a></li>
-                <li data-number="38" class="number"><a>38</a></li>
-                <li data-number="39" class="number"><a>39</a></li>
-                <li data-number="40" class="number"><a>40</a></li>
-                <li data-number="41" class="number"><a>41</a></li>
-                <li data-number="42" class="number"><a>42</a></li>
-                <li data-number="43" class="number"><a>43</a></li>
-                <li data-number="44" class="number"><a>44</a></li>
-                <li data-number="45" class="number"><a>45</a></li>
-                <li data-number="46" class="number"><a>46</a></li>
-                <li data-number="47" class="number"><a>47</a></li>
-                <li data-number="48" class="number"><a>48</a></li>
-                <li data-number="49" class="number"><a>49</a></li>
-                <li data-number="50" class="number"><a>50</a></li>
-                <li data-number="51" class="number"><a>51</a></li>
-                <li data-number="52" class="number"><a>52</a></li>
-                <li data-number="53" class="number"><a>53</a></li>
-                <li data-number="54" class="number"><a>54</a></li>
-                <li data-number="55" class="number"><a>55</a></li>
-                <li data-number="56" class="number"><a>56</a></li>
-                <li data-number="57" class="number"><a>57</a></li>
-                <li data-number="58" class="number"><a>58</a></li>
-                <li data-number="59" class="number"><a>59</a></li>
-                <li data-number="60" class="number"><a>60</a></li>
-                <li data-number="61" class="number"><a>61</a></li>
-                <li data-number="62" class="number"><a>62</a></li>
-                <li data-number="63" class="number"><a>63</a></li>
-                <li data-number="64" class="number"><a>64</a></li>
-                <li data-number="65" class="number"><a>65</a></li>
-                <li data-number="66" class="number"><a>66</a></li>
-                <li data-number="67" class="number"><a>67</a></li>
-                <li data-number="68" class="number"><a>68</a></li>
-                <li data-number="69" class="number"><a>69</a></li>
-                <li data-number="70" class="number"><a>70</a></li>
-                <li data-number="71" class="number"><a>71</a></li>
-                <li data-number="72" class="number"><a>72</a></li>
-                <li data-number="73" class="number"><a>73</a></li>
-                <li data-number="74" class="number"><a>74</a></li>
-                <li data-number="75" class="number"><a>75</a></li>
+                {{#each number in controller.numbers}}
+                    {{isDrawn}}
+                    <li data-number="{{number}}" class="number"><a>{{number}}</a></li>
+                {{/each}}
             </ul>
         </div>
         <br>
