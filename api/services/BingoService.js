@@ -225,7 +225,7 @@ function drawNumber(bingoNumbers, turn) {
         if (typeof bingoNumbers[turn] !== 'undefined') {
             deferred.resolve(bingoNumbers[turn]);
         }
-    }, 4000);
+    }, 100);
 
     return deferred.promise;
 }
@@ -307,7 +307,8 @@ function rewardWinners (game, winners) {
             winner = {};
 
             winner.winnerType = winningCard.won;
-            winner.player = winningCard.player;
+            winner.user = winningCard.user;
+            winner.bingoCard = winningCard.id;
             winner.game = winningCard.game;
 
             if(winner.winnerType === "bingo") {
@@ -322,24 +323,24 @@ function rewardWinners (game, winners) {
 
             depositData.push({
                 amount: winner.amount,
-                    type: "winnings",
-                player: winner.player
+                depositType: "winnings",
+                user: winner.user
             });
         }
     }
 
     async.parallel([
-        function (cb) {
+        function (done) {
             Winner.create(winnerData).exec( function (error, result) {
                 if(!error) {
-                    cb();
+                    done();
                 }
             });
         },
-        function (cb) {
+        function (done) {
             Deposit.create(depositData).exec( function (error, result) {
                 if(!error) {
-                    cb();
+                    done();
                 }
             });
         }
