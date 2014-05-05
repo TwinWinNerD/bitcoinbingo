@@ -371,26 +371,26 @@
                 <div id="cards">
                     <br>
                     {{#each bingoCard in ownBingoCards}}
-                    <div class="col-sm-4">
-                        <div class="table-responsive">
-                            <span class="label label-primary">Card {{bingoCard.id}}</span>
-                            <table class="table table-bordered table-card">
-                                <tbody>
-                                {{#each row in bingoCard.squares}}
-                                <tr>
-                                    {{#each number in row}}
-                                    {{#if number}}
-                                    <td class="number" data-number="{{number}}">{{number}}</td>
-                                    {{else}}
-                                    <td>X</td>
-                                    {{/if}}
+                        <div class="col-sm-4">
+                            <div class="table-responsive">
+                                <span class="label label-primary">Card {{bingoCard.id}}</span>
+                                <table class="table table-bordered table-card">
+                                    <tbody>
+                                    {{#each row in bingoCard.squares}}
+                                    <tr>
+                                        {{#each number in row itemController='number'}}
+                                            {{#if number}}
+                                                <td {{bind-attr class='isActive:active'}}>{{number.model}}</td>
+                                            {{else}}
+                                                <td>X</td>
+                                            {{/if}}
+                                        {{/each}}
+                                    </tr>
                                     {{/each}}
-                                </tr>
-                                {{/each}}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
                     {{/each}}
                 </div>
             </div>
