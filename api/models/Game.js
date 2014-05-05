@@ -48,6 +48,11 @@ module.exports = {
         winners: {
             collection: 'winner',
             via: 'game'
+        },
+
+        messages: {
+            collection: 'message',
+            via: 'game'
         }
 
 	}
