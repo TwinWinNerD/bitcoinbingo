@@ -3,8 +3,6 @@ module.exports.adapters = {
 
     mongo: {
         module   : 'sails-mongo',
-        url      : process.env.MONGOHQ_URL || 'mongodb://localhost:27017/bitcoinbingo'
+        url      : 'mongodb://heroku:fG2ISUVuL9p84M3jfn0JgccmE8nu-1FYnJ9xG77WoEfxht33MNyG_Drl6bfSANFusVOk_nM-jat1sWSwL7vakw@lennon.mongohq.com:10028/app24881659'
     }
 };
-
-console.log(process.env.MONGOHQ_URL);
