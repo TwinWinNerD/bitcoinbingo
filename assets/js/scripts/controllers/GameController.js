@@ -67,16 +67,3 @@ App.GameController = Ember.ObjectController.extend({
         }
     }
 });
-
-App.NumberController = Ember.ObjectController.extend({
-    needs: ['game'],
-    drawnNumbers: Ember.computed.alias('controllers.game.drawnNumbers'),
-    isActive: function () {
-        var item = this.get('model'),
-            drawnNumbers = this.get('drawnNumbers');
-
-        console.log(drawnNumbers.indexOf(item)>=0);
-
-        return drawnNumbers.indexOf(item)>=0;
-    }.property('model', 'drawnNumbers')
-});
