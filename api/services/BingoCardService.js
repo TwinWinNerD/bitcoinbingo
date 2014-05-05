@@ -32,7 +32,7 @@ exports.isUserAllowedToBuyCards = function (game, user) {
         if(error) {
 
             deferred.reject(error);
-        } else if(result.gameStatus !== "idle") {
+        } else if(result.gameStatus !== "idle" || result.gameStatus !== "countDown") {
 
             deferred.reject("Game is already started or finished");
 

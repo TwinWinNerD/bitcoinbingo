@@ -2,7 +2,7 @@ App.GameController = Ember.ObjectController.extend({
     needs: ['number', 'message'],
 
     idle: function () {
-        if(this.get('model.gameStatus') === 'idle') {
+        if(this.get('model.gameStatus') === 'idle' || this.get('model.gameStatus') === 'countDown') {
             return true;
         }
         return false;

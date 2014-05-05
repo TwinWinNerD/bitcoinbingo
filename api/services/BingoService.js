@@ -46,12 +46,17 @@ exports.settleRound = function (gameId, instant) {
                         awardPrizes = true;
                         instant = false;
 
-                        exports.updateGameStatus(gameId, "playing").then(function () {
-                            game.gameStatus = "playing";
+                        exports.updateGameStatus(gameId, "countDown").then(function () {
+                            game.gameStatus = "countDown";
 
                             countDown(10).then(function () {
 
-                                done(null, true);
+                                exports.updateGameStatus(gameId, "playing").then(function () {
+
+                                    game.gameStatus = "playing";
+                                    done(null, true);
+                                });
+
                             }, function (error) {
 
                             }, function (second) {
