@@ -15,6 +15,11 @@ module.exports = {
             required: true
         },
 
+        bingoCard: {
+            model: 'bingoCard',
+            required: true
+        },
+
         game: {
             model: 'game',
             required: true
