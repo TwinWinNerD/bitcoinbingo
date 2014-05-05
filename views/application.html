@@ -487,3 +487,23 @@
         </div>
     </div>
 </script>
+
+<script type="text/x-handlebars" data-template-name="register">
+    <form {{action 'register' on='submit'}}>
+        <div class="form-group">
+            <label for="username">Username</label>
+            {{input id='username' placeholder='Enter Username' class='form-control' value=username}}
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{input id='email' placeholder='Enter Email' class='form-control' value=email}}
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            {{input id='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
+        </div>
+    <button type="submit" class="btn btn-default">Create Your Account</button>
+    </form>
+
+</script>
