@@ -123,7 +123,10 @@ module.exports = {
 
                     res.json(500, { error: "You have exceeded the maximum amount of cards for this game"});
                 }
-            }, function (error) {});
+            }, function (error) {
+
+                res.json(500, { error: error });
+            });
 
         } else {
             res.json(500, { error: "Need to be logged in to buy cards" });

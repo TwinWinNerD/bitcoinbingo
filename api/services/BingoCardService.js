@@ -28,34 +28,49 @@ exports.isUserAllowedToBuyCards = function (game, user) {
 
     deferred = Q.defer();
 
-    async.parallel({
-        amountOfCards: function (done) {
-           BingoCardService.countCards({
-               game: game,
-               user: user
-           }).then(function (amount) {
-                   done(null, amount);
-           });
-        },
-        maximumCards: function (done) {
-            Game.findOne({ id: game}).populate('table').exec( function (error, result) {
-               if(error) {
-                   done(error);
-               } else {
-                   console.log(result.table);
-                   done(null, result.table.maximumCards);
-               }
+    Game.findOne({ id: game}).populate('table').exec( function (error, result) {
+        if(error) {
+
+            deferred.reject(error);
+        } else if(result.gameStatus !== "idle") {
+
+            deferred.reject("Game is already started or finished");
+
+        } else {
+
+            async.parallel({
+                amountOfCards: function (done) {
+                    BingoCardService.countCards({
+                        game: game,
+                        user: user
+                    }).then(function (amount) {
+                            done(null, amount);
+                        });
+                },
+                maximumCards: function (done) {
+                    Game.findOne({ id: game}).populate('table').exec( function (error, result) {
+                        if(error) {
+                            done(error);
+                        } else {
+                            console.log(result.table);
+                            done(null, result.table.maximumCards);
+                        }
+                    });
+                }
+            }, function (error, result) {
+                if(!error) {
+                    if(result.amountOfCards >= result.maximumCards) {
+                        deferred.resolve(false);
+                    } else {
+                        deferred.resolve(true);
+                    }
+                }
             });
-        }
-    }, function (error, result) {
-        if(!error) {
-            if(result.amountOfCards >= result.maximumCards) {
-                deferred.resolve(false);
-            } else {
-                deferred.resolve(true);
-            }
+
         }
     });
+
+
 
     return deferred.promise;
 };
