@@ -412,22 +412,16 @@
                     </div>
                     <div id="chat" class="panel-collapse collapse in">
                         <div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
-                            <!-- chat messages here -->
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
-                            <p> Test message</p>
+                            {{#each message in gameMessages}}
+                                <p><strong>{{message.user}}</strong>: {{message.body}}</p>
+                            {{/each}}
                         </div>
                         <div class="portlet-footer">
                             <div class="input-group">
-                                <input type="text" class="form-control"><span class="input-group-btn"><button type="button" class="btn btn-success">Send</button></span>
+                                {{input id='message' name='message' placeholder='Enter message' class='form-control' value=message}}
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
+                                </span>
                             </div>
                         </div>
                         </div>

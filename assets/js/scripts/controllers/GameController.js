@@ -1,5 +1,5 @@
 App.GameController = Ember.ObjectController.extend({
-    needs: ['number'],
+    needs: ['number', 'message'],
 
     idle: function () {
         if(this.get('model.gameStatus') === 'idle') {
@@ -25,6 +25,15 @@ App.GameController = Ember.ObjectController.extend({
     cardPrice: function () {
         return satoshiToMBTC(this.get('model.table.cardPrice'));
     }.property('model.table.cardPrice'),
+
+    gameMessages: function () {
+        var gameId;
+        gameId = this.get('id');
+
+        return this.get('store').filter('message', function (message) {
+            return (message.get('game.id') === gameId);
+        });
+    }.property('model.messages'),
 
 
     ownBingoCards: function () {
@@ -64,6 +73,29 @@ App.GameController = Ember.ObjectController.extend({
                     game.set('errorMessage', error.error);
                 });
             }
+        },
+
+        sendMessage: function () {
+            var store, game, messages, message, record;
+
+            store = this.store;
+            game = this.get('model');
+            messages = this.get('messages');
+
+
+            record = store.createRecord('message', {
+                game: game,
+                body: this.get('message')
+            });
+
+            record.save().then(function (newMessage) {
+                // reset error
+                // game.set('errorMessage', null);
+                messages.pushObject(newMessage);
+            }, function (error) {
+                // handle error
+            });
+
         }
     }
 });
