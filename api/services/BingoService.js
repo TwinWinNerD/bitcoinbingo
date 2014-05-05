@@ -40,60 +40,88 @@ exports.settleRound = function (gameId, instant) {
             deferred.reject(error);
         } else {
 
-            if(game.gameStatus === "idle") {
-                awardPrizes = true;
-                instant = false;
+            async.series({
+                readyToStart: function (done) {
+                    if(game.gameStatus === "idle") {
+                        awardPrizes = true;
+                        instant = false;
 
-                exports.updateGameStatus(gameId, "playing").then(function () {
-                    game.gameStatus = "playing";
-                });
+                        exports.updateGameStatus(gameId, "playing").then(function () {
+                            game.gameStatus = "playing";
 
-            }
+                            countDown(10).then(function () {
 
-            exports.runSimulation(game, instant).then( function (winners) {
+                                done(null, true);
+                            }, function (error) {
 
-                if(awardPrizes) {
-                    rewardWinners(game, winners).then( function (result) {
-                        if(result) {
-                            exports.updateGameStatus(gameId, "finished").then( function () {
-                                game.gameStatus = "finished";
+                            }, function (second) {
+                                Message.create({
+                                    user: "System",
+                                    body: "Game starting in " + second + " seconds",
+                                    game: gameId
+                                }).exec(function created (err, newInstance) {
+                                        Message.publishCreate(newInstance);
 
-                                Game.create({
-                                    minimumPlayers: game.minimumPlayers,
-                                    maximumPlayers: game.maximumPlayers,
-                                    table: game.table.id,
-                                    gameStatus: "idle",
-                                    serverSeed: SeedService.generateServerSeed(),
-                                }).exec(function (error, result) {
-                                        Game.publishCreate(result);
+
                                     });
-
-                                deferred.resolve(winners);
                             });
-                        }
-                    });
-                } else {
-                    deferred.resolve(winners);
+
+                        });
+                    } else {
+                        done(null, true);
+                    }
                 }
+            }, function (error, result) {
+                if(result.readyToStart) {
 
-            }, function (error) {
-                // error
-            }, function (drawnNumbers) {
+                    if(game.gameStatus === "playing" || game.gameStatus === "finished") {
+                        exports.runSimulation(game, instant).then( function (winners) {
 
-                Game.update(game.id, {
-                    drawnNumbers: drawnNumbers
-                }).exec(function (error, result) {
-                        if(result) {
+                            if(awardPrizes) {
+                                rewardWinners(game, winners).then( function (result) {
+                                    if(result) {
+                                        exports.updateGameStatus(gameId, "finished").then( function () {
+                                            game.gameStatus = "finished";
 
-                            // don't send this to the frontend again
-                            var gameData = _.cloneDeep(game);
+                                            Game.create({
+                                                minimumPlayers: game.minimumPlayers,
+                                                maximumPlayers: game.maximumPlayers,
+                                                table: game.table.id,
+                                                gameStatus: "idle",
+                                                serverSeed: SeedService.generateServerSeed(),
+                                            }).exec(function (error, result) {
+                                                    Game.publishCreate(result);
+                                                });
 
-                            delete gameData.bingoCards;
-                            delete gameData.table;
+                                            deferred.resolve(winners);
+                                        });
+                                    }
+                                });
+                            } else {
+                                deferred.resolve(winners);
+                            }
 
-                            Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: gameData });
-                        }
-                    });
+                        }, function (error) {
+                            // error
+                        }, function (drawnNumbers) {
+
+                            Game.update(game.id, {
+                                drawnNumbers: drawnNumbers
+                            }).exec(function (error, result) {
+                                    if(result) {
+
+                                        // don't send this to the frontend again
+                                        var gameData = _.cloneDeep(game);
+
+                                        delete gameData.bingoCards;
+                                        delete gameData.table;
+
+                                        Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: gameData });
+                                    }
+                                });
+                        });
+                    }
+                }
             });
         }
     });
@@ -367,3 +395,27 @@ exports.minimumPlayersReached = function (gameId) {
 
     return deferred.promise;
 };
+
+function countDown(seconds) {
+
+    var deferred, timer;
+    deferred = Q.defer();
+
+    timer = setInterval( function () {
+
+        console.log("Starting game in", seconds);
+
+        deferred.notify(seconds);
+
+        seconds--;
+
+        if(seconds === -1) {
+
+            clearInterval(timer);
+
+            deferred.resolve();
+        }
+    }, 1000);
+
+    return deferred.promise;
+}
