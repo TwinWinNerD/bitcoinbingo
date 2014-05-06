@@ -1,5 +1,11 @@
+var Q;
+
+Q = require('q');
+
 exports.sendSystemMessage = function (body, game) {
-    var message;
+    var message, deferred;
+
+    deferred = Q.defer();
 
     message = {
         user: "System",
@@ -7,8 +13,15 @@ exports.sendSystemMessage = function (body, game) {
         game: game
     };
 
-    Message.create(message).exec(function created (err, newInstance) {
-        Message.publishCreate(newInstance);
+    Message.create(message).exec(function (error, newInstance) {
+        if(!error && newInstance) {
+
+            Message.publishCreate(newInstance);
+
+            deferred.resolve(true);
+        }
+
     });
 
-}
+    return deferred.promise;
+};
