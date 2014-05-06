@@ -170,10 +170,27 @@ exports.runSimulation = function (game, instant) {
 
                 if(patternWinners.length > 0) {
 
+                    async.each(patternWinners, function (winner, done) {
+
+                        MessageService.sendSystemMessage("Pattern won by " + winner.user, winner.game).then(function (resolve) {
+                            if(resolve) {
+                                done();
+                            }
+                        });
+                    });
                 }
 
-
                 if (bingoWinners.length > 0) {
+
+                    async.each(bingoWinners, function (winner, done) {
+
+                        MessageService.sendSystemMessage("Bingo won by " + winner.user, winner.game).then(function (resolve) {
+                            if(resolve) {
+                                done();
+                            }
+                        });
+                    });
+
                     winners.push(bingoWinners);
                     winners.push(patternWinners);
                     deferred.resolve(winners);
