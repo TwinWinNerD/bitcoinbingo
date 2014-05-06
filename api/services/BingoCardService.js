@@ -52,7 +52,6 @@ exports.isUserAllowedToBuyCards = function (game, user) {
                         if(error) {
                             done(error);
                         } else {
-                            console.log(result.table);
                             done(null, result.table.maximumCards);
                         }
                     });

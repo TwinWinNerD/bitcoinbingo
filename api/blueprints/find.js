@@ -62,7 +62,6 @@ module.exports = function findRecords (req, res) {
 
             // subscribe users to new game instances
             if(req.options.model === 'game') {
-                console.log("subscribing to game");
                 Model.watch(req);
             }
 

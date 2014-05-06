@@ -13,7 +13,6 @@ exports.getBalance = function (userId) {
             Deposit.find().where( {user: userId }).sum('amount').exec(function (error, sum) {
                 if(!error) {
                     if(sum.length > 0) {
-                        console.log(sum);
                         done(null, sum[0].amount);
                     } else {
                         done(null, 0);
