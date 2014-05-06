@@ -60,15 +60,8 @@ exports.settleRound = function (gameId, instant) {
                             }, function (error) {
 
                             }, function (second) {
-                                Message.create({
-                                    user: "System",
-                                    body: "Game starting in " + second + " seconds",
-                                    game: gameId
-                                }).exec(function created (err, newInstance) {
-                                        Message.publishCreate(newInstance);
 
-
-                                    });
+                                MessageService.sendSystemMessage("Game starting in " + second + " seconds", gameId);
                             });
 
                         });
@@ -174,6 +167,10 @@ exports.runSimulation = function (game, instant) {
                 patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
 
                 console.log(number);
+
+                if(patternWinners.length > 0) {
+
+                }
 
 
                 if (bingoWinners.length > 0) {
