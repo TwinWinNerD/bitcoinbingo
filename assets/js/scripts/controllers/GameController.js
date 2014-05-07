@@ -1,5 +1,5 @@
 App.GameController = Ember.ObjectController.extend({
-    needs: ['number', 'message'],
+    needs: ['number'],
 
     idle: function () {
         if(this.get('model.gameStatus') === 'idle' || this.get('model.gameStatus') === 'countDown') {
@@ -45,6 +45,15 @@ App.GameController = Ember.ObjectController.extend({
             return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === userId);
         });
     }.property('model.bingoCards', 'session.content'),
+
+    gameWinners: function() {
+        var gameId;
+        gameId = this.get('id');
+
+        return this.get('store').filter('winner', function (winner) {
+            return (winner.get('game.id') === gameId);
+        });
+    }.property('model.winners'),
 
     actions: {
 
