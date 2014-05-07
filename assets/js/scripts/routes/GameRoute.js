@@ -8,4 +8,17 @@ App.GameRoute = Ember.Route.extend({
 
         controller.set('model', model);
     },
+
+    actions: {
+        showWinnerModal: function() {
+        	console.log("showWinnerModal");
+            this.render('winnerModal', {
+                into: 'game',
+                outlet: 'modal'
+            });
+        },
+        close: function() {
+            this.disconnectOutlet({outlet: 'modal', parentView: 'game'});
+        }
+    }
 });
