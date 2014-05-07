@@ -15,6 +15,11 @@ module.exports = {
             required: true
         },
 
+        amount: {
+            type: 'INTEGER',
+            required: true
+        },
+
         bingoCard: {
             model: 'bingoCard',
             required: true
