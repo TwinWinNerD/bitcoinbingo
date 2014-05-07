@@ -139,7 +139,7 @@ exports.runSimulation = function (game, instant) {
         bingoCard.squares = BingoCardService.generateSquares(game.serverseed, bingoCard.clientSeed, bingoCard.id);
     }
 
-    var bingoNumbers, masterSeed, bingoWinners, patternWinners, winners, turn, drawnNumbers;
+    var bingoNumbers, masterSeed, bingoWinners, patternWinners, winners, turn, drawnNumbers, notifiedPatternWinners;
 
     bingoNumbers = new BingoNumbersService();
     masterSeed = SeedService.generateMasterSeed(game);
@@ -148,6 +148,8 @@ exports.runSimulation = function (game, instant) {
     bingoWinners = [];
     patternWinners = [];
     winners = [];
+
+    notifiedPatternWinners = false;
 
     drawnNumbers = [];
     turn = 0;
@@ -168,36 +170,59 @@ exports.runSimulation = function (game, instant) {
 
                 console.log(number);
 
-                if(patternWinners.length > 0) {
+                async.series([
+                    function(done) {
+                        if (patternWinners.length > 0 && notifiedPatternWinners === false) {
 
-                    async.each(patternWinners, function (winner, done) {
-
-                        MessageService.sendSystemMessage("Pattern won by " + winner.user, winner.game).then(function (resolve) {
-                            if(resolve) {
+                            async.each(patternWinners, function (winner, done) {
+                                User.findOne(winner.user).exec(function(error, result) {
+                                    if(!error && result) {
+                                        MessageService.sendSystemMessage("Pattern won by " + result.username, winner.game).then(function (resolve) {
+                                            if(resolve) {
+                                                done();
+                                            }
+                                        });
+                                    } else {
+                                        done(error);
+                                    }
+                                });
+                            }, function(error, result) {
                                 done();
-                            }
-                        });
-                    });
-                }
+                            });
 
-                if (bingoWinners.length > 0) {
+                            notifiedPatternWinners = true;
+                        } else {
+                            done();
+                        }
+                    },
+                    function(done) {
+                        if (bingoWinners.length > 0) {
 
-                    async.each(bingoWinners, function (winner, done) {
+                            async.each(bingoWinners, function (winner, done) {
+                                User.findOne(winner.user).exec(function(error, result) {
+                                    if(!error && result) {
+                                        MessageService.sendSystemMessage("Bingo won by " + result.username, winner.game).then(function (resolve) {
+                                            if(resolve) {
+                                                done();
+                                            }
+                                        });
+                                    } else {
+                                        done(error);
+                                    }
+                                });
+                            });
 
-                        MessageService.sendSystemMessage("Bingo won by " + winner.user, winner.game).then(function (resolve) {
-                            if(resolve) {
-                                done();
-                            }
-                        });
-                    });
-
-                    winners.push(bingoWinners);
-                    winners.push(patternWinners);
-                    deferred.resolve(winners);
-                } else {
+                            winners.push(bingoWinners);
+                            winners.push(patternWinners);
+                            deferred.resolve(winners);
+                        } else {
+                            done();
+                        }
+                    }
+                ], function(err, result) {
                     turn++;
                     playTurn();
-                }
+                });
             });
         };
 
@@ -352,6 +377,12 @@ function rewardWinners (game, winners) {
         function (done) {
             Winner.create(winnerData).exec( function (error, result) {
                 if(!error) {
+
+                    for(var i = 0; i < result.length; i++) {
+                        Winner.publishCreate(result[i]);
+                    }
+
+
                     done();
                 }
             });
@@ -380,6 +411,10 @@ function calculatePrizePool(game) {
 
     cardPrice = game.table.cardPrice;
     amountOfCards = game.bingoCards.length;
+
+    console.log("cardprice " + cardPrice);
+    console.log("amountOfCards " + amountOfCards);
+    console.log("prizePool " + (cardPrice * amountOfCards) * 0.95);
 
     return (cardPrice * amountOfCards) * 0.95;
 }
