@@ -35,6 +35,11 @@ module.exports = {
             defaultsTo: []
         },
 
+        pattern: {
+            type: 'array',
+            defaultsTo: []
+        },
+
         bingoCards: {
             collection: 'bingoCard',
             via: 'game'
