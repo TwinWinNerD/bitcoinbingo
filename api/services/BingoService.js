@@ -87,6 +87,7 @@ exports.settleRound = function (gameId, instant) {
                                                 table: game.table.id,
                                                 gameStatus: "idle",
                                                 serverSeed: SeedService.generateServerSeed(),
+                                                pattern: PatternService.getRandomPattern(),
                                             }).exec(function (error, result) {
                                                     Game.publishCreate(result);
                                                 });
@@ -166,7 +167,7 @@ exports.runSimulation = function (game, instant) {
 
 //                // using cloneDeep to prevent the pattern check overwriting the bingo check
                 bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
-                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers, game.pattern));
 
                 console.log(number);
 
@@ -238,7 +239,7 @@ exports.runSimulation = function (game, instant) {
             drawnNumbers.push(number);
 
             bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
-            patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers));
+            patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers, game.pattern));
 
             if (bingoWinners.length > 0) {
                 winners.push(bingoWinners);
@@ -274,12 +275,14 @@ function drawNumber(bingoNumbers, turn) {
     return deferred.promise;
 }
 
-function checkForWinners (type, cards, drawnNumbers) {
+function checkForWinners (type, cards, drawnNumbers, pattern) {
 
     var bingoCount, numbersForBingo, pattern, patternCount, numbersForPattern, winners;
 
-    pattern = [ [1,1,1,1,1], [1,0,0,0,1], [1,0,0,0,1], [1,0,0,0,1], [1,1,1,1,1] ];
-    numbersForPattern = PatternService.countAmountOfNumbersInPattern(pattern);
+    if(typeof pattern !== 'undefined') {
+        numbersForPattern = PatternService.countAmountOfNumbersInPattern(pattern);
+    }
+
     numbersForBingo = 24;
     winners = [];
 

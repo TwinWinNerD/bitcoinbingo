@@ -29,6 +29,7 @@ module.exports = {
                     table: table.id,
                     gameStatus: "idle",
                     serverSeed: SeedService.generateServerSeed(),
+                    pattern: PatternService.getRandomPattern()
                 }).exec(function (error, game) {
                     if(!error) {
 
