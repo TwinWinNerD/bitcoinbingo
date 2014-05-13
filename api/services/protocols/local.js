@@ -45,7 +45,7 @@ exports.register = function (req, res, next) {
   User.create({
     username : username
   , email    : email
-  }).done(function (err, user) {
+  }).exec(function (err, user) {
     if (err) {
       req.flash('error', 'Error.Passport.User.Exists');
       return next(err);
@@ -55,7 +55,7 @@ exports.register = function (req, res, next) {
       protocol : 'local'
     , password : password
     , user     : user.id
-    }).done(function (err, passport) {
+    }).exec(function (err, passport) {
       next(err, user);
     });
   });
@@ -79,7 +79,7 @@ exports.connect = function (req, res, next) {
   Passport.findOne({
     protocol : 'local'
   , user     : user.id
-  }).done(function (err, passport) {
+  }).exec(function (err, passport) {
     if (err) return next(err);
 
     if (!passport) {
@@ -87,7 +87,7 @@ exports.connect = function (req, res, next) {
         protocol : 'local'
       , password : password
       , user     : user.id
-      }).done(function (err, passport) {
+      }).exec(function (err, passport) {
         next(err, user);
       });
     }
@@ -120,7 +120,7 @@ exports.login = function (req, identifier, password, next) {
     query.username = identifier;
   }
 
-  User.findOne(query).done(function (err, user) {
+  User.findOne(query).exec(function (err, user) {
     if (err) return next(err);
 
     if (!user) {
@@ -136,7 +136,7 @@ exports.login = function (req, identifier, password, next) {
     Passport.findOne().where({
       protocol : 'local'
     , user     : user.id
-    }).done(function (err, passport) {
+    }).exec(function (err, passport) {
       if (passport) {
         passport.validatePassword(password, function (err, res) {
           if (err) return next(err);
