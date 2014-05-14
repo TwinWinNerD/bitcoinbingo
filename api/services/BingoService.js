@@ -277,7 +277,7 @@ function drawNumber(bingoNumbers, turn) {
 
 function checkForWinners (type, cards, drawnNumbers, pattern) {
 
-    var bingoCount, numbersForBingo, pattern, patternCount, numbersForPattern, winners;
+    var bingoCount, numbersForBingo, patternCount, numbersForPattern, winners;
 
     if(typeof pattern !== 'undefined') {
         numbersForPattern = PatternService.countAmountOfNumbersInPattern(pattern);
