@@ -45,11 +45,11 @@ module.exports = function findRecords (req, res) {
         .skip( actionUtil.parseSkip(req) )
         .sort( actionUtil.parseSort(req) );
     // TODO: .populateEach(req.options);
-//    query = actionUtil.populateEach(query, req.options);
+    query = actionUtil.populateEach(query, req.options);
 
-    if(req.options.model === 'game') {
-        query.populate('table');
-    }
+//    if(req.options.model === 'game') {
+//        query.populate('table');
+//    }
 
     query.exec(function found(err, matchingRecords) {
         if (err) return res.serverError(err);

@@ -4,7 +4,7 @@ App.GameRoute = Ember.Route.extend({
     },
     setupController: function (controller, model) {
 
-        model.reload();
+//        model.reload();
 
         controller.set('model', model);
     },
