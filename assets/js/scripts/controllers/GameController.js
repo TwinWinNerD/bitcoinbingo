@@ -1,6 +1,14 @@
 App.GameController = Ember.ObjectController.extend({
     needs: ['number'],
 
+    userParticipating: function () {
+        if(this.get('ownBingoCards.length') > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }.property('ownBingoCards.[]'),
+
     idle: function () {
         if(this.get('model.gameStatus') === 'idle' || this.get('model.gameStatus') === 'countDown') {
             return true;
