@@ -275,7 +275,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                            {{#each idleGames itemController="game"}}
+                            {{#each}}
+                            {{#if idle}}
                             <tr>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
@@ -285,6 +286,7 @@
                                 <td>{{gameStatus}}</td>
                                 <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
                             </tr>
+                            {{/if}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -322,7 +324,8 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each playingGames itemController="game"}}
+                            {{#each}}
+                            {{#if playing}}
                             <tr>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
@@ -332,6 +335,7 @@
                                 <td>{{gameStatus}}</td>
                                 <td>{{#link-to 'game' id class='btn btn-orange'}}Watch{{/link-to}}</td>
                             </tr>
+                            {{/if}}
                             {{/each}}
                             </tbody>
                         </table>
