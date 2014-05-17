@@ -2,7 +2,7 @@ App.GameController = Ember.ObjectController.extend({
     needs: ['number'],
 
     userParticipating: function () {
-        if(this.get('ownBingoCards.length') > 0) {
+        if(this.get('ownBingoCards.length') > 0 && (this.get('idle') || this.get('playing'))) {
             return true;
         } else {
             return false;
