@@ -569,6 +569,48 @@
     </form>
 </script>
 
+<script type="text/x-handlebars" data-template-name="wallet">
+    <div class="row">
+
+        <!-- Basic Responsive Table -->
+        <div class="col-lg-12">
+            <div class="portlet portlet-orange">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>Deposits</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Amount</th>
+                                <th>Type</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each deposit in userDeposits}}
+                            <tr>
+                                <td>{{deposit.id}}</td>
+                                <td>{{deposit.amount}}</td>
+                                <td>{{deposit.depositType}}</td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.portlet -->
+        </div>
+        <!-- /.col-lg-6 -->
+
+    </div>
+</script>
+
 <script type="text/x-handlebars" data-template-name="winnerModal">
     <div class="modal-header">
         <button type="button" class="close" {{action close target="view"}}>&times;</button>

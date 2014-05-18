@@ -61,7 +61,7 @@ module.exports = function findRecords (req, res) {
             if (req.options.autoWatch) { Model.watch(req); }
 
             // subscribe users to new game instances
-            if(req.options.model === 'game') {
+            if(req.options.model === 'game' || req.options.model === 'deposit' || req.options.model === 'withdrawal') {
                 Model.watch(req);
             }
 
