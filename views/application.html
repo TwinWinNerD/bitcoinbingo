@@ -215,6 +215,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Type</th>
                             <th>Card price</th>
                             <th>Maximum cards</th>
@@ -228,6 +229,7 @@
                         {{#each}}
                             {{#if userParticipating}}
                             <tr>
+                                <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
                                 <td>{{table.maximumCards}}</td>
@@ -265,6 +267,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Type</th>
                             <th>Card price</th>
                             <th>Maximum cards</th>
@@ -278,6 +281,7 @@
                             {{#each}}
                             {{#if idle}}
                             <tr>
+                                <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
                                 <td>{{table.maximumCards}}</td>
@@ -314,6 +318,7 @@
                         <table class="table">
                             <thead>
                             <tr>
+                                <th>Id</th>
                                 <th>Type</th>
                                 <th>Card price</th>
                                 <th>Maximum cards</th>
@@ -327,6 +332,7 @@
                             {{#each}}
                             {{#if playing}}
                             <tr>
+                                <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} mBTC</td>
                                 <td>{{table.maximumCards}}</td>

@@ -1,6 +1,10 @@
 App.GameController = Ember.ObjectController.extend({
     needs: ['number'],
 
+    identifier: function () {
+        return this.get('model.id').slice(-5);
+    }.property('model.id'),
+
     userParticipating: function () {
         if(this.get('ownBingoCards.length') > 0 && (this.get('idle') || this.get('playing'))) {
             return true;
