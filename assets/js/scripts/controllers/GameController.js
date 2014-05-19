@@ -5,6 +5,19 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('model.id').slice(-5);
     }.property('model.id'),
 
+    amountOfPlayers: function () {
+        var bingoCards, users;
+
+        bingoCards = this.get('gameBingoCards');
+        users = [];
+
+        bingoCards.forEach(function (bingoCard) {
+            users.push(bingoCard.get('user'));
+        });
+
+        return users.uniq().length;
+    }.property('gameBingoCards.[]'),
+
     prizePool: function () {
         return satoshiToMBTC(this.get('amountOfCards') * this.get('model.table.cardPrice'));
     }.property('amountOfCards', 'model.table.cardPrice'),

@@ -1,3 +1,5 @@
+socket = io.connect();
+
 var BingoAuthenticator = Ember.SimpleAuth.Authenticators.Base.extend({
 
     restore: function (data) {
