@@ -89,7 +89,7 @@ App.GameController = Ember.ObjectController.extend({
 
             // if no new clientSeed is set, use the one saved in the session
             clientSeed = this.get('clientSeed') ? this.get('clientSeed') : this.get('session.clientSeed');
-            amountOfCards = this.get('amountOfCards') ? this.get('amountOfCards') : 1;
+            amountOfCards = 1;
 
             for(var i = 1; i <= amountOfCards; i++) {
                 bingoCard = store.createRecord('bingoCard', {
@@ -102,6 +102,8 @@ App.GameController = Ember.ObjectController.extend({
                     bingoCards.pushObject(newBingoCard);
                     $('#buy-cards-modal').modal('hide');
                 }, function (error) {
+
+                    bingoCard.deleteRecord();
                     game.set('errorMessage', error.error);
                 });
             }
