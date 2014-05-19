@@ -62,6 +62,8 @@ module.exports = {
                                             withdrawalType: 'bingoCards'
                                         }).exec(function (error, results) {
                                                 if(!error) {
+                                                    Withdrawal.publishCreate(results);
+
                                                     done(null, results);
                                                 } else {
                                                     done(error);
