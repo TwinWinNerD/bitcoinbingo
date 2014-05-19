@@ -5,6 +5,23 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('model.id').slice(-5);
     }.property('model.id'),
 
+    prizePool: function () {
+        return satoshiToMBTC(this.get('amountOfCards') * this.get('model.table.cardPrice'));
+    }.property('amountOfCards', 'model.table.cardPrice'),
+
+    amountOfCards: function () {
+        return this.get('gameBingoCards.length');
+    }.property('gameBingoCards.[]'),
+
+    gameBingoCards: function () {
+        var gameId;
+        gameId = this.get('id');
+
+        return this.get('store').filter('bingoCard', function (bingoCard) {
+            return (bingoCard.get('game.id') === gameId);
+        });
+    }.property('model.bingoCards'),
+
     userParticipating: function () {
         if(this.get('ownBingoCards.length') > 0 && (this.get('idle') || this.get('playing'))) {
             return true;

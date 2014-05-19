@@ -423,6 +423,7 @@
         </div>
         <div class="row">
             <div class="col-lg-2">
+                {{prizePool}} mBTC <br/>
                 {{#if session.isAuthenticated}}
                     {{#if idle}}
                         <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
