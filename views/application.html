@@ -56,6 +56,10 @@
     <!-- end ALERTS DROPDOWN -->
 
     <!-- begin USER ACTIONS DROPDOWN -->
+        
+    <li>
+        {{#link-to 'wallet'}} <i class="fa fa-btc"></i>  {{controllers.currentUser.balance}} mBTC {{/link-to}}
+    </li>
     <li class="dropdown">
         {{#if session.isAuthenticated}}
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
