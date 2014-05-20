@@ -25,11 +25,11 @@ var jsFilesToInject = [
 
 	// Dependencies like sails.io.js, jQuery, or Angular
 	// are brought in here
-    'js/dependencies/jquery-1.10.2.js',
-    'js/dependencies/sails.io.js',
-    'js/dependencies/handlebars-1.1.2.js',
+    'js/dependencies/jquery.min.js',
+    'js/dependencies/handlebars-1.3.0.js',
     'js/dependencies/ember-1.5.0.js',
     'js/dependencies/ember-data.js',
+    'js/dependencies/sails.io.js',
     'js/plugins/slimscroll/jquery.slimscroll.min.js',
     'js/plugins/ladda/spin.min.js',
     'js/plugins/ladda/ladda.min.js',
