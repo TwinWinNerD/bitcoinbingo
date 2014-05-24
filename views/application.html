@@ -422,8 +422,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-2">
-                {{prizePool}} mBTC <br/>
+            <div class="col-lg-3">
+                <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Prize pool <span class="badge pull-right">{{prizePool}} mBTC</span></a></li>
+                    <li class="active"><a><i class="fa fa-users fa-fw"></i>Players <span class="badge pull-right">{{amountOfPlayers}}</span></a></li>
+                </ul>
+
+
                 {{#if session.isAuthenticated}}
                     {{#if idle}}
                         <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
@@ -442,30 +447,30 @@
                 <div id="cards">
                     <br>
                     {{#each bingoCard in ownBingoCards}}
-                        <div class="col-sm-4">
-                            <div class="table-responsive">
-                                <span class="label label-primary">Card {{bingoCard.id}}</span>
-                                <table class="table table-bordered table-card">
-                                    <tbody>
-                                    {{#each row in bingoCard.squares}}
-                                    <tr>
-                                        {{#each number in row itemController='number'}}
-                                            {{#if number}}
-                                                <td {{bind-attr class='isActive:active'}}>{{number.model}}</td>
-                                            {{else}}
-                                                <td>X</td>
-                                            {{/if}}
-                                        {{/each}}
-                                    </tr>
+                    <div class="col-sm-4">
+                        <div class="table-responsive">
+                            <span class="label label-primary">Card {{bingoCard.id}}</span>
+                            <table class="table table-bordered table-card">
+                                <tbody>
+                                {{#each row in bingoCard.squares}}
+                                <tr>
+                                    {{#each number in row itemController='number'}}
+                                    {{#if number}}
+                                    <td {{bind-attr class='isActive:active'}}>{{number.model}}</td>
+                                    {{else}}
+                                    <td>X</td>
+                                    {{/if}}
                                     {{/each}}
-                                    </tbody>
-                                </table>
-                            </div>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
                         </div>
+                    </div>
                     {{/each}}
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-3">
                 <div class="portlet portlet-default">
                     <div class="portlet-heading">
                         <div class="portlet-title">
