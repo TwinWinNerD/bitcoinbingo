@@ -207,7 +207,7 @@
                 if(message.verb === "addedTo") {
                     var addedModel = Ember.Inflector.inflector.singularize(message.attribute);
 
-                    var added = store.find(addedModel, message.addedId);
+                    var added = store.push(addedModel, message.record);
                 }
 
                 if(message.verb === "created") {
