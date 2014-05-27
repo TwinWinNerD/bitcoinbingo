@@ -68,16 +68,16 @@ App.GameController = Ember.ObjectController.extend({
         return satoshiToMBTC(this.get('model.table.cardPrice'));
     }.property('model.table.cardPrice'),
 
-    newNumber: function () {
+    latestNumber: function () {
         var drawnNumbers;
 
         drawnNumbers = this.get('drawnNumbers');
 
         if(drawnNumbers.length > 0) {
-            ChangeLatestBall(drawnNumbers[drawnNumbers.length-1]);
+            return drawnNumbers[drawnNumbers.length-1];
         }
         
-    }.observes('model.drawnNumbers'),
+    }.property('model.drawnNumbers'),
 
     gameMessages: function () {
         var gameId;
