@@ -69,12 +69,18 @@ App.GameController = Ember.ObjectController.extend({
     }.property('model.table.cardPrice'),
 
     latestNumber: function () {
-        var drawnNumbers;
+        var drawnNumbers, latestNumber;
 
         drawnNumbers = this.get('drawnNumbers');
 
         if(drawnNumbers.length > 0) {
-            return drawnNumbers[drawnNumbers.length-1];
+            latestNumber = drawnNumbers[drawnNumbers.length-1];
+
+            if(this.get('model.gameStatus') === 'playing') {
+                document.getElementById("sound_number_" + latestNumber).play();
+            }
+
+            return latestNumber;
         }
         
     }.property('model.drawnNumbers'),
