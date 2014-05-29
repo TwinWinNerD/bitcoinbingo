@@ -2066,3 +2066,7 @@ input[type="checkbox"]:checked::after,
         margin-left: 0;
     }
 }
+
+.table-card td.active {
+    background-color: #34495e; !important
+}
