@@ -2068,5 +2068,6 @@ input[type="checkbox"]:checked::after,
 }
 
 .table-card td.active {
-    background-color: #34495e; !important
+    background-color: #34495e !important;
+    color: #fff;
 }
