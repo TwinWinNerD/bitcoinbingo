@@ -8,5 +8,5 @@ App.NumberController = Ember.ObjectController.extend({
         drawnNumbers = this.get('drawnNumbers');
 
         return drawnNumbers.indexOf(item) !== -1;
-    }.property('model', 'drawnNumbers')
+    }.property('drawnNumbers')
 });
