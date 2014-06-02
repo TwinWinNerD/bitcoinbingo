@@ -3,10 +3,11 @@ App.GameRoute = Ember.Route.extend({
         return this.store.find('game', params.game_id);
     },
     setupController: function (controller, model) {
-
         model.reload();
 
         controller.set('model', model);
+        controller.set('modelBingoCards', model.get('bingoCards'));
+        controller.set('modelMessages', model.get('messages'));
     },
 
     actions: {

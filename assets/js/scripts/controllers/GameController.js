@@ -33,7 +33,7 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('store').filter('bingoCard', function (bingoCard) {
             return (bingoCard.get('game.id') === gameId);
         });
-    }.property('model.bingoCards'),
+    }.property('modelBingoCards'),
 
     userParticipating: function () {
         if(this.get('ownBingoCards.length') > 0 && (this.get('idle') || this.get('playing'))) {
@@ -92,7 +92,7 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('store').filter('message', function (message) {
             return (message.get('game.id') === gameId);
         });
-    }.property('model.messages'),
+    }.property('modelMessages'),
 
 
     ownBingoCards: function () {
@@ -103,7 +103,7 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('store').filter('bingoCard', function (bingoCard) {
             return (bingoCard.get('game.id') === gameId && bingoCard.get('user.id') === userId);
         });
-    }.property('model.bingoCards', 'session.content'),
+    }.property('gameBingoCards', 'session.content'),
 
     gameWinners: function() {
         var gameId;
