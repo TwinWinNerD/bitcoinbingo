@@ -10,5 +10,13 @@ App.GamesRoute = Ember.Route.extend({
         controller.set('modelIdleGames', model.modelIdleGames);
         controller.set('modelCountDownGames', model.modelCountDownGames);
         controller.set('modelPlayingGames', model.modelPlayingGames);
+    },
+    afterModel: function () {
+        if(this.get('session.isAuthenticated')) {
+            return Ember.RSVP.hash({
+                deposits: this.store.find('deposit', { user: this.get('session.id') }),
+                withdrawals: this.store.find('withdrawal', { user: this.get('session.id') })
+            });
+        }
     }
 });
