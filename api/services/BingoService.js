@@ -397,6 +397,11 @@ function rewardWinners (game, winners) {
         function (done) {
             Deposit.create(depositData).exec( function (error, result) {
                 if(!error) {
+
+                    for(var i = 0; i < result.length; i++) {
+                        Deposit.publishCreate(result[i]);
+                    }
+
                     done();
                 }
             });
