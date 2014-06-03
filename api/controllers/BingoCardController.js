@@ -103,7 +103,11 @@ module.exports = {
                                         BingoService.minimumPlayersReached(data.game).then( function (result) {
 
                                             if(result) {
-                                                BingoService.settleRound(data.game, false);
+                                                Game.findOne(data.game).exec(function (err, result) {
+                                                    if(result.gameStatus === 'idle') {
+                                                        BingoService.settleRound(data.game, false);
+                                                    }
+                                                })
                                             } else {
                                                 // nope not yet
                                             }
