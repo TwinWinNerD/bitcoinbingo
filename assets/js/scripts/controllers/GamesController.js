@@ -2,7 +2,6 @@ App.GamesController = Ember.ArrayController.extend({
     itemController: 'game',
     idleGames: function () {
         return this.store.filter('game', function (game) {
-            console.log('tes');
             return (game.get('gameStatus') === "idle" || game.get('gameStatus') === "countDown");
         });
     }.property('modelIdleGames', 'modelCountDownGames'),
