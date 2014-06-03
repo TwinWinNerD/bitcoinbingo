@@ -165,11 +165,15 @@ exports.runSimulation = function (game, instant) {
 
                 deferred.notify(drawnNumbers);
 
-//                // using cloneDeep to prevent the pattern check overwriting the bingo check
-                bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
-                patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers, game.pattern));
+                // using cloneDeep to prevent the pattern check overwriting the bingo check
 
-                console.log(number);
+                if(patternWinners.length === 0) {
+                    patternWinners = _.cloneDeep(checkForWinners('pattern', game.bingoCards, drawnNumbers, game.pattern));
+                }
+
+                if(patternWinners.length > 0) {
+                    bingoWinners = _.cloneDeep(checkForWinners('bingo', game.bingoCards, drawnNumbers));
+                }
 
                 async.series([
                     function(done) {
