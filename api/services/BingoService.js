@@ -29,101 +29,78 @@ exports.settleRound = function (gameId, instant) {
     var awardPrizes, deferred;
 
     deferred = Q.defer();
-    awardPrizes = false;
 
-    Game.findOne(gameId)
-        .populate('bingoCards')
-        .populate('table')
-        .exec(function (error, game) {
+    exports.updateGameStatus(gameId, "countDown").then(function () {
 
-        if(error) {
-            deferred.reject(error);
-        } else {
+        countDown(10).then(function () {
 
-            async.series({
-                readyToStart: function (done) {
-                    if(game.gameStatus === "idle") {
-                        awardPrizes = true;
-                        instant = false;
+            exports.updateGameStatus(gameId, "playing").then(function () {
 
-                        exports.updateGameStatus(gameId, "countDown").then(function () {
-                            game.gameStatus = "countDown";
+                Game.findOne(gameId)
+                    .populate('bingoCards')
+                    .populate('table')
+                    .exec(function (error, game) {
 
-                            countDown(10).then(function () {
+                        if(error) {
+                            deferred.reject(error);
+                        } else {
+                            if(game.gameStatus === "playing" || game.gameStatus === "finished") {
+                                exports.runSimulation(game, instant).then( function (winners) {
 
-                                exports.updateGameStatus(gameId, "playing").then(function () {
+                                    rewardWinners(game, winners).then( function (result) {
+                                        if(result) {
+                                            exports.updateGameStatus(gameId, "finished").then( function () {
+                                                game.gameStatus = "finished";
 
-                                    game.gameStatus = "playing";
-                                    done(null, true);
-                                });
-
-                            }, function (error) {
-
-                            }, function (second) {
-
-                                MessageService.sendSystemMessage("Game starting in " + second + " seconds", gameId);
-                            });
-
-                        });
-                    } else {
-                        done(null, true);
-                    }
-                }
-            }, function (error, result) {
-                if(result.readyToStart) {
-
-                    if(game.gameStatus === "playing" || game.gameStatus === "finished") {
-                        exports.runSimulation(game, instant).then( function (winners) {
-
-                            if(awardPrizes) {
-                                rewardWinners(game, winners).then( function (result) {
-                                    if(result) {
-                                        exports.updateGameStatus(gameId, "finished").then( function () {
-                                            game.gameStatus = "finished";
-
-                                            Game.create({
-                                                minimumPlayers: game.minimumPlayers,
-                                                maximumPlayers: game.maximumPlayers,
-                                                table: game.table.id,
-                                                gameStatus: "idle",
-                                                serverSeed: SeedService.generateServerSeed(),
-                                                pattern: PatternService.getRandomPattern(),
-                                            }).exec(function (error, result) {
+                                                Game.create({
+                                                    minimumPlayers: game.minimumPlayers,
+                                                    maximumPlayers: game.maximumPlayers,
+                                                    table: game.table.id,
+                                                    gameStatus: "idle",
+                                                    serverSeed: SeedService.generateServerSeed(),
+                                                    pattern: PatternService.getRandomPattern(),
+                                                }).exec(function (error, result) {
                                                     Game.publishCreate(result);
                                                 });
 
-                                            deferred.resolve(winners);
-                                        });
-                                    }
+                                                deferred.resolve(winners);
+                                            });
+                                        }
+                                    });
+
+                                }, function (error) {
+                                    // error
+                                }, function (drawnNumbers) {
+
+                                    Game.update(game.id, {
+                                        drawnNumbers: drawnNumbers
+                                    }).exec(function (error, result) {
+                                        if(result) {
+
+                                            // don't send this to the frontend again
+                                            var gameData = _.cloneDeep(game);
+
+                                            delete gameData.bingoCards;
+                                            delete gameData.table;
+
+                                            Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: gameData });
+                                        }
+                                    });
                                 });
-                            } else {
-                                deferred.resolve(winners);
                             }
-
-                        }, function (error) {
-                            // error
-                        }, function (drawnNumbers) {
-
-                            Game.update(game.id, {
-                                drawnNumbers: drawnNumbers
-                            }).exec(function (error, result) {
-                                    if(result) {
-
-                                        // don't send this to the frontend again
-                                        var gameData = _.cloneDeep(game);
-
-                                        delete gameData.bingoCards;
-                                        delete gameData.table;
-
-                                        Game.publishUpdate(game.id, { drawnNumbers: result[0].drawnNumbers, updatedAt: result[0].updatedAt }, null,{ previous: gameData });
-                                    }
-                                });
-                        });
-                    }
-                }
+                        }
+                    });
             });
-        }
+
+        }, function (error) {
+
+        }, function (second) {
+            MessageService.sendSystemMessage("Game starting in " + second + " seconds", gameId);
+        });
+
     });
+
+
 
     return deferred.promise;
 };
