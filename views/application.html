@@ -230,19 +230,33 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {{#each}}
-                            {{#if userParticipating}}
-                            <tr>
-                                <td>{{identifier}}</td>
-                                <td>{{table.tableType}}</td>
-                                <td>{{cardPrice}} mBTC</td>
-                                <td>{{table.maximumCards}}</td>
-                                <td>{{amountOfPlayers}}</td>
-                                <td>{{prizePool}} mBTC</td>
-                                <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
-                            </tr>
-                            {{/if}}
+                        {{#each idleGames itemController='game'}}
+                        {{#if userParticipating}}
+                        <tr>
+                            <td>{{identifier}}</td>
+                            <td>{{table.tableType}}</td>
+                            <td>{{cardPrice}} mBTC</td>
+                            <td>{{table.maximumCards}}</td>
+                            <td>{{amountOfPlayers}}</td>
+                            <td>{{prizePool}} mBTC</td>
+                            <td>{{gameStatus}}</td>
+                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        </tr>
+                        {{/if}}
+                        {{/each}}
+                        {{#each playingGames itemController='game'}}
+                        {{#if userParticipating}}
+                        <tr>
+                            <td>{{identifier}}</td>
+                            <td>{{table.tableType}}</td>
+                            <td>{{cardPrice}} mBTC</td>
+                            <td>{{table.maximumCards}}</td>
+                            <td>{{amountOfPlayers}}</td>
+                            <td>{{prizePool}} mBTC</td>
+                            <td>{{gameStatus}}</td>
+                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        </tr>
+                        {{/if}}
                         {{/each}}
                         </tbody>
                     </table>
@@ -282,8 +296,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            {{#each}}
-                            {{#if idle}}
+                            {{#each idleGames itemController='game'}}
                             <tr>
                                 <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
@@ -294,7 +307,6 @@
                                 <td>{{gameStatus}}</td>
                                 <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
                             </tr>
-                            {{/if}}
                             {{/each}}
                         </tbody>
                     </table>
@@ -333,8 +345,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each}}
-                            {{#if playing}}
+                            {{#each playingGames itemController='game'}}
                             <tr>
                                 <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
@@ -343,9 +354,8 @@
                                 <td>{{amountOfPlayers}}</td>
                                 <td>{{prizePool}} mBTC</td>
                                 <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id class='btn btn-orange'}}Watch{{/link-to}}</td>
+                                <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
                             </tr>
-                            {{/if}}
                             {{/each}}
                             </tbody>
                         </table>
