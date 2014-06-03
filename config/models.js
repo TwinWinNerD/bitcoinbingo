@@ -5,6 +5,7 @@
  * Unless you override them, the following properties will be included
  * in each of your models.
  */
+util = require('util');
 
 module.exports.models = {
  
