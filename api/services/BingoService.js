@@ -270,7 +270,7 @@ function drawNumber(bingoNumbers, turn) {
         if (typeof bingoNumbers[turn] !== 'undefined') {
             deferred.resolve(bingoNumbers[turn]);
         }
-    }, 4000);
+    }, 2000);
 
     return deferred.promise;
 }
