@@ -28,8 +28,12 @@ module.exports = function findOneRecord (req, res) {
 
     var query = Model.findOne(pk);
 
-    if(req.options.model === 'game') {
-        query = actionUtil.populateEach(query, req.options);
+    switch(req.options.model) {
+        case 'user':
+            break;
+        default:
+            query = actionUtil.populateEach(query, req.options);
+            break;
     }
 
     query.exec(function found(err, matchingRecord) {

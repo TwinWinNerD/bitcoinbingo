@@ -45,12 +45,14 @@ module.exports = function findRecords (req, res) {
         .skip( actionUtil.parseSkip(req) )
         .sort( actionUtil.parseSort(req) );
     // TODO: .populateEach(req.options);
-    query = actionUtil.populateEach(query, req.options);
-//
-//    if(req.options.model === 'game') {
-//        query.populate('table');
-//        query.populate('bingoCards');
-//    }
+
+    switch(req.options.model) {
+        case 'user':
+            break;
+        default:
+            query = actionUtil.populateEach(query, req.options);
+            break;
+    }
 
     query.exec(function found(err, matchingRecords) {
         if (err) return res.serverError(err);
