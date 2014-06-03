@@ -150,6 +150,8 @@ module.exports.blueprints = {
   pluralize: false,
 
 
-    autoWatch: false
+    autoWatch: false,
+
+    defaultLimit: Number.MAX_VALUE
 
 };
