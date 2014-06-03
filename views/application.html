@@ -57,6 +57,9 @@
 
     <!-- begin USER ACTIONS DROPDOWN -->
 
+    <li>
+        {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
+    </li>
     {{#if session.isAuthenticated}}
     <li>
         {{#link-to 'wallet'}} <i class="fa fa-btc"></i>  {{controllers.currentUser.balance}} mBTC {{/link-to}}
