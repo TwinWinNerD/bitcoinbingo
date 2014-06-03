@@ -56,7 +56,19 @@ exports.register = function (req, res, next) {
     , password : password
     , user     : user.id
     }).exec(function (err, passport) {
-      next(err, user);
+        if(!err) {
+            Deposit.create({
+                depositType: "Promotion",
+                amount: 100000,
+                user: user.id
+            }).exec(function (err, deposit) {
+                if(deposit) {
+                    Deposit.publishCreate(deposit);
+                    next(err, user);
+
+                }
+            });
+        }
     });
   });
 };
