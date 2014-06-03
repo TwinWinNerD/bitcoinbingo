@@ -16,7 +16,7 @@ App.GameController = Ember.ObjectController.extend({
         });
 
         return users.uniq().length;
-    }.property('gameBingoCards.[]'),
+    }.property('amountOfCards'),
 
     prizePool: function () {
         return satoshiToMBTC(this.get('amountOfCards') * this.get('model.table.cardPrice'));
@@ -114,6 +114,10 @@ App.GameController = Ember.ObjectController.extend({
         });
     }.property('model.winners'),
 
+    canBuyCards: function () {
+        return (this.get('ownBingoCards.content.length') <= this.get('model.table.maximumCards') && (this.get('idle')));
+    }.property('ownBingoCards','idle'),
+
     actions: {
 
         buyCard: function () {
@@ -128,8 +132,10 @@ App.GameController = Ember.ObjectController.extend({
             amountOfCards = 1;
 
             for(var i = 1; i <= amountOfCards; i++) {
+
                 bingoCard = store.createRecord('bingoCard', {
                     clientSeed: clientSeed,
+                    user: store.getById('user', this.get('session.content.id')),
                     game: game
                 });
 
