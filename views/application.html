@@ -448,7 +448,7 @@
             <div class="col-lg-6">
                 <div id="cards">
                     <br>
-                    {{#each bingoCard in ownBingoCards}}
+                    {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
                     <div class="col-sm-4">
                         <div class="table-responsive">
                             <span class="label label-primary">Card {{bingoCard.id}}</span>
@@ -457,11 +457,11 @@
                                 {{#each row in bingoCard.squares}}
                                 <tr>
                                     {{#each number in row itemController='number'}}
-                                    {{#if number}}
-                                    <td {{bind-attr class='isActive:active'}}>{{number.model}}</td>
-                                    {{else}}
-                                    <td>X</td>
-                                    {{/if}}
+                                        {{#if number.pattern}}
+                                        <td {{bind-attr class='isActive:active:pattern'}}>{{number.number}}</td>
+                                        {{else}}
+                                        <td {{bind-attr class='isActive:active'}}>{{number.number}}</td>
+                                        {{/if}}
                                     {{/each}}
                                 </tr>
                                 {{/each}}

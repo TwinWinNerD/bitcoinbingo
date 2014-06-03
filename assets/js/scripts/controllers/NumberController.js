@@ -4,7 +4,7 @@ App.NumberController = Ember.ObjectController.extend({
     isActive: function () {
         var item, drawnNumbers;
 
-        item = this.get('model');
+        item = this.get('model.number') ? this.get('model.number') : this.get('model');
         drawnNumbers = this.get('drawnNumbers');
 
         return drawnNumbers.indexOf(item) !== -1;

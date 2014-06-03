@@ -2071,3 +2071,8 @@ input[type="checkbox"]:checked::after,
     background-color: #34495e !important;
     color: #fff;
 }
+
+.table-card td.pattern {
+    background-color: #99C4E8 !important;
+    color: #000;
+}
