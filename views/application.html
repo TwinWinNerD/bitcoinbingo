@@ -412,7 +412,7 @@
             <h3>Drawn numbers:</h3>
             <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in RED have already been drawn." class="pagination">
                 {{#each number in numbers itemController='number'}}
-                    <li {{bind-attr class='isActive:active'}}><a>{{number.model}}</a></li>
+                    <li {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
                 {{/each}}
             </ul>
         </div>
@@ -463,9 +463,9 @@
                                 <tr>
                                     {{#each number in row itemController='number'}}
                                         {{#if number.pattern}}
-                                        <td {{bind-attr class='isActive:active:pattern'}}>{{number.number}}</td>
+                                        <td {{bind-attr class='number.isActive:active:pattern'}}>{{number.number}}</td>
                                         {{else}}
-                                        <td {{bind-attr class='isActive:active'}}>{{number.number}}</td>
+                                        <td {{bind-attr class='number.isActive:active'}}>{{number.number}}</td>
                                         {{/if}}
                                     {{/each}}
                                 </tr>
