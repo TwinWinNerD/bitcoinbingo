@@ -94,13 +94,26 @@ App.GameController = Ember.ObjectController.extend({
     }.property('model.drawnNumbers'),
 
     gameMessages: function () {
-        var gameId;
-        gameId = this.get('id');
+        var gameId = this.get('id');
 
         return this.get('store').filter('message', function (message) {
             return (message.get('game.id') === gameId);
         });
     }.property('modelMessages'),
+
+    lastMessages: function() {
+        var amountOfMessages, startIndex;
+
+        amountOfMessages = this.get('gameMessages.length');
+
+        if(amountOfMessages > 20) {
+            startIndex = amountOfMessages - 20;
+        } else {
+            startIndex = 0;
+        }
+
+        return this.get('gameMessages').toArray().slice(startIndex)
+    }.property('gameMessages.[]'),
 
 
     ownBingoCards: function () {

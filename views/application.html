@@ -493,7 +493,7 @@
                     </div>
                     <div id="chat" class="panel-collapse collapse in">
                         <div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
-                            {{#each message in gameMessages}}
+                            {{#each message in lastMessages}}
                                 <p><strong>{{message.user}}</strong>: {{message.body}}</p>
                             {{/each}}
                         </div>
