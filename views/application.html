@@ -453,12 +453,9 @@
                 </button>
             </div>
             <div class="col-lg-6">
-                <div id="cards">
-                    <br>
-                    {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
-                    <div class="col-sm-4">
+                {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="table-responsive">
-                            <span class="label label-primary">Card {{bingoCard.id}}</span>
                             <table class="table table-bordered table-card">
                                 <tbody>
                                 {{#each row in bingoCard.squares}}
@@ -476,8 +473,8 @@
                             </table>
                         </div>
                     </div>
-                    {{/each}}
-                </div>
+                {{/each}}
+                <div class="clearfix"></div>
             </div>
             <div class="col-lg-3">
                 <div class="portlet portlet-default">
