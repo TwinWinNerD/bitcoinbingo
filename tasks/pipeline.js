@@ -27,7 +27,7 @@ var jsFilesToInject = [
 	// are brought in here
     'js/dependencies/jquery.min.js',
     'js/dependencies/handlebars-1.3.0.js',
-    'js/dependencies/ember-1.5.0.js',
+    'js/dependencies/ember.js',
     'js/dependencies/ember-data.js',
     'js/dependencies/sails.io.js',
     'js/plugins/slimscroll/jquery.slimscroll.min.js',
