@@ -35,7 +35,7 @@ module.exports = {
 
         tableType: {
             type: 'STRING',
-            alpha: true,
+            text: true,
             required: true
         },
 
