@@ -136,7 +136,7 @@ App.GameController = Ember.ObjectController.extend({
     }.property('model.winners'),
 
     canBuyCards: function () {
-        return (this.get('ownBingoCards.content.length') <= this.get('model.table.maximumCards') && (this.get('idle')));
+        return (this.get('ownBingoCards.content.length') < this.get('model.table.maximumCards') && (this.get('idle')));
     }.property('ownBingoCards','idle'),
 
     actions: {
