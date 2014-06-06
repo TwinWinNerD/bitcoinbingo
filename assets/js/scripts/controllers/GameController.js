@@ -142,11 +142,15 @@ App.GameController = Ember.ObjectController.extend({
     actions: {
 
         buyCard: function () {
-            var store, game, clientSeed, amountOfCards, bingoCard, bingoCards;
+            var store, game, clientSeed, amountOfCards, bingoCard, bingoCards, buyCardButton;
 
             store = this.store;
             game = this.get('model');
             bingoCards = this.get('bingoCards');
+
+            buyCardButton = Ladda.create(document.querySelector('#buyCardButton'));
+
+            buyCardButton.start();
 
             // if no new clientSeed is set, use the one saved in the session
             clientSeed = this.get('clientSeed') ? this.get('clientSeed') : this.get('session.clientSeed');
@@ -163,9 +167,9 @@ App.GameController = Ember.ObjectController.extend({
                 bingoCard.save().then(function (newBingoCard) {
                     game.set('errorMessage', null);
                     bingoCards.pushObject(newBingoCard);
-                    $('#buy-cards-modal').modal('hide');
+                    buyCardButton.stop();
                 }, function (error) {
-
+                    buyCardButton.stop();
                     bingoCard.deleteRecord();
                     game.set('errorMessage', error.error);
                 });

@@ -441,7 +441,7 @@
 
                 {{#if session.isAuthenticated}}
                     {{#if canBuyCards}}
-                        <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
+                        <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
                             <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} mBTC)
                         </button>
                     {{else}}
@@ -555,7 +555,7 @@
                                     {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
                                 </div>
                                 <br>
-                                <button type="submit" class="btn btn-default ladda-button" data-style="expand-left">
+                                <button id="loginButton" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
                                     <span class="ladda-label">Sign In</span>
                                 </button>
                             </fieldset>
@@ -612,7 +612,7 @@
                             <label for="password">Password</label>
                             {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
                         </div>
-                        <button type="submit" class="btn btn-default ladda-button" data-style="expand-left">
+                        <button id="registerButton" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
                             <span class="ladda-label">Create your account</span>
                         </button>
                         </form>

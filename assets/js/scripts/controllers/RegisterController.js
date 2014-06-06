@@ -1,7 +1,11 @@
 App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRouteMixin, {
     actions: {
         register: function () {
-            var username, email, password, self;
+            var username, email, password, self, registerButton;
+
+            registerButton = Ladda.create(document.querySelector('#registerButton'));
+
+            registerButton.start();
 
             username = this.get('username');
             email = this.get('email');
@@ -16,6 +20,8 @@ App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRou
                     provider: "local"
                 }, function(response) {
                     Ember.run(function() {
+                        registerButton.stop();
+
                         if(response.error) {
                             reject(response.error);
                         } else if(response.user) {
