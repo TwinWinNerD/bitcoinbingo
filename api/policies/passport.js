@@ -18,18 +18,18 @@
  * http://passportjs.org/guide/configure/
  *
  * @param {Object}   req
- * @param {Object}   res
+ * @param {Obecjt}   res
  * @param {Function} next
  */
 module.exports = function (req, res, next) {
-    // Initialize Passport
-    passport.initialize()(req, res, function () {
-        // Use the built-in sessions
-        passport.session()(req, res, function () {
-            // Make the user available throughout the frontend
-            res.locals.user = req.user;
+  // Initialize Passport
+  passport.initialize()(req, res, function () {
+    // Use the built-in sessions
+    passport.session()(req, res, function () {
+      // Make the user available throughout the frontend
+      res.locals.user = req.user;
 
-            next();
-        });
+      next();
     });
+  });
 };
