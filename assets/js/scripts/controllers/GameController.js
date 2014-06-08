@@ -19,7 +19,7 @@ App.GameController = Ember.ObjectController.extend({
     }.property('amountOfCards'),
 
     prizePool: function () {
-        return parseFloat(satoshiToMBTC((this.get('amountOfCards') * this.get('model.table.cardPrice')) * 0.95).toFixed(8));
+        return parseFloat(satoshiToBits((this.get('amountOfCards') * this.get('model.table.cardPrice')) * 0.95).toFixed(8));
     }.property('amountOfCards', 'model.table.cardPrice'),
 
     patternPrize: function () {
@@ -73,7 +73,7 @@ App.GameController = Ember.ObjectController.extend({
     }.property('model.gameStatus'),
 
     cardPrice: function () {
-        return satoshiToMBTC(this.get('model.table.cardPrice'));
+        return satoshiToBits(this.get('model.table.cardPrice'));
     }.property('model.table.cardPrice'),
 
     latestNumber: function () {

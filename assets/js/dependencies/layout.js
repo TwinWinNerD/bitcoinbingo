@@ -125,6 +125,6 @@ function RollInHistoryBall(num) {
     }, 500);
 }
 
-function satoshiToMBTC(satoshi) {
-    return satoshi / 100000;
+function satoshiToBits(satoshi) {
+    return satoshi / 100;
 }

@@ -5,6 +5,6 @@ App.CurrentUserController = Ember.ArrayController.extend({
     }.property('username'),
 
     balance: function () {
-        return satoshiToMBTC(this.get('controllers.wallet.balance'));
+        return satoshiToBits(this.get('controllers.wallet.balance'));
     }.property('balance', 'controllers.wallet.balance')
 });
