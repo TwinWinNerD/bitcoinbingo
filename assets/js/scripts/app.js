@@ -15,7 +15,6 @@ var BingoAuthenticator = Ember.SimpleAuth.Authenticators.Base.extend({
     authenticate: function(credentials) {
 
         return new Ember.RSVP.Promise(function (resolve, reject) {
-            console.log(credentials);
             socket.post('/login', {
                 username: credentials.username,
                 password: credentials.password

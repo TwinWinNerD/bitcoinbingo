@@ -10,29 +10,19 @@ App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRou
             username = this.get('username');
             self = this;
 
-            return new Ember.RSVP.Promise(function (resolve, reject) {
-                socket.post('/api/user', {
-                    username: username
-                }, function(response) {
-                    Ember.run(function() {
-                        registerButton.stop();
+            socket.post('/api/user', {
+                username: username
+            }, function(response) {
+                registerButton.stop();
 
-                        console.log(response);
-
-                        if(response.error) {
-                            reject(response.error);
-                        } else if(response) {
-                            var user = response;
-
-                            self.get('session').authenticate('authenticator:custom', {
-                                username: username,
-                                password: null
-                            });
-
-                            resolve(user);
-                        }
+                if(response.error) {
+                    self.set('errorMessage', response.error);
+                } else if(response) {
+                    self.get('session').authenticate('authenticator:custom', {
+                        username: username,
+                        password: null
                     });
-                });
+                }
             });
         }
     }
