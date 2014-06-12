@@ -3,14 +3,20 @@ App.LoginController = Ember.Controller.extend(Ember.SimpleAuth.LoginControllerMi
 
     actions: {
         authenticate: function () {
-            var loginButton = Ladda.create(document.querySelector('#loginButton'));
+            var loginButton, self;
 
+            self = this;
+
+            loginButton = Ladda.create(document.querySelector('#loginButton'));
             loginButton.start();
 
             this.get('session').authenticate('authenticator:custom', {
                 username: this.get('username'),
                 password: this.get('password')
             }).then(function () {
+                loginButton.stop();
+            }, function (error) {
+                self.set('errorMessage', error);
                 loginButton.stop();
             });
         }

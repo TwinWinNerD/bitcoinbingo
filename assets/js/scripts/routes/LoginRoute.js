@@ -4,10 +4,6 @@ App.LoginRoute = Ember.Route.extend({
         controller.set('errorMessage', null);
     },
     actions: {
-        // display an error when authentication fails
-        sessionAuthenticationFailed: function(message) {
-            this.controller.set('errorMessage', message);
-        },
         sessionAuthenticationSucceeded: function() {
             Ember.RSVP.hash({
                 deposits: this.store.find('deposit', { user: this.get('session.id') }),
