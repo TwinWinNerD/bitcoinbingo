@@ -8,7 +8,7 @@ App.LoginController = Ember.Controller.extend(Ember.SimpleAuth.LoginControllerMi
             loginButton.start();
 
             this.get('session').authenticate('authenticator:custom', {
-                identification: this.get('identification'),
+                username: this.get('username'),
                 password: this.get('password')
             }).then(function () {
                 loginButton.stop();

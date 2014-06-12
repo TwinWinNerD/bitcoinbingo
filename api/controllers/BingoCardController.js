@@ -19,8 +19,8 @@ module.exports = {
         // Omit the blacklisted params (like JSONP callback param, etc.)
         var data = actionUtil.parseValues(req);
 
-        if(typeof req.user !== "undefined") {
-            data.user = req.user.id;
+        if(typeof req.session.user !== "undefined" && req.session.user !== null) {
+            data.user = req.session.user.id;
 
             BingoCardService.isUserAllowedToBuyCards(data.game, data.user).then(function (resolve) {
                 if(resolve) {

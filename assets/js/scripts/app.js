@@ -15,16 +15,16 @@ var BingoAuthenticator = Ember.SimpleAuth.Authenticators.Base.extend({
     authenticate: function(credentials) {
 
         return new Ember.RSVP.Promise(function (resolve, reject) {
-            socket.post('/auth/local', {
-                identifier: credentials.identification,
-                password: credentials.password,
-                provider: "local"
+            console.log(credentials);
+            socket.post('/login', {
+                username: credentials.username,
+                password: credentials.password
         }, function(response) {
                 Ember.run(function() {
                     if(response.error) {
                         reject(response.error);
-                    } else if(response.user) {
-                        resolve(response.user);
+                    } else if(response) {
+                        resolve(response);
                     }
                 });
             });

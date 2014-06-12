@@ -1,35 +1,32 @@
 App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRouteMixin, {
     actions: {
         register: function () {
-            var username, email, password, self, registerButton;
+            var username, self, registerButton;
 
             registerButton = Ladda.create(document.querySelector('#registerButton'));
 
             registerButton.start();
 
             username = this.get('username');
-            email = this.get('email');
-            password = this.get('password');
             self = this;
 
             return new Ember.RSVP.Promise(function (resolve, reject) {
-                socket.post('/auth/local/register', {
-                    username: username,
-                    email: email,
-                    password: password,
-                    provider: "local"
+                socket.post('/api/user', {
+                    username: username
                 }, function(response) {
                     Ember.run(function() {
                         registerButton.stop();
 
+                        console.log(response);
+
                         if(response.error) {
                             reject(response.error);
-                        } else if(response.user) {
-                            var user = response.user;
+                        } else if(response) {
+                            var user = response;
 
                             self.get('session').authenticate('authenticator:custom', {
-                                identification: username,
-                                password: password
+                                username: username,
+                                password: null
                             });
 
                             resolve(user);

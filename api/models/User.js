@@ -1,9 +1,9 @@
 /**
-* User.js
-*
-* @description :: TODO: You might write a short summary of how this model works and what it represents here.
-* @docs        :: http://sailsjs.org/#!documentation/models
-*/
+ * User.js
+ *
+ * @description :: TODO: You might write a short summary of how this model works and what it represents here.
+ * @docs        :: http://sailsjs.org/#!documentation/models
+ */
 
 var bcrypt;
 
@@ -16,6 +16,7 @@ module.exports = {
         username: {
             type: 'STRING',
             unique: true,
+            minLength: 3,
             required: true
         },
 
@@ -24,6 +25,10 @@ module.exports = {
             email: true,
             unique: true,
             required: false
+        },
+
+        password: {
+            type: 'STRING'
         },
 
         clientSeed: {
@@ -50,11 +55,28 @@ module.exports = {
         winners: {
             collection: 'winner',
             via: 'user'
-        },
+        }
+    },
 
-        passports : {
-            collection: 'Passport',
-            via: 'user'
+    beforeCreate: function (user, next) {
+        if (user.hasOwnProperty('password')) {
+            bcrypt.hash(user.password, 10, function (err, hash) {
+                user.password = hash;
+                next(err, user);
+            });
+        } else {
+            next(null, user);
+        }
+    },
+
+    beforeUpdate: function (user, next) {
+        if (user.hasOwnProperty('password')) {
+            bcrypt.hash(user.password, 10, function (err, hash) {
+                user.password = hash;
+                next(err, user);
+            });
+        } else {
+            next(null, user);
         }
     }
 

@@ -17,8 +17,8 @@ module.exports = {
         // Omit the blacklisted params (like JSONP callback param, etc.)
         var data = actionUtil.parseValues(req);
 
-        if(typeof req.user !== "undefined") {
-            data.user = req.user.username;
+        if(typeof req.session.user !== "undefined" && req.session.user !== null) {
+            data.user = req.user.session.username;
 
             Message.create(data).exec(function created (err, newInstance) {
 
