@@ -95,6 +95,32 @@ module.exports = {
 
 
                                         });
+                                    },
+                                    addedToGame: function(done) {
+
+                                        Game.findOne(data.game).exec(function(err, result) {
+                                            if(err) {
+                                                done(err);
+                                            } else {
+                                                var foundUser = false;
+                                                for(var i = 0; i < result.users.length; i++) {
+                                                    if(result.users[i].id === data.user) {
+                                                        foundUser = true;
+                                                    }
+                                                }
+
+                                                if(foundUser) {
+                                                    done(null);
+                                                } else {
+                                                    result.users.add(data.user);
+                                                    result.save();
+
+                                                    done(null);
+                                                }
+
+                                            }
+                                        });
+
                                     }
                                 }, function(error, results) {
 

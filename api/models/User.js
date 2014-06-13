@@ -55,6 +55,11 @@ module.exports = {
         winners: {
             collection: 'winner',
             via: 'user'
+        },
+
+        games: {
+            collection: 'game',
+            via: 'users'
         }
     },
 

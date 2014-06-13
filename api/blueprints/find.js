@@ -52,6 +52,7 @@ module.exports = function findRecords (req, res) {
         case 'game':
             query.populate('table');
             query.populate('bingoCards');
+            query.populate('users');
             break;
         default:
             query = actionUtil.populateEach(query, req.options);

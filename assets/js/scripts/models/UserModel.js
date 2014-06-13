@@ -4,5 +4,6 @@ App.User = DS.Model.extend({
     bingoCards: DS.hasMany('bingoCard'),
     deposits: DS.hasMany('deposit'),
     withdrawals: DS.hasMany('withdrawal'),
-    winners: DS.hasMany('winner')
+    winners: DS.hasMany('winner'),
+    games: DS.hasMany('game')
 });

@@ -8,6 +8,7 @@ App.Game = DS.Model.extend({
     bingoCards: DS.hasMany('bingoCard'),
     messages: DS.hasMany('message'),
     winners: DS.hasMany('winner'),
+    users: DS.hasMany('user'),
     createdAt: DS.attr(),
     updatedAt: DS.attr()
 });

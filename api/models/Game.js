@@ -58,6 +58,11 @@ module.exports = {
         messages: {
             collection: 'message',
             via: 'game'
+        },
+
+        users: {
+            collection: 'user',
+            via: 'games'
         }
 
 	}
