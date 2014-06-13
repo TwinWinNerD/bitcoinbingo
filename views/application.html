@@ -175,7 +175,7 @@
                             {{#each game in lastPersonalGames itemController='game'}}
                             <tr>
                                 <td>{{game.id}}</td>
-                                <td>{{game.updatedAt}}</td>
+                                <td>{{convertDateToLocale game.updatedAt}}</td>
                                 <td>{{game.gameStatus}}</td>
                                 <td>{{#link-to 'game' game.id class='btn btn-green'}}Watch{{/link-to}}</td>
                             </tr>
@@ -715,7 +715,7 @@
                             {{#each withdrawal in last10userWithdrawals}}
                             <tr>
                                 <td>{{withdrawal.id}}</td>
-                                <td>{{withdrawal.createdAt}}</td>
+                                <td>{{convertDateToLocale withdrawal.createdAt}}</td>
                                 <td>{{satoshiToBits withdrawal.amount}} Bits</td>
                                 <td>{{withdrawal.withdrawalType}}</td>
                             </tr>
@@ -749,7 +749,7 @@
                             {{#each deposit in last10userDeposits}}
                             <tr>
                                 <td>{{deposit.id}}</td>
-                                <td>{{deposit.createdAt}}</td>
+                                <td>{{convertDateToLocale deposit.createdAt}}</td>
                                 <td>{{satoshiToBits deposit.amount}} Bits</td>
                                 <td>{{deposit.depositType}}</td>
                             </tr>
