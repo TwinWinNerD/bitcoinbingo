@@ -152,6 +152,6 @@ module.exports.blueprints = {
 
     autoWatch: false,
 
-    defaultLimit: Number.MAX_VALUE
+    maxLimit: Number.MAX_VALUE
 
 };
