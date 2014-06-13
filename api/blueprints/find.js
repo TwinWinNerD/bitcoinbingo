@@ -59,6 +59,20 @@ module.exports = function findRecords (req, res) {
             break;
     }
 
+    var requestGamesHistory = false;
+
+    if(req.options.model === 'game' && typeof actionUtil.parseCriteria(req).user !== 'undefined') {
+        query = User.findOne(actionUtil.parseCriteria(req).user)
+            .populate('games', {
+                where: { gameStatus: "finished"},
+                skip: actionUtil.parseSkip(req),
+                limit: actionUtil.parseLimit(req),
+                sort: "updatedAt ASC"
+            });
+
+        requestGamesHistory = true;
+    }
+
     query.exec(function found(err, matchingRecords) {
         if (err) return res.serverError(err);
 
@@ -77,6 +91,13 @@ module.exports = function findRecords (req, res) {
             _.each(matchingRecords, function (record) {
                 actionUtil.subscribeDeep(req, record);
             });
+        }
+
+
+        if(requestGamesHistory) {
+            matchingRecords = matchingRecords.toJSON();
+
+            return res.ok(matchingRecords.games);
         }
 
         res.ok(matchingRecords);
