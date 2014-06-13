@@ -18,7 +18,7 @@ module.exports = {
         var data = actionUtil.parseValues(req);
 
         if(typeof req.session.user !== "undefined" && req.session.user !== null) {
-            data.user = req.user.session.username;
+            data.user = req.session.user.username;
 
             Message.create(data).exec(function created (err, newInstance) {
 
