@@ -504,9 +504,13 @@
                     {{/if}}
                 {{/if}}
 
+                {{#if finished}}
                 <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'showWinnerModal'}}>
                     <span class="ladda-label">Show Winners</span>
                 </button>
+                {{else}}
+                    <button class="btn btn-red btn-block disabled">Show Winners</button>
+                {{/if}}
             </div>
             <div class="col-lg-6">
                 {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
@@ -766,15 +770,51 @@
 <script type="text/x-handlebars" data-template-name="winnerModal">
     <div class="modal-header">
         <button type="button" class="close" {{action close target="view"}}>&times;</button>
-        <h3>We have a winner!</h3>
+        <h3>We have some winners!</h3>
     </div>
     <div class="modal-body">
-        {{#each winner in gameWinners}}
-        <p>
-            {{winner.user.username}}<br>
-            {{winner.amount}}
-        </p>
-        {{/each}}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Winner</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Card</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each winner in gameWinners}}
+                <tr>
+                    <td>{{winner.user.username}}</td>
+                    <td>{{winner.winnerType}}</td>
+                    <td>{{satoshiToBits winner.amount}} Bits</td>
+                    <td>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-card">
+                                    <tbody>
+                                    {{#each row in winner.bingoCard.squares}}
+                                    <tr>
+                                        {{#each number in row}}
+                                            {{#if number}}
+                                                <td>{{number}}</td>
+                                            {{else}}
+                                                <td>{{number}}</td>
+                                            {{/if}}
+                                        {{/each}}
+                                    </tr>
+                                    {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn btn-primary" {{action close}}>Close</a>
