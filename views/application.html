@@ -164,13 +164,18 @@
                         <strong>Saving settings failed:</strong> {{errorMessage}}
                     </div>
                     {{/if}}
+                    {{#if successMessage}}
+                    <div class="alert alert-success">
+                        <strong>Settings saved!</strong>
+                    </div>
+                    {{/if}}
                     <form accept-charset="UTF-8" role="form" {{action 'saveSettings' on='submit'}}>
                     <fieldset>
                         <div class="form-group">
                             {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed' class='form-control' value=clientSeed}}
                         </div>
                         <div class="form-group">
-                            {{input id='email' name='email' placeholder='Enter email' class='form-control' type='email' value=email}}
+                            {{input id='email' name='email' placeholder='Enter email' class='form-control' value=email}}
                         </div>
                         <div class="form-group">
                             {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
@@ -179,6 +184,11 @@
                         <button id="saveSettings" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
                             <span class="ladda-label">Save Settings</span>
                         </button>
+                        {{#if isDirty}}
+                        <div class="pull-right">
+
+                        </div>
+                        {{/if}}
                     </fieldset>
                     </form>
                 </div>
