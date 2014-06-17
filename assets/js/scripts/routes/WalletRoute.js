@@ -1,4 +1,4 @@
-App.WalletRoute = Ember.Route.extend({
+App.WalletRoute = Ember.Route.extend(Ember.SimpleAuth.AuthenticatedRouteMixin, {
     model: function () {
         if(!this.controllerFor('wallet').get('loadedWallet')) {
             return Ember.RSVP.hash({
