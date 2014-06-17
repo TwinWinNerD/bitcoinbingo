@@ -60,6 +60,7 @@ App.Router.map(function () {
     this.route('register');
     this.route('wallet');
     this.resource('games', { path: '/' });
+    this.resource('settings', { path: '/settings' });
     this.resource('gamesHistory', { path: '/history' });
     this.resource('game', { path: '/game/:game_id' });
 });

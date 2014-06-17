@@ -4,6 +4,9 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
+var bcrypt;
+
+bcrypt = require('bcrypt');
 
 module.exports = {
 
@@ -17,11 +20,20 @@ module.exports = {
 
 
         if(typeof req.session.user === "undefined" || req.session.user === null) {
-            User.findOne().where( { username: username, password: password }).exec(function (error, user) {
+            User.findOne().where( { username: username }).exec(function (error, user) {
 
                 if (user && user !== null) {
-                    req.session.user = user;
-                    res.send(user);
+
+                    bcrypt.compare(password, user.password, function(err, result) {
+                        if(result) {
+                            req.session.user = user;
+                            res.send(user);
+                        } else {
+                            res.json(500, { error: "We couldn't log you in with these details."});
+                        }
+
+                    });
+
                 } else {
                     res.json(500, { error: "We couldn't log you in with these details."});
                 }
