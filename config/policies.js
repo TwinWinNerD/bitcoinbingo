@@ -80,4 +80,13 @@ module.exports.policies = {
         findOne: false,
         update: false
     },
+
+    WithdrawalController: {
+        add: false,
+        create: false, // TODO: ofcourse we want withdrawals, but we first need to write this functionality
+        destroy: false,
+        find: ['isAuthenticated', 'belongsToUser'],
+        findOne: false,
+        update: false
+    },
 };
