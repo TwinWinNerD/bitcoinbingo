@@ -25,5 +25,14 @@ module.exports.policies = {
         find: false,
         findOne: ['isAuthenticated', 'isUser'],
         update: ['isAuthenticated', 'isUser', 'protectedAttributes']
-    }
+    },
+
+    BingoCardController: {
+        add: false,
+        create: ['isAuthenticated'],
+        destroy: false,
+        find: false,
+        findOne: false,
+        update: false
+    },
 };
