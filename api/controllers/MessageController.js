@@ -42,7 +42,8 @@ module.exports = {
 
 
             });
-
+        } else {
+            res.json(500, { error: "Please make sure you are logged in." });
         }
     }
 };

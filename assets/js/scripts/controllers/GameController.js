@@ -178,32 +178,29 @@ App.GameController = Ember.ObjectController.extend({
         },
 
         sendMessage: function () {
-            var store, game, messages, message, record, self;
+            var store, game, messages, message, record, user, self;
 
             store = this.store;
             game = this.get('model');
             messages = this.get('messages');
             message = this.get('message');
+            user = this.get('session.username');
             self = this;
 
+            if(message.trim() !== "") {
+                record = store.createRecord('message', {
+                    game: game,
+                    body: message,
+                    user: user
+                });
 
-            record = store.createRecord('message', {
-                game: game,
-                body: message
-            });
-
-            record.save().then(function (newMessage) {
-                self.set('message','');
-
-//                $(".chat-widget").slimScroll({ scrollTo: $('.chat-widget')[0].scrollHeight});
-
-                // reset error
-                // game.set('errorMessage', null);
-                messages.pushObject(newMessage);
-            }, function (error) {
-                // handle error
-            });
-
+                record.save().then(function (newMessage) {
+                    self.set('message','');
+                    messages.pushObject(newMessage);
+                }, function (error) {
+                    // handle error
+                });
+            }
         }
     }
 });
