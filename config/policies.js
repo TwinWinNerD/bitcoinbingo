@@ -35,4 +35,13 @@ module.exports.policies = {
         findOne: false,
         update: false
     },
+
+    DepositController: {
+        add: false,
+        create: false,
+        destroy: false,
+        find: ['isAuthenticated', 'belongsToUser'],
+        findOne: false,
+        update: false
+    },
 };
