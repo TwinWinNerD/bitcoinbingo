@@ -62,4 +62,13 @@ module.exports.policies = {
         findOne: false,
         update: false
     },
+
+    TableController: {
+        add: false,
+        create: false,
+        destroy: false,
+        find: false,
+        findOne: false,
+        update: false
+    },
 };
