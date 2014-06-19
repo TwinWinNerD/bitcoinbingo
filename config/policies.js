@@ -53,4 +53,13 @@ module.exports.policies = {
         findOne: true,
         update: false
     },
+
+    MessageController: {
+        add: false,
+        create: ['isAuthenticated'],
+        destroy: false,
+        find: false,
+        findOne: false,
+        update: false
+    },
 };
