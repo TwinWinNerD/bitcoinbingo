@@ -2,8 +2,8 @@ App.WalletRoute = Ember.Route.extend(Ember.SimpleAuth.AuthenticatedRouteMixin, {
     model: function () {
         if(!this.controllerFor('wallet').get('loadedWallet')) {
             return Ember.RSVP.hash({
-                deposits: this.store.find('deposit', { user: this.get('session.id') }),
-                withdrawals: this.store.find('withdrawal', { user: this.get('session.id') })
+                deposits: this.store.find('deposit', { user: this.get('session.id'), limit: 20, sort: 'createdAt DESC' }),
+                withdrawals: this.store.find('withdrawal', { user: this.get('session.id'), limit: 20, sort: 'createdAt DESC' })
             });
         } else {
             var userId = this.get('session.content.id');

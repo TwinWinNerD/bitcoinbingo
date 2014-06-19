@@ -1,11 +1,16 @@
 App.WalletController = Ember.ArrayController.extend({
     userDeposits: function () {
         var userId = this.get('session.content.id');
-        return this.store.filter('deposit', function(deposit) {
-            return deposit.get('user.id') === userId;
+
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: ['createdAt'],
+            sortAscending: false,
+            content: this.store.filter('deposit', function(deposit) {
+                return deposit.get('user.id') === userId;
+            })
         });
     }.property('deposits'),
-    last10userDeposits: function () {
+    last20userDeposits: function () {
         var amountOfDeposits, startIndex;
 
         amountOfDeposits = this.get('userDeposits.length');
@@ -20,11 +25,16 @@ App.WalletController = Ember.ArrayController.extend({
     }.property('userDeposits.[]'),
     userWithdrawals: function () {
         var userId = this.get('session.content.id');
-        return this.store.filter('withdrawal', function(withdrawal) {
-            return withdrawal.get('user.id') === userId;
+
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: ['createdAt'],
+            sortAscending: false,
+            content: this.store.filter('withdrawal', function(withdrawal) {
+                return withdrawal.get('user.id') === userId;
+            })
         });
     }.property('withdrawals'),
-    last10userWithdrawals: function () {
+    last20userWithdrawals: function () {
         var amountOfWithdrawals, startIndex;
 
         amountOfWithdrawals = this.get('userWithdrawals.length');

@@ -778,7 +778,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each withdrawal in last10userWithdrawals}}
+                            {{#each withdrawal in last20userWithdrawals}}
                             <tr>
                                 <td>{{withdrawal.id}}</td>
                                 <td>{{convertDateToLocale withdrawal.createdAt}}</td>
@@ -812,7 +812,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each deposit in last10userDeposits}}
+                            {{#each deposit in last20userDeposits}}
                             <tr>
                                 <td>{{deposit.id}}</td>
                                 <td>{{convertDateToLocale deposit.createdAt}}</td>
