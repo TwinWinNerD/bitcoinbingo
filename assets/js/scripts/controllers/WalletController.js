@@ -11,17 +11,7 @@ App.WalletController = Ember.ArrayController.extend({
         });
     }.property('deposits'),
     last20userDeposits: function () {
-        var amountOfDeposits, startIndex;
-
-        amountOfDeposits = this.get('userDeposits.length');
-
-        if(amountOfDeposits > 15) {
-            startIndex = amountOfDeposits - 15;
-        } else {
-            startIndex = 0;
-        }
-
-        return this.get('userDeposits').toArray().slice(startIndex)
+        return this.get('userDeposits').toArray().slice(0, 20)
     }.property('userDeposits.[]'),
     userWithdrawals: function () {
         var userId = this.get('session.content.id');
@@ -35,16 +25,6 @@ App.WalletController = Ember.ArrayController.extend({
         });
     }.property('withdrawals'),
     last20userWithdrawals: function () {
-        var amountOfWithdrawals, startIndex;
-
-        amountOfWithdrawals = this.get('userWithdrawals.length');
-
-        if(amountOfWithdrawals > 15) {
-            startIndex = amountOfWithdrawals - 15;
-        } else {
-            startIndex = 0;
-        }
-
-        return this.get('userWithdrawals').toArray().slice(startIndex)
+        return this.get('userWithdrawals').toArray().slice(0, 20)
     }.property('userWithdrawals.[]')
 });
