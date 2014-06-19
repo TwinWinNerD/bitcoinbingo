@@ -21,6 +21,8 @@ App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRou
                     self.get('session').authenticate('authenticator:custom', {
                         username: username,
                         password: null
+                    }).then(function (user) {
+                        self.store.find('user', self.get('session.id'));
                     });
                 }
             });

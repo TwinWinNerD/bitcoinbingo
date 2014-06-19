@@ -4,11 +4,10 @@ App.LoginRoute = Ember.Route.extend({
     },
     actions: {
         sessionAuthenticationSucceeded: function() {
-            Ember.RSVP.hash({
-                deposits: this.store.find('deposit', { user: this.get('session.id') }),
-                withdrawals: this.store.find('withdrawal', { user: this.get('session.id') })
+            var self = this;
+            return this.store.find('user', { user: this.get('session.id') }).then(function () {
+                self.transitionTo('games');
             });
-            this.transitionTo('games');
         }
     }
 });
