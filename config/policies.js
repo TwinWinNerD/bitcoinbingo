@@ -24,6 +24,6 @@ module.exports.policies = {
         destroy: false,
         find: false,
         findOne: ['isAuthenticated', 'isUser'],
-        update: ['isAuthenticated', 'isUser']
+        update: ['isAuthenticated', 'isUser', 'protectedAttributes']
     }
 };

@@ -74,6 +74,10 @@ module.exports = {
         }
     },
 
+    protectedAttributes: function () {
+        return [ "username", "balance", "bingoCards", "games", "winners", "deposits", "withdrawals" ];
+    },
+
     beforeCreate: function (user, next) {
         if (user.hasOwnProperty('password')) {
             bcrypt.hash(user.password, 10, function (err, hash) {
