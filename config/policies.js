@@ -44,4 +44,13 @@ module.exports.policies = {
         findOne: false,
         update: false
     },
+
+    GameController: {
+        add: false,
+        create: false,
+        destroy: false,
+        find: true,
+        findOne: true,
+        update: false
+    },
 };
