@@ -24,7 +24,8 @@ module.exports = {
             type: 'STRING',
             email: true,
             unique: true,
-            required: false
+            required: false,
+            defaultsTo: ""
         },
 
         password: {
@@ -33,8 +34,8 @@ module.exports = {
 
         clientSeed: {
             type: 'STRING',
-            alphanumeric: true,
-            required: false
+            required: false,
+            defaultsTo: ""
         },
 
         balance: {
