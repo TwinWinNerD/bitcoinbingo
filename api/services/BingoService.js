@@ -382,6 +382,28 @@ function rewardWinners (game, winners) {
                     done();
                 }
             });
+        },
+        function (done) {
+            User.findOne(winner.user).exec(function (error, result) {
+                if(!error) {
+                    var userBalance = result.balance;
+
+                    for(var i = 0; i < depositData.length; i++) {
+                        userBalance += depositData[i].amount;
+                    }
+
+                    User.update(winner.user, { balance: userBalance }).exec(function (error, result) {
+                        if(!error) {
+                            User.publishUpdate(winner.user, { balance: userBalance }, null);
+                            done(null,result);
+                        } else {
+                            done(error);
+                        }
+                    });
+                } else {
+                    done(error);
+                }
+            });
         }
     ], function (error, results) {
         if(!error) {

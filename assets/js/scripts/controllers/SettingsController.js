@@ -1,8 +1,7 @@
 App.SettingsController = Ember.ObjectController.extend({
-    needs: ['currentUser'],
-    id: Ember.computed.alias('controllers.currentUser.id'),
-    email: Ember.computed.alias('controllers.currentUser.email'),
-    clientSeed: Ember.computed.alias('controllers.currentUser.clientSeed'),
+    id: Ember.computed.alias('session.currentUser.id'),
+    email: Ember.computed.alias('session.currentUser.email'),
+    clientSeed: Ember.computed.alias('session.currentUser.clientSeed'),
     password: '',
     errorMessage: null,
     successMessage: null,

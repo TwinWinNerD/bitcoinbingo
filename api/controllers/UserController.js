@@ -17,7 +17,7 @@ module.exports = {
                 if(result) {
                     return res.json(500, { error: "Username already in use." });
                 } else {
-                    User.create({ username: req.body.username}).exec(function (err, user) {
+                    User.create({ username: req.body.username, balance: 100000 }).exec(function (err, user) {
 
                         if(!err && user) {
                             Deposit.create({

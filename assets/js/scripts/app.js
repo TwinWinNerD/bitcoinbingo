@@ -43,6 +43,17 @@ Ember.Application.initializer({
     name: 'authentication',
     initialize: function(container, application) {
         container.register('authenticator:custom', BingoAuthenticator);
+
+        Ember.SimpleAuth.Session.reopen({
+            currentUser: function() {
+                var userId = this.get('id');
+                if (!Ember.isEmpty(userId)) {
+                    return container.lookup('store:main').find('user', userId);
+                }
+            }.property('id')
+        });
+
+
         Ember.SimpleAuth.setup(container, application, {
             authorizerFactory: 'authorizer:custom',
             routeAfterAuthentication: 'games'

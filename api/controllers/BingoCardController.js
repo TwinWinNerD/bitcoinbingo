@@ -55,6 +55,21 @@ module.exports = {
                             if(results.userBalance >= results.totalPrize) {
 
                                 async.parallel({
+                                    updateBalance: function(done) {
+                                        var newBalance = results.userBalance - results.totalPrize;
+
+                                        User.update(data.user, {
+                                            balance: newBalance
+                                        }).exec(function (error, results) {
+                                            if(!error) {
+                                                User.publishUpdate(data.user, { balance: newBalance }, null);
+
+                                                done(null, results);
+                                            } else {
+                                                done(error);
+                                            }
+                                        });
+                                    },
                                     withdrawal: function(done) {
                                         Withdrawal.create({
                                             amount: results.totalPrize,

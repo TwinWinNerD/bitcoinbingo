@@ -37,6 +37,11 @@ module.exports = {
             required: false
         },
 
+        balance: {
+            type: 'INTEGER',
+            defaultsTo: 0
+        },
+
         bingoCards: {
             collection: 'bingoCard',
             via: 'user'

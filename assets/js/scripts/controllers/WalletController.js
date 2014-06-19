@@ -36,26 +36,5 @@ App.WalletController = Ember.ArrayController.extend({
         }
 
         return this.get('userWithdrawals').toArray().slice(startIndex)
-    }.property('userWithdrawals.[]'),
-    balance: function () {
-        var deposits, totalDeposits, withdrawals, totalWithdrawals;
-
-        deposits = this.get('userDeposits');
-        withdrawals = this.get('userWithdrawals');
-
-
-        totalDeposits = deposits.reduce(function (prev, deposit) {
-            return prev + deposit.get('amount');
-        }, 0);
-
-        totalWithdrawals = withdrawals.reduce(function (prev, withdrawal) {
-            return prev + withdrawal.get('amount');
-        }, 0);
-
-        console.log(totalDeposits);
-        console.log(totalWithdrawals);
-
-        return totalDeposits - totalWithdrawals;
-
-    }.property('userDeposits.@each.amount', 'userWithdrawals.@each.amount')
+    }.property('userWithdrawals.[]')
 });
