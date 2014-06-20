@@ -7,7 +7,6 @@
   "dependencies": {
     "async": "~0.2.10",
     "bcrypt": "^0.7.7",
-    "connect-redis": "^1.4.5",
     "ejs": "~0.8.4",
     "grunt": "0.4.2",
     "grunt-contrib-clean": "~0.5.0",
@@ -31,7 +30,8 @@
     "sails-disk": "~0.10.0",
     "sails-generate-auth": "^0.1.2",
     "sails-mongo": "^0.10.0-rc3",
-    "validator": "^3.8.0"
+    "validator": "^3.8.0",
+    "connect-redis": "1.4.5"
   },
   "scripts": {
     "start": "node app.js",
