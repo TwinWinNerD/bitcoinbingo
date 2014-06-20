@@ -46,32 +46,7 @@ module.exports = function findRecords (req, res) {
         .sort( actionUtil.parseSort(req) );
     // TODO: .populateEach(req.options);
 
-    switch(req.options.model) {
-        case 'user':
-            break;
-        case 'game':
-            query.populate('table');
-            query.populate('bingoCards');
-            query.populate('users');
-            break;
-        default:
-            query = actionUtil.populateEach(query, req.options);
-            break;
-    }
-
-    var requestGamesHistory = false;
-
-    if(req.options.model === 'game' && typeof actionUtil.parseCriteria(req).user !== 'undefined') {
-        query = User.findOne(actionUtil.parseCriteria(req).user)
-            .populate('games', {
-                where: { gameStatus: "finished"},
-                skip: actionUtil.parseSkip(req),
-                limit: actionUtil.parseLimit(req),
-                sort: "updatedAt ASC"
-            });
-
-        requestGamesHistory = true;
-    }
+    query = actionUtil.populateEach(query, req.options);
 
     query.exec(function found(err, matchingRecords) {
         if (err) return res.serverError(err);
@@ -91,13 +66,6 @@ module.exports = function findRecords (req, res) {
             _.each(matchingRecords, function (record) {
                 actionUtil.subscribeDeep(req, record);
             });
-        }
-
-
-        if(requestGamesHistory) {
-            matchingRecords = matchingRecords.toJSON();
-
-            return res.ok(matchingRecords.games);
         }
 
         res.ok(matchingRecords);
