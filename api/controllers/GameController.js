@@ -71,7 +71,7 @@ module.exports = {
                     if(typeof game.users[j] !== "undefined") {
 
                         if(typeof game.users[j].email !== "undefined") delete game.users[j].email;
-                        if(typeof game.users[j].balance !== "undefined") delete game.users[j].balance;
+                        // if(typeof game.users[j].balance !== "undefined") delete game.users[j].balance;
 
                     }
                 }
