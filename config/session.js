@@ -29,10 +29,7 @@ module.exports.session = {
     // In production, uncomment the following lines to set up a shared redis session store
     // that can be shared across multiple Sails.js servers
     adapter: 'redis',
-    host: process.env.REDIS_HOST,
-    db: process.env.REDIS_DB,
-    port: process.env.REDIS_PORT,
-    pass: process.env.REDIS_PASS,
+    url: process.env.REDISCLOUD_URL,
     //
     // The following values are optional, if no options are set a redis instance running
     // on localhost is expected.
