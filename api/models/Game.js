@@ -5,6 +5,10 @@
  * @docs		:: http://sailsjs.org/#!documentation/models
  */
 
+var crypto;
+
+crypto = require('crypto');
+
 module.exports = {
 
 	attributes: {
@@ -63,6 +67,20 @@ module.exports = {
         users: {
             collection: 'user',
             via: 'games'
+        },
+
+        toJSON: function() {
+            var obj;
+
+            obj = this.toObject();
+
+            obj.serverSeedHash = crypto.createHash('sha256').update(obj.serverSeed).digest('hex');
+
+            if(obj.gameStatus !== "finished") {
+                obj.serverSeed = "";
+            }
+
+            return obj;
         }
 
 	}
