@@ -234,7 +234,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{#each game in lastPersonalGames itemController='game'}}
+                            {{#each game in lastPersonalGamesSorted itemController='game'}}
                             <tr>
                                 <td>{{game.id}}</td>
                                 <td>{{convertDateToLocale game.updatedAt}}</td>
