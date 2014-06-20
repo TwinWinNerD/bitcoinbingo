@@ -382,32 +382,38 @@ function rewardWinners (game, winners) {
                     done();
                 }
             });
-        },
-        function (done) {
-            User.findOne(winner.user).exec(function (error, result) {
-                if(!error) {
-                    var userBalance = result.balance;
-
-                    for(var i = 0; i < depositData.length; i++) {
-                        userBalance += depositData[i].amount;
-                    }
-
-                    User.update(winner.user, { balance: userBalance }).exec(function (error, result) {
-                        if(!error) {
-                            User.publishUpdate(winner.user, { balance: userBalance }, null);
-                            done(null,result);
-                        } else {
-                            done(error);
-                        }
-                    });
-                } else {
-                    done(error);
-                }
-            });
         }
     ], function (error, results) {
         if(!error) {
-            deferred.resolve(results);
+
+            async.eachSeries(depositData, function (deposit, done) {
+                User.findOne(deposit.user).exec(function (error, result) {
+                    if(!error) {
+                        var userBalance = result.balance;
+
+                        userBalance += deposit.amount;
+
+                        User.update(deposit.user, { balance: userBalance }).exec(function (error, result) {
+                            if(!error) {
+                                User.publishUpdate(deposit.user, { balance: userBalance }, null);
+                                done(null,result);
+                            } else {
+                                done(error);
+                            }
+                        });
+                    } else {
+                        done(error);
+                    }
+                });
+            }, function (error) {
+
+                if(!error) {
+                    deferred.resolve(results);
+                } else {
+                    deferred.reject(error);
+                }
+            });
+
         } else {
             deferred.reject(error);
         }
