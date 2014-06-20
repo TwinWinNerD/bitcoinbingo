@@ -12,9 +12,6 @@ actionUtil = require('../actionUtil');
 module.exports = {
 
     find: function(req, res) {
-
-        console.log("inside find");
-
         var Model = actionUtil.parseModel(req);
 
         // Lookup for records that match the specified criteria
@@ -37,7 +34,7 @@ module.exports = {
                     where: { gameStatus: "finished"},
                     skip: actionUtil.parseSkip(req),
                     limit: actionUtil.parseLimit(req),
-                    sort: "updatedAt ASC"
+                    sort: actionUtil.parseSort(req)
                 });
 
             requestGamesHistory = true;
