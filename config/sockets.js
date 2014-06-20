@@ -43,10 +43,10 @@ module.exports.sockets = {
     // Use this option to set the datastore socket.io will use to manage rooms/sockets/subscriptions:
     // default: memory
     adapter: 'redis',
-    host: process.env.REDIS_HOST,
-    db: process.env.REDIS_DB,
-    port: process.env.REDIS_PORT,
-    pass: process.env.REDIS_PASS,
+    host: process.env.REDIS_HOST || 'localhost',
+    db: process.env.REDIS_DB || 'bitcoinbingo',
+    port: process.env.REDIS_PORT || 6379,
+    pass: process.env.REDIS_PASS || '',
 
     // Node.js (and consequently Sails.js) apps scale horizontally.
     // It's a powerful, efficient approach, but it involves a tiny bit of planning.
