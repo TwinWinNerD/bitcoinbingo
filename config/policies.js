@@ -68,7 +68,7 @@ module.exports.policies = {
         create: false,
         destroy: false,
         find: false,
-        findOne: false,
+        findOne: true,
         update: false
     },
 

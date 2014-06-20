@@ -31,6 +31,8 @@ module.exports = function findOneRecord (req, res) {
     switch(req.options.model) {
         case 'user':
             break;
+        case 'table':
+            break;
         default:
             query = actionUtil.populateEach(query, req.options);
             break;
