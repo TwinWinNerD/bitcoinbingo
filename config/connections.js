@@ -26,7 +26,7 @@ module.exports.connections = {
 
     bitcoinBingoMongo: {
         adapter: 'sails-mongo',
-        url: process.env.MONGOHQ_URL,
+        url: process.env.MONGO_URL,
         schema: true
     }
 };
