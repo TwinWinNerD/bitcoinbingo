@@ -99,10 +99,8 @@ module.exports = {
             for(var i = 0; i < matchingRecord.users.length; i++) {
                 if (typeof matchingRecord.users[i] !== "undefined") {
 
-                    console.log(matchingRecord.users[i]);
-
                     if (typeof matchingRecord.users[i].email !== "undefined") delete matchingRecord.users[i].email;
-                    if (typeof matchingRecord.users[i].balance !== "undefined") delete matchingRecord.users[i].balance;
+                    // if (typeof matchingRecord.users[i].balance !== "undefined") delete matchingRecord.users[i].balance;
 
                 }
             }
