@@ -1,6 +1,7 @@
 App.GameView = Ember.View.extend({
     didInsertElement: function () {
         Ember.run.scheduleOnce('afterRender', this, function(){
+            $(".alert").alert();
             $('.chat-widget').slimScroll({
                 start: 'bottom',
                 height: '300px',
