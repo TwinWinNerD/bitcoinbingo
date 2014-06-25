@@ -125,7 +125,7 @@ module.exports = {
             "maximumPlayers": 2,
             "maximumCards": 10,
             "cardPrice": 1000,
-            "tableType": "Beginner 2v2"
+            "tableType": "beginner"
         }).exec(function (err, table) {
 
                 Game.create({
@@ -149,7 +149,7 @@ module.exports = {
             "maximumPlayers": 10,
             "maximumCards": 10,
             "cardPrice": 1000,
-            "tableType": "Beginner 4+"
+            "tableType": "beginner"
         }).exec(function (err, table) {
 
             Game.create({
@@ -173,7 +173,7 @@ module.exports = {
             "maximumPlayers": 100,
             "maximumCards": 10,
             "cardPrice": 1000,
-            "tableType": "Beginner 10+"
+            "tableType": "beginner"
         }).exec(function (err, table) {
 
             Game.create({
@@ -197,7 +197,7 @@ module.exports = {
             "maximumPlayers": 2,
             "maximumCards": 10,
             "cardPrice": 10000,
-            "tableType": "Medium 2v2"
+            "tableType": "medium"
         }).exec(function (err, table) {
 
             Game.create({
@@ -221,7 +221,31 @@ module.exports = {
             "maximumPlayers": 100,
             "maximumCards": 10,
             "cardPrice": 10000,
-            "tableType": "Medium 4+"
+            "tableType": "medium"
+        }).exec(function (err, table) {
+
+            Game.create({
+                table: table.id,
+                gameStatus: "idle",
+                serverSeed: SeedService.generateServerSeed(),
+                pattern: PatternService.getRandomPattern()
+            }).exec(function (error, game) {
+                if(!error) {
+
+                    Game.publishCreate(game);
+
+                    res.ok();
+
+                }
+            });
+        });
+
+        Table.create({
+            "minimumPlayers": 2,
+            "maximumPlayers": 2,
+            "maximumCards": 10,
+            "cardPrice": 100000,
+            "tableType": "hard"
         }).exec(function (err, table) {
 
             Game.create({
