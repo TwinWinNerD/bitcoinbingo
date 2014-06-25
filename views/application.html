@@ -355,7 +355,7 @@
                         <tbody>
                         {{#each idleGames itemController='game'}}
                         {{#if userParticipating}}
-                        <tr>
+                        <tr class=tableClass>
                             <td>{{identifier}}</td>
                             <td>{{table.tableType}}</td>
                             <td>{{cardPrice}} Bits</td>
@@ -369,7 +369,7 @@
                         {{/each}}
                         {{#each playingGames itemController='game'}}
                         {{#if userParticipating}}
-                        <tr>
+                        <tr class=tableClass>
                             <td>{{identifier}}</td>
                             <td>{{table.tableType}}</td>
                             <td>{{cardPrice}} Bits</td>
@@ -420,7 +420,7 @@
                         </thead>
                         <tbody>
                             {{#each idleGames itemController='game'}}
-                            <tr>
+                            <tr {{bind-attr class=tableClass}}>
                                 <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} Bits</td>
@@ -469,7 +469,7 @@
                             </thead>
                             <tbody>
                             {{#each playingGames itemController='game'}}
-                            <tr>
+                            <tr class=tableClass>
                                 <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} Bits</td>

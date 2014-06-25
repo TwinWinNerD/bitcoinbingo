@@ -143,6 +143,20 @@ App.GameController = Ember.ObjectController.extend({
         return (this.get('ownBingoCards.content.length') < this.get('model.table.maximumCards') && (this.get('idle')));
     }.property('ownBingoCards','idle'),
 
+    tableClass: function () {
+        var tableType = this.get('table.tableType');
+        var tableClass = 'success';
+
+        if(tableType === 'medium') {
+            tableClass = 'warning';
+        }
+        if(tableType === 'hard') {
+            tableClass = 'danger';
+        }
+
+        return tableClass;
+    }.property('table.tableType'),
+
     actions: {
 
         buyCard: function () {
