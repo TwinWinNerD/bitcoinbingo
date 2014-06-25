@@ -58,6 +58,8 @@ module.exports = {
                                     updateBalance: function(done) {
                                         var newBalance = results.userBalance - results.totalPrize;
 
+                                        req.session.user.balance = newBalance;
+
                                         User.update(data.user, {
                                             balance: newBalance
                                         }).exec(function (error, results) {
@@ -85,6 +87,42 @@ module.exports = {
                                                 }
                                             });
                                     },
+                                    addedToGame: function(done) {
+
+                                        Game.findOne(data.game).exec(function(err, result) {
+                                            if(err) {
+                                                done(err);
+                                            } else {
+                                                var foundUser = false;
+                                                for(var i = 0; i < result.users.length; i++) {
+                                                    if(result.users[i].id === data.user) {
+                                                        foundUser = true;
+                                                    }
+                                                }
+
+                                                if(foundUser) {
+                                                    done(null);
+                                                } else {
+                                                    result.users.add(data.user);
+                                                    result.save(function (error, result) {
+                                                        if(!err) {
+                                                            var user = {
+                                                                id: data.user,
+                                                                username: req.session.user.username,
+                                                                balance: req.session.user.balance,
+                                                                games: [data.game]
+                                                            };
+
+                                                            Game.publishAdd(data.game, "users", user);
+                                                        }
+                                                    });
+
+                                                    done(null);
+                                                }
+
+                                            }
+                                        });
+                                    },
                                     cards: function(done) {
                                         // Create new instance of model using data from params
                                         BingoCard.create(data).exec(function created (err, newInstance) {
@@ -110,32 +148,6 @@ module.exports = {
 
 
                                         });
-                                    },
-                                    addedToGame: function(done) {
-
-                                        Game.findOne(data.game).exec(function(err, result) {
-                                            if(err) {
-                                                done(err);
-                                            } else {
-                                                var foundUser = false;
-                                                for(var i = 0; i < result.users.length; i++) {
-                                                    if(result.users[i].id === data.user) {
-                                                        foundUser = true;
-                                                    }
-                                                }
-
-                                                if(foundUser) {
-                                                    done(null);
-                                                } else {
-                                                    result.users.add(data.user);
-                                                    result.save();
-
-                                                    done(null);
-                                                }
-
-                                            }
-                                        });
-
                                     }
                                 }, function(error, results) {
 

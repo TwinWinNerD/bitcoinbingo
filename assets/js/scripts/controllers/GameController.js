@@ -5,7 +5,7 @@ App.GameController = Ember.ObjectController.extend({
         return this.get('model.id').slice(-5);
     }.property('model.id'),
 
-    amountOfPlayers: function () {
+    players: function () {
         var bingoCards, users;
 
         bingoCards = this.get('gameBingoCards');
@@ -15,8 +15,12 @@ App.GameController = Ember.ObjectController.extend({
             users.push(bingoCard.get('user'));
         });
 
-        return users.uniq().length;
+        return users.uniq();
     }.property('amountOfCards'),
+
+    amountOfPlayers: function () {
+        return this.get('players').length;
+    }.property('players.[]'),
 
     prizePool: function () {
         return parseFloat(satoshiToBits((this.get('amountOfCards') * this.get('model.table.cardPrice')) * 0.95).toFixed(8));
