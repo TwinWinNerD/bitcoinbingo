@@ -205,6 +205,8 @@ App.GameController = Ember.ObjectController.extend({
             user = this.get('session.username');
             self = this;
 
+            self.set('message','');
+
             if(message.trim() !== "") {
                 record = store.createRecord('message', {
                     game: game,
@@ -213,7 +215,6 @@ App.GameController = Ember.ObjectController.extend({
                 });
 
                 record.save().then(function (newMessage) {
-                    self.set('message','');
                     messages.pushObject(newMessage);
                 }, function (error) {
                     // handle error

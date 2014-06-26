@@ -526,30 +526,35 @@
                 <div class="portlet portlet-default">
                     <div class="portlet-heading">
                         <div class="portlet-title">
-                            <h4><i class="fa fa-circle text-green"></i> Game specific chat</h4>
-                        </div>
-                        <div class="portlet-widgets">
-                            <span class="divider"></span>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#chat"><i
-                                    class="fa fa-chevron-down"></i></a>
+                            <h4><i class="fa fa-circle text-green"></i> Game chat</h4>
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div id="chat" class="panel-collapse collapse in">
+                    <div id="chat">
                         <div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
                             {{#each message in lastMessages}}
-                            <p><strong>{{message.user}}</strong>: {{message.body}}</p>
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="media-heading"><strong>{{message.user}}</strong>
+                                        <span class="small pull-right">{{convertDateToLocale message.createdAt}}</span>
+                                    </h5>
+                                    <p>{{message.body}}</p>
+                                </div>
+                            </div>
                             {{/each}}
                         </div>
+                        {{#if session.isAuthenticated}}
                         <div class="portlet-footer">
                             <div class="input-group">
                                 {{input action='sendMessage' id='message' name='message' placeholder='Enter message'
                                 class='form-control' value=message}}
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
+                                        <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
+                                        <button type="button" class="btn btn-success disabled">Send</button>
                                 </span>
                             </div>
                         </div>
+                        {{/if}}
                     </div>
                 </div>
             </div>
