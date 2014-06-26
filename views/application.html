@@ -2,132 +2,77 @@
 
     <nav class="navbar-top" role="navigation">
 
-    <!-- begin BRAND HEADING -->
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".sidebar-collapse">
-            <i class="fa fa-bars"></i> Menu
-        </button>
-        <!--<div class="navbar-brand">-->
-            <!--<a href="index.html">Bitcoin Bingo</a>-->
-        <!--</div>-->
-    </div>
-    <!-- end BRAND HEADING -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle pull-right" data-toggle="collapse"
+                    data-target=".sidebar-collapse">
+                <i class="fa fa-bars"></i> Menu
+            </button>
+        </div>
 
-    <div class="nav-top">
+        <div class="nav-top">
+            <ul class="nav navbar-right">
+                <li>
+                    {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
+                </li>
 
-    <!-- begin LEFT SIDE WIDGETS -->
-    <ul class="nav navbar-left">
+                {{#if session.isAuthenticated}}
+                <li>
+                    {{#link-to 'wallet'}} <i class="fa fa-btc"></i> {{satoshiToBits session.currentUser.balance}} Bits
+                    {{/link-to}}
+                </li>
+                {{/if}}
 
-    </ul>
-    <!-- end LEFT SIDE WIDGETS -->
+                <li class="dropdown">
+                    {{#if session.isAuthenticated}}
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-user"></i> {{session.currentUser.username}} <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
+                        </li>
+                        <li>
+                            <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
+                        </li>
+                    </ul>
+                    {{else}}
+                    {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
+                    {{/if}}
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
-    <ul class="nav navbar-right">
-
-    <!-- begin ALERTS DROPDOWN -->
-    <!--<li class="dropdown">-->
-        <!--<a href="#" class="alerts-link dropdown-toggle" data-toggle="dropdown">-->
-            <!--<i class="fa fa-bell"></i>-->
-            <!--<span class="number">9</span><i class="fa fa-caret-down"></i>-->
-        <!--</a>-->
-        <!--<ul class="dropdown-menu dropdown-scroll dropdown-alerts">-->
-
-            <!--&lt;!&ndash; Alerts Dropdown Heading &ndash;&gt;-->
-            <!--<li class="dropdown-header">-->
-                <!--<i class="fa fa-bell"></i> 9 New Alerts-->
-            <!--</li>-->
-
-            <!--&lt;!&ndash; Alerts Dropdown Body - This is contained within a SlimScroll fixed height box. You can change the height using the SlimScroll jQuery features. &ndash;&gt;-->
-            <!--<div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 200px;"><li id="alertScroll" style="overflow: hidden; width: auto; height: 200px;">-->
-                <!--<ul class="list-unstyled">-->
-
-                <!--</ul>-->
-            <!--</li><div class="slimScrollBar" style="background-color: rgb(0, 0, 0); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; z-index: 99; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-top-left-radius: 7px; border-top-right-radius: 7px; border-bottom-right-radius: 7px; border-bottom-left-radius: 7px; background-color: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px; background-position: initial initial; background-repeat: initial initial;"></div></div>-->
-
-            <!--&lt;!&ndash; Alerts Dropdown Footer &ndash;&gt;-->
-            <!--<li class="dropdown-footer">-->
-                <!--<a href="#">View All Alerts</a>-->
-            <!--</li>-->
-
-        <!--</ul>-->
-        <!--&lt;!&ndash; /.dropdown-menu &ndash;&gt;-->
-    <!--</li>-->
-    <!-- /.dropdown -->
-    <!-- end ALERTS DROPDOWN -->
-
-    <!-- begin USER ACTIONS DROPDOWN -->
-
-    <li>
-        {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
-    </li>
-    {{#if session.isAuthenticated}}
-    <li>
-        {{#link-to 'wallet'}} <i class="fa fa-btc"></i>  {{satoshiToBits session.currentUser.balance}} Bits {{/link-to}}
-    </li>
-    {{/if}}
-    <li class="dropdown">
-        {{#if session.isAuthenticated}}
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-user"></i> {{session.currentUser.username}} <i class="fa fa-caret-down"></i>
-        </a>
-
-        <ul class="dropdown-menu dropdown-user">
+    <nav class="navbar-side" role="navigation">
+        <div class="navbar-collapse sidebar-collapse collapse">
+            <ul id="side" class="nav navbar-nav side-nav">
+                {{#if session.isAuthenticated}}
+                <li class="side-user hidden-xs">
+                    <p class="name tooltip-sidebar-logout">
+                        {{session.currentUser.username}}
+                        <a style="color: inherit" href="#" data-toggle="tooltip" data-placement="top" title="Logout"
+                           data-popup-ordinal="1" {{ action 'invalidateSession' }}><i class="fa fa-sign-out"></i></a>
+                    </p>
+                </li>
+                {{/if}}
+                <li>
+                    {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to 'gamesHistory' }} <i class="fa fa-history"></i> History{{/link-to}}
+                </li>
+                <li>
+                    {{#link-to '' }} <i class="fa fa-info-circle"></i> Help{{/link-to}}
+                </li>
                 <li>
                     {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
                 </li>
                 <li>
-                    <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
+                    {{#link-to '' }} <i class="fa fa-envelope"></i> Contact{{/link-to}}
                 </li>
-        </ul>
-        {{else}}
-            {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
-        {{/if}}
-        <!-- /.dropdown-menu -->
-    </li>
-    <!-- /.dropdown -->
-    <!-- end USER ACTIONS DROPDOWN -->
-
-    </ul>
-    <!-- /.nav -->
-    <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
-
-    </div>
-    <!-- /.nav-top -->
+            </ul>
+        </div>
     </nav>
-
-    <nav class="navbar-side" role="navigation">
-    <div class="navbar-collapse sidebar-collapse collapse">
-    <ul id="side" class="nav navbar-nav side-nav">
-        {{#if session.isAuthenticated}}
-        <li class="side-user hidden-xs">
-            <p class="name tooltip-sidebar-logout">
-                {{session.currentUser.username}}
-                <a style="color: inherit" href="#" data-toggle="tooltip" data-placement="top" title="Logout" data-popup-ordinal="1" {{ action 'invalidateSession' }}><i class="fa fa-sign-out"></i></a>
-            </p>
-        </li>
-        {{/if}}
-        <li>
-            {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
-        </li>
-        <li>
-            {{#link-to 'gamesHistory' }} <i class="fa fa-history"></i> History{{/link-to}}
-        </li>
-        <li>
-            {{#link-to '' }} <i class="fa fa-info-circle"></i> Help{{/link-to}}
-        </li>
-        <li>
-            {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
-        </li>
-        <li>
-            {{#link-to '' }} <i class="fa fa-envelope"></i> Contact{{/link-to}}
-        </li>
-    </ul>
-
-    <!-- /.side-nav -->
-    </div>
-    <!-- /.navbar-collapse -->
-    </nav>
-
 
     <div id="page-wrapper">
         {{outlet}}
@@ -142,7 +87,7 @@
                     <small>Account Settings</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i>  {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
+                    <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
                     </li>
                     <li class="active">Account Settings</li>
                 </ol>
@@ -169,19 +114,23 @@
                         <strong>Settings saved!</strong>
                     </div>
                     {{/if}}
-                    <form accept-charset="UTF-8" role="form" {{action 'saveSettings' on='submit'}}>
+                    <form accept-charset="UTF-8" role="form"
+                    {{action 'saveSettings' on='submit'}}>
                     <fieldset>
                         <div class="form-group">
-                            {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed' class='form-control' value=clientSeed}}
+                            {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed'
+                            class='form-control' value=clientSeed}}
                         </div>
                         <div class="form-group">
                             {{input id='email' name='email' placeholder='Enter email' class='form-control' value=email}}
                         </div>
                         <div class="form-group">
-                            {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
+                            {{input id='password' name='password' placeholder='Enter Password' class='form-control'
+                            type='password' value=password}}
                         </div>
                         <br>
-                        <button id="saveSettings" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
+                        <button id="saveSettings" type="submit" class="btn btn-default ladda-button"
+                                data-style="expand-left">
                             <span class="ladda-label">Save Settings</span>
                         </button>
                         {{#if isDirty}}
@@ -206,7 +155,7 @@
                     <small>Own Games History</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i>  {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
+                    <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
                     </li>
                     <li class="active">Own Games History</li>
                 </ol>
@@ -255,7 +204,6 @@
 
 <div class="page-content page-content-ease-in">
 
-<!-- begin PAGE TITLE ROW -->
 <div class="row">
     <div class="col-lg-12">
         <div class="page-title">
@@ -263,18 +211,15 @@
                 <small>Games</small>
             </h1>
             <ol class="breadcrumb">
-                <li><i class="fa fa-dashboard"></i>  {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
+                <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
                 </li>
                 <li class="active">Games</li>
             </ol>
         </div>
     </div>
-    <!-- /.col-lg-12 -->
 </div>
-<!-- /.row -->
-<!-- end PAGE TITLE ROW -->
 
-
+<!--
 <div class="row">
     <div class="col-lg-4 col-sm-6">
         <div class="circle-tile">
@@ -325,10 +270,9 @@
 
 
 </div>
+-->
 
 <div class="row">
-
-    <!-- Basic Responsive Table -->
     <div class="col-lg-12">
         <div class="portlet portlet-red">
             <div class="portlet-heading">
@@ -386,15 +330,10 @@
                 </div>
             </div>
         </div>
-        <!-- /.portlet -->
     </div>
-    <!-- /.col-lg-6 -->
-
 </div>
 
 <div class="row">
-
-    <!-- Basic Responsive Table -->
     <div class="col-lg-12">
         <div class="portlet portlet-green">
             <div class="portlet-heading">
@@ -419,80 +358,72 @@
                         </tr>
                         </thead>
                         <tbody>
-                            {{#each idleGames itemController='game'}}
-                            <tr {{bind-attr class=tableClass}}>
-                                <td>{{identifier}}</td>
-                                <td>{{table.tableType}}</td>
-                                <td>{{cardPrice}} Bits</td>
-                                <td>{{table.maximumCards}}</td>
-                                <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
-                                <td>{{prizePool}} Bits</td>
-                                <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
-                            </tr>
-                            {{/each}}
+                        {{#each idleGames itemController='game'}}
+                        <tr
+                        {{bind-attr class=tableClass}}>
+                        <td>{{identifier}}</td>
+                        <td>{{table.tableType}}</td>
+                        <td>{{cardPrice}} Bits</td>
+                        <td>{{table.maximumCards}}</td>
+                        <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
+                        <td>{{prizePool}} Bits</td>
+                        <td>{{gameStatus}}</td>
+                        <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        </tr>
+                        {{/each}}
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <!-- /.portlet -->
     </div>
-    <!-- /.col-lg-6 -->
-
 </div>
 
 <div class="row">
-        <!-- Basic Responsive Table -->
-        <div class="col-lg-12">
-            <div class="portlet portlet-orange">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
-                        <h4>In progress games</h4>
-                    </div>
-                    <div class="clearfix"></div>
+    <div class="col-lg-12">
+        <div class="portlet portlet-orange">
+            <div class="portlet-heading">
+                <div class="portlet-title">
+                    <h4>In progress games</h4>
                 </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Type</th>
-                                <th>Card price</th>
-                                <th>Maximum cards</th>
-                                <th>Players</th>
-                                <th>Prize Pool</th>
-                                <th>Status</th>
-                                <th>Watch</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each playingGames itemController='game'}}
-                            <tr class=tableClass>
-                                <td>{{identifier}}</td>
-                                <td>{{table.tableType}}</td>
-                                <td>{{cardPrice}} Bits</td>
-                                <td>{{table.maximumCards}}</td>
-                                <td>{{amountOfPlayers}} / {{table.maximumPlayers}}</td>
-                                <td>{{prizePool}} Bits</td>
-                                <td>{{gameStatus}}</td>
-                                <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
-                            </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="portlet-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Type</th>
+                            <th>Card price</th>
+                            <th>Maximum cards</th>
+                            <th>Players</th>
+                            <th>Prize Pool</th>
+                            <th>Status</th>
+                            <th>Watch</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {{#each playingGames itemController='game'}}
+                        <tr class=tableClass>
+                            <td>{{identifier}}</td>
+                            <td>{{table.tableType}}</td>
+                            <td>{{cardPrice}} Bits</td>
+                            <td>{{table.maximumCards}}</td>
+                            <td>{{amountOfPlayers}} / {{table.maximumPlayers}}</td>
+                            <td>{{prizePool}} Bits</td>
+                            <td>{{gameStatus}}</td>
+                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        </tr>
+                        {{/each}}
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- /.portlet -->
         </div>
-        <!-- /.col-lg-6 -->
+    </div>
 </div>
-
 </div>
-<!-- /.page-content -->
-
 </script>
 
 
@@ -515,22 +446,22 @@
                     </ol>
                 </div>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
-        <!-- /.row -->
-        <!-- end PAGE TITLE ROW -->
 
         <div class="row">
-            <div id="h-ball-history" data-container="body" data-toggle="popover" data-placement="left" data-content="Displays 10 last drawn bingo balls." class="col-sm-12 hide-outside">
+            <div id="h-ball-history" data-container="body" data-toggle="popover" data-placement="left"
+                 data-content="Displays 10 last drawn bingo balls." class="col-sm-12 hide-outside">
                 <div style="font-size: 40px; text-align: center;">{{latestNumber}}</div>
             </div>
         </div>
 
         <div class="row drawn-numbers">
             <h3>Drawn numbers:</h3>
-            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in RED have already been drawn." class="pagination">
+            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top"
+                data-content="The numbers marked in RED have already been drawn." class="pagination">
                 {{#each number in numbers itemController='number'}}
-                    <li {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
+                <li
+                {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
                 {{/each}}
             </ul>
         </div>
@@ -550,31 +481,38 @@
         <div class="row">
             <div class="col-lg-3">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a><i class="fa fa-question-circle fa-fw"></i>Status <span class="badge pull-right">{{gameStatus}}</span></a></li>
-                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Bingo <span class="badge pull-right">{{bingoPrize}} Bits</span></a></li>
-                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Pattern <span class="badge pull-right">{{patternPrize}} Bits</span></a></li>
-                    <li class="active"><a><i class="fa fa-users fa-fw"></i>Players <span class="badge pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span></a></li>
+                    <li class="active"><a><i class="fa fa-question-circle fa-fw"></i>Status <span
+                            class="badge pull-right">{{gameStatus}}</span></a></li>
+                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Bingo <span class="badge pull-right">{{bingoPrize}} Bits</span></a>
+                    </li>
+                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Pattern <span class="badge pull-right">{{patternPrize}} Bits</span></a>
+                    </li>
+                    <li class="active"><a><i class="fa fa-users fa-fw"></i>Players <span class="badge pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span></a>
+                    </li>
                 </ul>
 
 
                 {{#if session.isAuthenticated}}
-                    {{#if canBuyCards}}
-                        <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
-                            <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} Bits)
-                        </button>
-                    {{else}}
-                        <button class="btn btn-red btn-block disabled">Buy Card</button>
-                    {{/if}}
+                {{#if canBuyCards}}
+                <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left"
+                {{action 'buyCard'}}>
+                <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} Bits)
+                </button>
+                {{else}}
+                <button class="btn btn-red btn-block disabled">Buy Card</button>
+                {{/if}}
                 {{/if}}
 
                 {{#if finished}}
-                <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'showWinnerModal'}}>
-                    <span class="ladda-label">Show Winners</span>
+                <button class="btn btn-red btn-block ladda-button" data-style="expand-left"
+                {{action 'showWinnerModal'}}>
+                <span class="ladda-label">Show Winners</span>
                 </button>
                 {{else}}
-                    <button class="btn btn-red btn-block disabled">Show Winners</button>
+                <button class="btn btn-red btn-block disabled">Show Winners</button>
                 {{/if}}
                 <br/>
+
                 <div class="portlet portlet-blue">
                     <div class="portlet-heading">
                         <div class="portlet-title">
@@ -604,25 +542,27 @@
             </div>
             <div class="col-lg-6">
                 {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-card">
-                                <tbody>
-                                {{#each row in bingoCard.squares}}
-                                <tr>
-                                    {{#each number in row itemController='number'}}
-                                        {{#if number.pattern}}
-                                        <td {{bind-attr class='number.isActive:active:pattern'}}>{{number.number}}</td>
-                                        {{else}}
-                                        <td {{bind-attr class='number.isActive:active'}}>{{number.number}}</td>
-                                        {{/if}}
-                                    {{/each}}
-                                </tr>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-card">
+                            <tbody>
+                            {{#each row in bingoCard.squares}}
+                            <tr>
+                                {{#each number in row itemController='number'}}
+                                {{#if number.pattern}}
+                                <td
+                                {{bind-attr class='number.isActive:active:pattern'}}>{{number.number}}</td>
+                                {{else}}
+                                <td
+                                {{bind-attr class='number.isActive:active'}}>{{number.number}}</td>
+                                {{/if}}
                                 {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
                     </div>
+                </div>
                 {{/each}}
                 <div class="clearfix"></div>
             </div>
@@ -634,34 +574,33 @@
                         </div>
                         <div class="portlet-widgets">
                             <span class="divider"></span>
-                            <a data-toggle="collapse" data-parent="#accordion" href="#chat"><i class="fa fa-chevron-down"></i></a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#chat"><i
+                                    class="fa fa-chevron-down"></i></a>
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div id="chat" class="panel-collapse collapse in">
                         <div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
                             {{#each message in lastMessages}}
-                                <p><strong>{{message.user}}</strong>: {{message.body}}</p>
+                            <p><strong>{{message.user}}</strong>: {{message.body}}</p>
                             {{/each}}
                         </div>
                         <div class="portlet-footer">
                             <div class="input-group">
-                                {{input action='sendMessage' id='message' name='message' placeholder='Enter message' class='form-control' value=message}}
+                                {{input action='sendMessage' id='message' name='message' placeholder='Enter message'
+                                class='form-control' value=message}}
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
                                 </span>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <!-- /.col-lg-4 -->
         </div>
-        <!-- /.row -->
+    </div>
 
     </div>
-    <!-- /.page-content -->
 </script>
 
 <script type="text/x-handlebars" data-template-name="login">
@@ -678,7 +617,6 @@
                     </ol>
                 </div>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -695,22 +633,26 @@
                             <strong>Login failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
-                        <form accept-charset="UTF-8" role="form" {{action 'authenticate' on='submit'}}>
-                            <fieldset>
-                                <div class="form-group">
-                                    {{input id='username' name='username' placeholder='Enter Username' class='form-control' value=username}}
-                                </div>
-                                <div class="form-group">
-                                    {{input id='password' name='password' placeholder='Enter Password' class='form-control' type='password' value=password}}
-                                </div>
-                                <br>
-                                <button id="loginButton" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
-                                    <span class="ladda-label">Sign In</span>
-                                </button>
-                                <div class="pull-right">
-                                    {{#link-to 'register' class='btn btn-success' }}Go To Register{{/link-to}}
-                                </div>
-                            </fieldset>
+                        <form accept-charset="UTF-8" role="form"
+                        {{action 'authenticate' on='submit'}}>
+                        <fieldset>
+                            <div class="form-group">
+                                {{input id='username' name='username' placeholder='Enter Username' class='form-control'
+                                value=username}}
+                            </div>
+                            <div class="form-group">
+                                {{input id='password' name='password' placeholder='Enter Password' class='form-control'
+                                type='password' value=password}}
+                            </div>
+                            <br>
+                            <button id="loginButton" type="submit" class="btn btn-default ladda-button"
+                                    data-style="expand-left">
+                                <span class="ladda-label">Sign In</span>
+                            </button>
+                            <div class="pull-right">
+                                {{#link-to 'register' class='btn btn-success' }}Go To Register{{/link-to}}
+                            </div>
+                        </fieldset>
                         </form>
                     </div>
                 </div>
@@ -733,7 +675,6 @@
                     </ol>
                 </div>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
@@ -750,12 +691,15 @@
                             <strong>Registration failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
-                        <form accept-charset="UTF-8" role="form" {{action 'register' on='submit'}}>
+                        <form accept-charset="UTF-8" role="form"
+                        {{action 'register' on='submit'}}>
                         <div class="form-group">
                             <label for="username">Username</label>
-                            {{input id='username' name='username' placeholder='Username' class='form-control' value=username}}
+                            {{input id='username' name='username' placeholder='Username' class='form-control'
+                            value=username}}
                         </div>
-                        <button id="registerButton" type="submit" class="btn btn-default ladda-button" data-style="expand-left">
+                        <button id="registerButton" type="submit" class="btn btn-default ladda-button"
+                                data-style="expand-left">
                             <span class="ladda-label">Create your account</span>
                         </button>
                         <div class="pull-right">
@@ -777,13 +721,13 @@
                     <small>Wallet</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i>  <a id="ember2300" class="ember-view active" href="#/">Bitcoin Bingo</a>
+                    <li><i class="fa fa-dashboard"></i> <a id="ember2300" class="ember-view active" href="#/">Bitcoin
+                        Bingo</a>
                     </li>
                     <li class="active">Wallet</li>
                 </ol>
             </div>
         </div>
-        <!-- /.col-lg-12 -->
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -859,7 +803,8 @@
 
 <script type="text/x-handlebars" data-template-name="winnerModal">
     <div class="modal-header">
-        <button type="button" class="close" {{action close target="view"}}>&times;</button>
+        <button type="button" class="close"
+        {{action close target="view"}}>&times;</button>
         <h3>We have some winners!</h3>
     </div>
     <div class="modal-body">
@@ -887,11 +832,11 @@
                                     {{#each row in winner.bingoCard.squares}}
                                     <tr>
                                         {{#each number in row}}
-                                            {{#if number}}
-                                                <td>{{number}}</td>
-                                            {{else}}
-                                                <td>{{number}}</td>
-                                            {{/if}}
+                                        {{#if number}}
+                                        <td>{{number}}</td>
+                                        {{else}}
+                                        <td>{{number}}</td>
+                                        {{/if}}
                                         {{/each}}
                                     </tr>
                                     {{/each}}
@@ -911,10 +856,9 @@
     </div>
 </script>
 
-
 <script type="text/x-handlebars" data-template-name="modal_layout">
     <div class="modal-backdrop fade">&nbsp;</div>
-    <div class="modal fade show" >
+    <div class="modal fade show">
         <div class="modal-dialog">
             <div class="modal-content">
                 {{yield}}
