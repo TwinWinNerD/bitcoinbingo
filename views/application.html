@@ -274,67 +274,6 @@
 
 <div class="row">
     <div class="col-lg-12">
-        <div class="portlet portlet-red">
-            <div class="portlet-heading">
-                <div class="portlet-title">
-                    <h4>Own active games</h4>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-            <div class="portlet-body">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Type</th>
-                            <th>Card price</th>
-                            <th>Maximum cards</th>
-                            <th>Players</th>
-                            <th>Prize Pool</th>
-                            <th>Status</th>
-                            <th>Join</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{#each idleGames itemController='game'}}
-                        {{#if userParticipating}}
-                        <tr class=tableClass>
-                            <td>{{identifier}}</td>
-                            <td>{{table.tableType}}</td>
-                            <td>{{cardPrice}} Bits</td>
-                            <td>{{table.maximumCards}}</td>
-                            <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
-                            <td>{{prizePool}} Bits</td>
-                            <td>{{gameStatus}}</td>
-                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
-                        </tr>
-                        {{/if}}
-                        {{/each}}
-                        {{#each playingGames itemController='game'}}
-                        {{#if userParticipating}}
-                        <tr class=tableClass>
-                            <td>{{identifier}}</td>
-                            <td>{{table.tableType}}</td>
-                            <td>{{cardPrice}} Bits</td>
-                            <td>{{table.maximumCards}}</td>
-                            <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
-                            <td>{{prizePool}} Bits</td>
-                            <td>{{gameStatus}}</td>
-                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
-                        </tr>
-                        {{/if}}
-                        {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-lg-12">
         <div class="portlet portlet-green">
             <div class="portlet-heading">
                 <div class="portlet-title">
@@ -347,28 +286,40 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>ID</th>
                             <th>Type</th>
                             <th>Card price</th>
-                            <th>Maximum cards</th>
                             <th>Players</th>
                             <th>Prize Pool</th>
                             <th>Status</th>
-                            <th>Join</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         {{#each idleGames itemController='game'}}
                         <tr
                         {{bind-attr class=tableClass}}>
-                        <td>{{identifier}}</td>
+                        <td><strong>{{#link-to 'game' id }}{{identifier}}{{/link-to}}</strong></td>
                         <td>{{table.tableType}}</td>
                         <td>{{cardPrice}} Bits</td>
-                        <td>{{table.maximumCards}}</td>
                         <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
                         <td>{{prizePool}} Bits</td>
                         <td>{{gameStatus}}</td>
-                        <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        {{#if userParticipating}}
+                            <td>
+                                {{#link-to 'game' id class='btn btn-sm btn-orange'}}
+                                <i class="fa fa-arrow-circle-right"></i>
+                                Continue
+                                {{/link-to}}
+                            </td>
+                        {{else}}
+                            <td>
+                                {{#link-to 'game' id class='btn btn-sm btn-green'}}
+                                <i class="fa fa-arrow-circle-right"></i>
+                                Join
+                                {{/link-to}}
+                            </td>
+                        {{/if}}
                         </tr>
                         {{/each}}
                         </tbody>
@@ -393,27 +344,30 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>ID</th>
                             <th>Type</th>
                             <th>Card price</th>
-                            <th>Maximum cards</th>
                             <th>Players</th>
                             <th>Prize Pool</th>
                             <th>Status</th>
-                            <th>Watch</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         {{#each playingGames itemController='game'}}
-                        <tr class=tableClass>
-                            <td>{{identifier}}</td>
-                            <td>{{table.tableType}}</td>
-                            <td>{{cardPrice}} Bits</td>
-                            <td>{{table.maximumCards}}</td>
-                            <td>{{amountOfPlayers}} / {{table.maximumPlayers}}</td>
-                            <td>{{prizePool}} Bits</td>
-                            <td>{{gameStatus}}</td>
-                            <td>{{#link-to 'game' id class='btn btn-green'}}Join{{/link-to}}</td>
+                        <tr
+                        {{bind-attr class=tableClass}}>
+                        <td><strong>{{#link-to 'game' id }}{{identifier}}{{/link-to}}</strong></td>
+                        <td>{{table.tableType}}</td>
+                        <td>{{cardPrice}} Bits</td>
+                        <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
+                        <td>{{prizePool}} Bits</td>
+                        <td>{{gameStatus}}</td>
+                        {{#if userParticipating}}
+                        <td>{{#link-to 'game' id class='btn btn-sm btn-orange'}}Continue{{/link-to}}</td>
+                        {{else}}
+                        <td>{{#link-to 'game' id class='btn btn-sm btn-green'}}Watch{{/link-to}}</td>
+                        {{/if}}
                         </tr>
                         {{/each}}
                         </tbody>
