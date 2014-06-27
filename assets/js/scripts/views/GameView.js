@@ -9,6 +9,8 @@ App.GameView = Ember.View.extend({
                 disableFadeOut: true,
                 touchScrollStep: 50
             });
+
+            $('[data-toggle="tooltip"]').tooltip({});
         });
     },
 

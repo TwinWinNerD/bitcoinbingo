@@ -437,13 +437,33 @@
         <div class="row">
             <div class="col-lg-3">
                 <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a><i class="fa fa-question-circle fa-fw"></i>Status <span
-                            class="badge pull-right">{{gameStatus}}</span></a></li>
-                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Bingo <span class="badge pull-right">{{bingoPrize}} Bits</span></a>
+                    <li class="active">
+                        <a>
+                            <i class="fa fa-question fa-fw"></i>
+                            <abbr data-toggle="tooltip" title="The game status">Status</abbr>
+                            <span class="badge pull-right">{{gameStatus}}</span>
+                        </a>
                     </li>
-                    <li class="active"><a><i class="fa fa-btc fa-fw"></i>Pattern <span class="badge pull-right">{{patternPrize}} Bits</span></a>
+                    <li class="active">
+                        <a>
+                            <i class="fa fa-btc fa-fw"></i>
+                            <abbr data-toggle="tooltip" title="The first one to hit BINGO will win this amount">Bingo prize</abbr>
+                            <span class="badge pull-right">{{bingoPrize}} Bits</span>
+                        </a>
                     </li>
-                    <li class="active"><a><i class="fa fa-users fa-fw"></i>Players <span class="badge pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span></a>
+                    <li class="active">
+                        <a>
+                            <i class="fa fa-btc fa-fw"></i>
+                            <abbr data-toggle="tooltip" title="The first one to hit the pattern will win this amount">Pattern prize</abbr>
+                            <span class="badge pull-right">{{patternPrize}} Bits</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a>
+                            <i class="fa fa-users fa-fw"></i>
+                            <abbr data-toggle="tooltip" title="Left shows the current amount of players. Right shows the minimum to start">Players</abbr>
+                            <span class="badge pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span>
+                        </a>
                     </li>
                 </ul>
 
