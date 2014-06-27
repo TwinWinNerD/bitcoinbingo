@@ -405,16 +405,14 @@
         </div>
 
         <div class="row">
-            <div id="h-ball-history" data-container="body" data-toggle="popover" data-placement="left"
-                 data-content="Displays 10 last drawn bingo balls." class="col-sm-12 hide-outside">
+            <div class="col-sm-12 hide-outside">
                 <div style="font-size: 40px; text-align: center;">{{latestNumber}}</div>
             </div>
         </div>
 
         <div class="row drawn-numbers">
             <h3>Drawn numbers:</h3>
-            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top"
-                data-content="The numbers marked in RED have already been drawn." class="pagination">
+            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in DARK BLUE have already been drawn." class="pagination help">
                 {{#each number in numbers itemController='number'}}
                 <li
                 {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
@@ -436,7 +434,7 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <ul class="nav nav-pills nav-stacked">
+                <ul class="nav nav-pills nav-stacked help" data-toggle="popover" data-placement="top" data-content="Shows information about the game you are currently in">
                     <li class="active">
                         <a>
                             <i class="fa fa-question fa-fw"></i>
@@ -469,26 +467,25 @@
 
 
                 {{#if session.isAuthenticated}}
-                {{#if canBuyCards}}
-                <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left"
-                {{action 'buyCard'}}>
-                <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} Bits)
-                </button>
-                {{else}}
-                <button class="btn btn-red btn-block disabled">Buy Card</button>
-                {{/if}}
+                    {{#if canBuyCards}}
+                    <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
+                    <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} Bits)
+                    </button>
+                    {{else}}
+                    <button class="btn btn-red btn-block disabled">Buy Card</button>
+                    {{/if}}
                 {{/if}}
 
                 {{#if finished}}
-                <button class="btn btn-red btn-block ladda-button" data-style="expand-left"
-                {{action 'showWinnerModal'}}>
+                <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'showWinnerModal'}}>
                 <span class="ladda-label">Show Winners</span>
                 </button>
                 {{else}}
                 <button class="btn btn-red btn-block disabled">Show Winners</button>
                 {{/if}}
                 <br/>
-
+                <button id="game-help-button" class="btn btn-purple btn-block" data-toggle="tooltip" title="Click this button to show explanation windows for each element! You turn them back off simply by clicking this button once again.">Help!</button>
+                <br/>
                 <div class="portlet portlet-blue">
                     <div class="portlet-heading">
                         <div class="portlet-title">
@@ -516,7 +513,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 help" data-toggle="popover" data-placement="top" data-content="All your cards appear here. Fields marked in light blue show the current pattern">
                 {{#each bingoCard in ownBingoCards itemController='bingoCard'}}
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="table-responsive">

@@ -11,6 +11,19 @@ App.GameView = Ember.View.extend({
             });
 
             $('[data-toggle="tooltip"]').tooltip({});
+
+            var helpMode = 0;
+            $("#game-help-button").on('click', function () {
+                var popovers = $('.help[data-toggle="popover"]');
+                if(helpMode == 0) {
+                    popovers.popover('show');
+                    return helpMode = 1;
+                }
+                if(helpMode == 1) {
+                    popovers.popover('hide');
+                    return helpMode = 0;
+                }
+            });
         });
     },
 
