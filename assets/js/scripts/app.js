@@ -70,8 +70,25 @@ App.Router.map(function () {
     this.route('login');
     this.route('register');
     this.route('wallet');
+    this.route('contact');
     this.resource('games', { path: '/' });
     this.resource('settings', { path: '/settings' });
     this.resource('gamesHistory', { path: '/history' });
     this.resource('game', { path: '/game/:game_id' });
 });
+
+Ember.LinkView.reopen({
+    attributeBindings: ['data-uv-trigger']
+});
+
+UserVoice=window.UserVoice||[];(function(){var uv=document.createElement('script');uv.type='text/javascript';uv.async=true;uv.src='//widget.uservoice.com/Neq0A5TkWO0gPK4mIspXiw.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(uv,s)})();
+
+UserVoice.push(['set', {
+    accent_color: '#448dd6',
+    trigger_color: 'white',
+    trigger_background_color: 'rgba(46, 49, 51, 0.6)'
+}]);
+
+UserVoice.push(['identify', {}]);
+UserVoice.push(['addTrigger', { mode: 'contact', trigger_position: 'bottom-right' }]);
+UserVoice.push(['autoprompt', {}]);
