@@ -2083,3 +2083,7 @@ input[type="checkbox"]:checked::after,
     color:#000;
     padding: .2em 0;
 }
+
+.games-list td {
+    cursor: pointer;
+}
