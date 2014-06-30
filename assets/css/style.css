@@ -2076,3 +2076,10 @@ input[type="checkbox"]:checked::after,
     background-color: #99C4E8 !important;
     color: #000;
 }
+
+.browsehappy{
+    margin:.2em 0;
+    background:#ccc;
+    color:#000;
+    padding: .2em 0;
+}
