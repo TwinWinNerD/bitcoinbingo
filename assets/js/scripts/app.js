@@ -1,7 +1,3 @@
-if (!Modernizr.websockets || !Modernizr.localstorage) {
-    $("body .container").empty().html('<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to use this website.</p>');
-}
-
 socket = io.connect();
 
 var BingoAuthenticator = Ember.SimpleAuth.Authenticators.Base.extend({
