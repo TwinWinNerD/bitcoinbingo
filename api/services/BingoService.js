@@ -330,7 +330,7 @@ function rewardWinners (game, winners) {
         amountOfWinners = winners[i].length;
 
         for(var j = 0; j < amountOfWinners; j++) {
-            var winner, winningCard, amount;
+            var winner, winningCard, amount, type;
             winningCard = winners[i][j];
             winner = {};
 
@@ -341,8 +341,10 @@ function rewardWinners (game, winners) {
 
             if(winner.winnerType === "bingo") {
                 amount = parseInt((prizePool * bingoPercentage) / amountOfWinners, 10);
+                type = "Bingo won";
             } else if(winner.winnerType === "pattern") {
                 amount = parseInt((prizePool * patternPercentage) / amountOfWinners, 10);
+                type = "Pattern won";
             }
 
             winner.amount = amount;
@@ -351,7 +353,7 @@ function rewardWinners (game, winners) {
 
             depositData.push({
                 amount: winner.amount,
-                depositType: "winnings",
+                depositType: type,
                 user: winner.user
             });
         }

@@ -76,7 +76,7 @@ module.exports = {
                                         Withdrawal.create({
                                             amount: results.totalPrize,
                                             user: data.user,
-                                            withdrawalType: 'bingoCards'
+                                            withdrawalType: 'Card'
                                         }).exec(function (error, results) {
                                                 if(!error) {
                                                     Withdrawal.publishCreate(results);
