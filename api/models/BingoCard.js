@@ -11,7 +11,7 @@ module.exports = {
 
         clientSeed: {
             type: 'STRING',
-            alphanumeric: true,
+            maxLength: 20,
             notNull: true
         },
 
