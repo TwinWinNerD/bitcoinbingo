@@ -120,15 +120,24 @@
                     {{action 'saveSettings' on='submit'}}>
                     <fieldset>
                         <div class="form-group">
+                            <label for="clientSeed">Client seed</label>
                             {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed'
                             class='form-control' value=clientSeed}}
+                            <p class="help-block">
+                                Your client seed will be used for the random number generator to ensure fairness. Input anything you like.
+                            </p>
                         </div>
                         <div class="form-group">
+                            <label for="email">Email</label>
                             {{input id='email' name='email' placeholder='Enter email' class='form-control' value=email}}
                         </div>
                         <div class="form-group">
+                            <label for="password">Password</label>
                             {{input id='password' name='password' placeholder='Enter Password' class='form-control'
                             type='password' value=password}}
+                            <p class="help-block">
+                                Please set a password before logging out. Without your password you cannot login if you accidentally delete your cookies.
+                            </p>
                         </div>
                         <br>
                         <button id="saveSettings" type="submit" class="btn btn-default ladda-button"
