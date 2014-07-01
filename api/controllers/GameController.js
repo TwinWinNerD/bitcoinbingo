@@ -54,9 +54,13 @@ module.exports = {
             var returnRecords = [];
 
             if(requestGamesHistory) {
-                returnRecords = matchingRecords.toJSON();
+                try {
+                    returnRecords = matchingRecords.toJSON();
+                    return res.ok(returnRecords.games);
+                } catch(e) {
+                    return res.forbidden();
+                }
 
-                return res.ok(returnRecords.games);
             }
 
             // remove data that needs to stay hidden
