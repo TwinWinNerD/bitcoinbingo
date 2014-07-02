@@ -105,9 +105,6 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
         payload = newPayload;
 
-        console.log(payload);
-
-
         // Many items (findMany, findAll)
         if (typeof payload[typeKeyPlural] != "undefined"){
             payload[typeKeyPlural].forEach(function(item, index){
@@ -148,9 +145,6 @@ App.ApplicationSerializer = DS.RESTSerializer.extend({
 
             delete payload[typeKeyPlural];
         }
-
-        console.log(payload);
-
 
         return this._super(store, type, payload, id, requestType);
     }

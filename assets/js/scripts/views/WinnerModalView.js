@@ -12,8 +12,6 @@ App.WinnerModalView = Ember.View.extend({
 		close: function() {
 			var view = this;
 
-			console.log(view.controller);
-
 			this.$('.modal, .modal-backdrop').one("transitionend", function(ev) {
 				view.controller.send('close');
 			});
