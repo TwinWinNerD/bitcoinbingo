@@ -4,7 +4,8 @@ App.GamesRoute = Ember.Route.extend({
             return Ember.RSVP.hash({
                 modelIdleGames: this.store.find('game', { gameStatus: 'idle' }),
                 modelCountDownGames: this.store.find('game', { gameStatus: 'countDown' }),
-                modelPlayingGames: this.store.find('game', { gameStatus: 'playing' })
+                modelPlayingGames: this.store.find('game', { gameStatus: 'playing' }),
+                modelFinishedGames: this.store.find('game', { gameStatus: 'finished', limit: 10, sort: 'updatedAt DESC' })
             });
         } else {
             return Ember.RSVP.hash({
@@ -16,6 +17,9 @@ App.GamesRoute = Ember.Route.extend({
                 }),
                 modelPlayingGames: this.store.filter('game', function (game) {
                     return (game.get('gameStatus') === "playing");
+                }),
+                modelFinishedGames: this.store.filter('game', function (game) {
+                    return (game.get('gameStatus') === "finished");
                 })
             });
         }
@@ -24,6 +28,7 @@ App.GamesRoute = Ember.Route.extend({
         controller.set('modelIdleGames', model.modelIdleGames);
         controller.set('modelCountDownGames', model.modelCountDownGames);
         controller.set('modelPlayingGames', model.modelPlayingGames);
+        controller.set('modelFinishedGames', model.modelFinishedGames);
         controller.set('loadedGames', true);
     }
 });

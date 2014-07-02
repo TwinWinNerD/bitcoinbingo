@@ -328,6 +328,65 @@
             </div>
         </div>
     </div>
+    <p>This list shows the latest finished games. Everyone can watch!</p>
+    <br/>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="portlet portlet-red">
+                <div class="portlet-heading">
+                    <div class="portlet-title">
+                        <h4>Latest Finished Games</h4>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="portlet-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover games-list">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Card price</th>
+                                <th>Players</th>
+                                <th>Prize Pool</th>
+                                <th>Date</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each finishedGames itemController='game'}}
+                            {{#link-to 'game' id tagName='tr' class=tableClass}}
+                            <td>{{identifier}}</td>
+                            <td>{{table.tableType}}</td>
+                            <td>{{cardPrice}} Bits</td>
+                            <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
+                            <td>{{prizePool}} Bits</td>
+                            <td>{{convertDateToLocale updatedAt}}</td>
+                            {{#if userParticipating}}
+                            <td>
+                                {{#link-to 'game' id class='btn btn-sm btn-orange'}}
+                                <i class="fa fa-arrow-circle-right"></i>
+                                Watch
+                                {{/link-to}}
+                            </td>
+                            {{else}}
+                            <td>
+                                {{#link-to 'game' id class='btn btn-sm btn-red'}}
+                                <i class="fa fa-arrow-circle-right"></i>
+                                Watch
+                                {{/link-to}}
+                            </td>
+                            {{/if}}
+                            {{/link-to}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </script>
 

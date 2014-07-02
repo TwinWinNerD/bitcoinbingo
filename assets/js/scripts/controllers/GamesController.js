@@ -9,6 +9,15 @@ App.GamesController = Ember.ArrayController.extend({
         return this.store.filter('game', function (game) {
             return (game.get('gameStatus') === "playing");
         });
-    }.property('modelPlayingGames')
+    }.property('modelPlayingGames'),
+    finishedGames: function () {
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: ['updatedAt'],
+            sortAscending: false,
+            content: this.store.filter('game', function (game) {
+                return (game.get('gameStatus') === "finished");
+            })
+        });
+    }.property('modelFinishedGames')
 
 });
