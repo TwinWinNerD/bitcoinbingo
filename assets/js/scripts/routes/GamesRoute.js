@@ -5,7 +5,7 @@ App.GamesRoute = Ember.Route.extend({
                 modelIdleGames: this.store.find('game', { gameStatus: 'idle' }),
                 modelCountDownGames: this.store.find('game', { gameStatus: 'countDown' }),
                 modelPlayingGames: this.store.find('game', { gameStatus: 'playing' }),
-                modelFinishedGames: this.store.find('game', { gameStatus: 'finished', limit: 5, sort: 'updatedAt DESC' })
+                modelFinishedGames: this.store.find('game', { 'gameStatus': 'finished', 'limit': 5, 'sort': 'updatedAt DESC' })
             });
         } else {
             return Ember.RSVP.hash({
