@@ -62,8 +62,8 @@ Ember.Application.initializer({
 });
 
 window.App = Ember.Application.create({
-    LOG_TRANSITIONS: true,
-    LOG_TRANSITIONS_INTERNAL: true
+//    LOG_TRANSITIONS: true,
+//    LOG_TRANSITIONS_INTERNAL: true
 });
 
 App.Router.map(function () {
