@@ -21,3 +21,20 @@ exports.createAddress = function (user) {
 
     return deferred.promise;
 };
+
+exports.getBalance = function (address, confirmations) {
+    var deferred = Q.defer();
+    var url = "https://blockchain.info/merchant/" + alias +"/address_balance?password=" + password + "&confirmations=" + confirmations + "&address" + address;
+
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result = JSON.parse(body);
+
+            deferred.resolve(result);
+        } else {
+            deferred.reject(error);
+        }
+    });
+
+    return deferred.promise;
+};
