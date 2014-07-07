@@ -38,6 +38,11 @@ module.exports = {
             defaultsTo: ""
         },
 
+        depositAddress: {
+            type: 'STRING',
+            defaultsTo: ""
+        },
+
         balance: {
             type: 'INTEGER',
             defaultsTo: 0
@@ -76,7 +81,7 @@ module.exports = {
     },
 
     protectedAttributes: function () {
-        return [ "username", "balance", "bingoCards", "games", "winners", "deposits", "withdrawals" ];
+        return [ "username", "balance", "bingoCards", "games", "winners", "deposits", "withdrawals", "depositAddress" ];
     },
 
     beforeCreate: function (user, next) {
