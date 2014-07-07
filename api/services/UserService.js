@@ -53,15 +53,11 @@ exports.updateBalance = function (userId, amount) {
         balance = Number(balance);
         amount = Number(amount);
 
-        console.log(balance);
-        console.log(amount);
-
         if(amount < 0) {
             balance -= amount;
         } else {
             balance += amount;
         }
-        console.log(balance);
 
         User.update(userId, { balance: balance }).exec(function (err, result) {
             if(!err && result) {
