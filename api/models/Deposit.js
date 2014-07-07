@@ -20,6 +20,16 @@ module.exports = {
             required: true
         },
 
+        confirmed: {
+            type: 'INTEGER',
+            integer: true,
+            defaultsTo: 1
+        },
+
+        hash: {
+            type: 'STRING'
+        },
+
         user: {
             model: 'user',
             required: true
