@@ -5,6 +5,10 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var actionUtil;
+
+actionUtil = require('../actionUtil');
+
 module.exports = {
 
     session: function (req, res) {
@@ -42,6 +46,37 @@ module.exports = {
         } else {
             res.json(500, { error: "We need a username." });
         }
+    },
+
+    findOne: function (req, res) {
+        var pk = actionUtil.requirePk(req);
+
+        var query = User.findOne(pk);
+
+        query.exec(function found(err, user) {
+            if (err) return res.serverError(err);
+            if(!user) return res.notFound('No record found with the specified `id`.');
+
+            console.log(user);
+
+            if(typeof user.depositAddress === "undefined" || user.depositAddress === "") {
+
+                BlockchainService.createAddress(user).then(function (result) {
+                    if(result.address) {
+                        User.update(user.id, { depositAddress: result.address }).exec(function (err, result) {
+                            User.publishUpdate(user.id, { depositAddress: result.address }, null);
+                        });
+                    }
+                });
+            }
+
+            if (sails.hooks.pubsub && req.isSocket) {
+                User.subscribe(req, user);
+                actionUtil.subscribeDeep(req, user);
+            }
+
+            res.ok(user);
+        });
     }
 
 };
