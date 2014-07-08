@@ -24,8 +24,7 @@ module.exports = {
             type: 'STRING',
             email: true,
             unique: true,
-            required: false,
-            defaultsTo: ""
+            required: false
         },
 
         password: {
