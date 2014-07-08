@@ -3,7 +3,8 @@
 site 'http://community.opscode.com/api/v1'
 
 cookbook "apt"
-cookbook "redis", {:github=>"ctrabold/chef-redis"}
-cookbook "mongodb", {}
+cookbook "nginx", {}
+cookbook "mysql", {}
 cookbook "nodejs", {:github=>"mdxp/nodejs-cookbook"}
 cookbook "git", {}
+cookbook "redis", {:github=>"ctrabold/chef-redis"}
