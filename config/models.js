@@ -13,7 +13,7 @@ module.exports.models = {
   // i.e. the name of one of your app's connections (see `config/connections.js`)
   //
   // (defaults to localDiskDb)
-  connection: 'bitcoinBingoMongo',
+  connection: 'bitcoinBingoMySQL',
 
     publishCreate: function(values, req, options) {
         var self = this;
