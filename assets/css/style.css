@@ -2087,3 +2087,7 @@ input[type="checkbox"]:checked::after,
 .games-list td {
     cursor: pointer;
 }
+
+.form-control[readonly] {
+    cursor: default;
+}

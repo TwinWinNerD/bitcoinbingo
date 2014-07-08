@@ -715,6 +715,17 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-4">
+        {{#if session.currentUser.depositAddress}}
+            <label for="depositAddress">Deposit Address</label>
+            {{input class='form-control' id='depositAddress' readonly=true value=session.currentUser.depositAddress}}
+            <p class="help-block">You can deposit to this address and play right away! After one confirmation you can withdraw your coins.</p>
+        {{else}}
+            Due to a server error we couldn't generate a deposit address for you. Please try again in a couple minutes.
+        {{/if}}
+        </div>
+    </div>
+    <div class="row">
         <div class="col-lg-6">
             <div class="portlet portlet-red">
                 <div class="portlet-heading">
