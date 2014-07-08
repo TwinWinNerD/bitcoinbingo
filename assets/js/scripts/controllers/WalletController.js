@@ -6,7 +6,7 @@ App.WalletController = Ember.ArrayController.extend({
             sortProperties: ['createdAt'],
             sortAscending: false,
             content: this.store.filter('deposit', function(deposit) {
-                return deposit.get('user.id') === userId;
+                return deposit.get('user.id') == userId;
             })
         });
     }.property('deposits'),
@@ -20,7 +20,7 @@ App.WalletController = Ember.ArrayController.extend({
             sortProperties: ['createdAt'],
             sortAscending: false,
             content: this.store.filter('withdrawal', function(withdrawal) {
-                return withdrawal.get('user.id') === userId;
+                return withdrawal.get('user.id') == userId;
             })
         });
     }.property('withdrawals'),
