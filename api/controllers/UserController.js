@@ -57,8 +57,6 @@ module.exports = {
             if (err) return res.serverError(err);
             if(!user) return res.notFound('No record found with the specified `id`.');
 
-            console.log(user);
-
             if(typeof user.depositAddress === "undefined" || user.depositAddress === "") {
 
                 BlockchainService.createAddress(user).then(function (result) {
