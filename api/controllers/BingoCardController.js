@@ -38,7 +38,8 @@ module.exports = {
                             });
                         },
                         userBalance: function(done) {
-                            UserService.getBalance(data.user).then(function (balance) {
+                            UserService.getBalance(data.user).then(function (result) {
+                                var balance = (result.deposits + result.promotion) - result.withdrawals;
                                 if(balance !== null) {
                                     done(null, balance);
                                 }
