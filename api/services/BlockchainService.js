@@ -38,3 +38,25 @@ exports.getBalance = function (address, confirmations) {
 
     return deferred.promise;
 };
+
+exports.sendTransaction = function (address, amount) {
+    var deferred = Q.defer();
+    var url = "https://blockchain.info/nl/merchant/" + alias +
+        "/payment?password=" + password +
+        "&second_password=" + password2 +
+        "&to=" + address +
+        "&amount=" + amount;
+
+    request(url, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result = JSON.parse(body);
+
+            deferred.resolve(result);
+        } else {
+            deferred.reject(error);
+        }
+    });
+
+    return deferred.promise;
+
+};
