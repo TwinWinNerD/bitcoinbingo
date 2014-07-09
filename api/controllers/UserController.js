@@ -72,7 +72,7 @@ module.exports = {
                 User.subscribe(req, user);
                 actionUtil.subscribeDeep(req, user);
             }
-
+            req.session.user.isBusy = false;
             res.ok(user);
         });
     }
