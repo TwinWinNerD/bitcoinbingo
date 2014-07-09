@@ -34,7 +34,6 @@ module.exports = {
                         var cardPrice = game.table.cardPrice;
 
                         if(balance < cardPrice) {
-                            req.session.user.isBusy = false;
                             return res.json({ error: "Not enough balance" });
                         }
 
@@ -139,16 +138,13 @@ module.exports = {
                             }
                         });
                     }, function (error) {
-                        req.session.user.isBusy = false;
                         return res.json({ error: error });
                     });
                 });
             } else {
-                req.session.user.isBusy = false;
                 res.json({ error: "You are not allowed to buy cards at the moment." });
             }
         }, function (error) {
-            req.session.user.isBusy = false;
             res.json({ error: error });
         });
     }
