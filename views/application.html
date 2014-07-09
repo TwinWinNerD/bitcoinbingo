@@ -414,7 +414,16 @@
 
         <div class="row">
             <div class="col-sm-12 hide-outside">
-                <div style="font-size: 40px; text-align: center;">{{latestNumber}}</div>
+                <div style="text-align: center;">
+                    <span style="font-size: 40px">{{latestNumber}}&nbsp;&nbsp;</span>
+                    <span style="font-size: 20px">
+                        {{#each number in last10Numbers}}
+                        {{number}}&nbsp;
+                        {{/each}}
+                    </span>
+
+                </div>
+
             </div>
         </div>
 

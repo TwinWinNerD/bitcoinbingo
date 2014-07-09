@@ -97,6 +97,16 @@ App.GameController = Ember.ObjectController.extend({
         
     }.property('model.drawnNumbers'),
 
+    last10Numbers: function () {
+        var drawnNumbers = this.get('drawnNumbers');
+        var reverseDrawnNumbers = _.clone(drawnNumbers).reverse();
+
+        if(drawnNumbers.length > 0) {
+            return reverseDrawnNumbers.slice(1, 11);
+        }
+
+    }.property('model.drawnNumbers'),
+
     gameMessages: function () {
         var gameId = this.get('id');
 
