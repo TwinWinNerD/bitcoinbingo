@@ -5,191 +5,151 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var actionUtil, async;
+var actionUtil = require('../actionUtil');
 
-actionUtil = require('../actionUtil');
-async = require('async');
+var startGameQueue = async.queue(function (task, callback) {
+    BingoService.startGame(task.gameId).then(function () {
+        callback();
+    });
+}, 1);
 
 module.exports = {
 
-    create: function(req, res) {
+    create: function (req, res) {
         var Model = actionUtil.parseModel(req);
-
-        // Create data object (monolithic combination of all parameters)
-        // Omit the blacklisted params (like JSONP callback param, etc.)
         var data = actionUtil.parseValues(req);
 
-        if(typeof req.session.user !== "undefined" && req.session.user !== null) {
-            data.user = req.session.user.id;
+        data.user = req.session.user.id;
 
-            BingoCardService.isUserAllowedToBuyCards(data.game, data.user).then(function (resolve) {
-                if(resolve) {
-                    async.parallel({
-                        totalPrize: function(done) {
-                            // use amountOfCards = 1 for now
-                            BingoCardService.calculateTotalPrice(data.game, 1).then( function (totalPrize) {
-                                if(totalPrize !== null) {
-                                    done(null, totalPrize);
-                                }
-                            }, function (error) {
-                                if(error) {
-                                    done(error);
-                                }
-                            });
-                        },
-                        userBalance: function(done) {
-                            UserService.getBalance(data.user).then(function (result) {
-                                var balance = (result.deposits + result.promotion) - result.withdrawals;
-                                if(balance !== null) {
-                                    done(null, balance);
-                                }
-                            }, function(error) {
-                                if(error) {
-                                    done(error);
-                                }
-                            });
+        BingoCardService.isUserAllowedToBuyCards(data.game, data.user).then(function (allowed) {
+            if(allowed) {
+
+                Game.findOne(data.game).populate('table').exec(function (err, game) {
+                    if(err && !game) {
+                        return res.json({ error: err });
+                    }
+
+                    UserService.getBalance(data.user).then(function (result) {
+                        var balance = (result.deposits + result.promotion) - result.withdrawals;
+                        var cardPrice = game.table.cardPrice;
+
+                        if(balance < cardPrice) {
+                            req.session.user.isBusy = false;
+                            return res.json({ error: "Not enough balance" });
                         }
-                    }, function (error, results) {
 
-                        if(!error) {
-
-                            if(results.userBalance >= results.totalPrize) {
-
-                                async.parallel({
-                                    updateBalance: function(done) {
-                                        var newBalance = results.userBalance - results.totalPrize;
-
-                                        req.session.user.balance = newBalance;
-
-                                        User.update(data.user, {
-                                            balance: newBalance
-                                        }).exec(function (error, results) {
-                                            if(!error) {
-                                                User.publishUpdate(data.user, { balance: newBalance }, null);
-
-                                                done(null, results);
-                                            } else {
-                                                done(error);
-                                            }
-                                        });
-                                    },
-                                    withdrawal: function(done) {
-                                        Withdrawal.create({
-                                            amount: results.totalPrize,
-                                            user: data.user,
-                                            withdrawalType: 'Card'
-                                        }).exec(function (error, results) {
-                                                if(!error) {
-                                                    Withdrawal.publishCreate(results);
-
-                                                    done(null, results);
-                                                } else {
-                                                    done(error);
-                                                }
-                                            });
-                                    },
-                                    addedToGame: function(done) {
-
-                                        Game.findOne(data.game).exec(function(err, result) {
-                                            if(err) {
-                                                done(err);
-                                            } else {
-                                                var foundUser = false;
-                                                for(var i = 0; i < result.users.length; i++) {
-                                                    if(result.users[i].id === data.user) {
-                                                        foundUser = true;
-                                                    }
-                                                }
-
-                                                if(foundUser) {
-                                                    done(null);
-                                                } else {
-                                                    result.users.add(data.user);
-                                                    result.save(function (err, result) {
-                                                        if(!err && result) {
-                                                            var user = {
-                                                                id: data.user,
-                                                                username: req.session.user.username,
-                                                                balance: req.session.user.balance,
-                                                                games: [data.game]
-                                                            };
-
-                                                            Game.publishAdd(data.game, "users", user);
-                                                        }
-                                                    });
-
-                                                    done(null);
-                                                }
-
-                                            }
-                                        });
-                                    },
-                                    cards: function(done) {
-                                        // Create new instance of model using data from params
-                                        BingoCard.create(data).exec(function created (err, newInstance) {
-
-                                            // Differentiate between waterline-originated validation errors
-                                            // and serious underlying issues. Respond with badRequest if a
-                                            // validation error is encountered, w/ validation info.
-                                            if (err) return res.negotiate(err);
-
-                                            // If we have the pubsub hook, use the model class's publish method
-                                            // to notify all subscribers about the created item
-                                            if (req._sails.hooks.pubsub) {
-                                                if (req.isSocket) {
-                                                    Model.subscribe(req, newInstance);
-                                                    Model.introduce(newInstance);
-                                                }
-
-                                                Model.publishCreate(newInstance, !req.options.mirror && req);
-                                            }
-
-
-                                            done(null, newInstance);
-
-
-                                        });
-                                    }
-                                }, function(error, results) {
-
+                        async.series([
+                            function(done) {
+                                Withdrawal.create({
+                                    amount: cardPrice,
+                                    user: data.user,
+                                    withdrawalType: 'Card'
+                                }).exec(function (error, withdrawal) {
                                     if(!error) {
+                                        UserService.getBalance(data.user, 0).then(function (result) {
+                                            var balance = (result.deposits + result.promotion) - result.withdrawals;
 
-                                        BingoService.minimumPlayersReached(data.game).then( function (result) {
+                                            if(balance < 0) {
+                                                withdrawal.destroy(function (err) {
+                                                    if(!err) {
+                                                        UserService.updateBalance(data.user, 0).then(function (result) {
 
-                                            if(result) {
-                                                Game.findOne(data.game).exec(function (err, result) {
-                                                    if(result.gameStatus === 'idle') {
-                                                        BingoService.settleRound(data.game, false);
+                                                            done(true);
+                                                        });
                                                     }
                                                 })
                                             } else {
-                                                // nope not yet
-                                            }
+                                                Withdrawal.publishCreate(withdrawal);
+                                                done(null, withdrawal);
 
+                                            }
                                         });
 
-                                        res.status(201);
-                                        res.ok(results.cards.toJSON());
+
+                                    } else {
+                                        done(error);
+                                    }
+                                });
+                            },
+                            function(done) {
+                                UserService.updateBalance(data.user, 0).then(function (result) {
+                                    done(null, result);
+                                }, function (error) {
+                                    done(error);
+                                });
+                            },
+                            function(done) {
+
+                                Game.findOne(data.game).exec(function(err, result) {
+                                    if(err) {
+                                        done(err);
+                                    } else {
+                                        var foundUser = false;
+                                        for(var i = 0; i < result.users.length; i++) {
+                                            if(result.users[i].id === data.user) {
+                                                foundUser = true;
+                                            }
+                                        }
+
+                                        if(foundUser) {
+                                            done(null);
+                                        } else {
+                                            result.users.add(data.user);
+                                            result.save(function (err, result) {
+                                                if(!err && result) {
+                                                    var user = {
+                                                        id: data.user,
+                                                        username: req.session.user.username,
+                                                        games: [data.game]
+                                                    };
+
+                                                    Game.publishAdd(data.game, "users", user);
+                                                }
+                                            });
+
+                                            done(null);
+                                        }
+
+                                    }
+                                });
+                            },
+                            function(done) {
+                                BingoCard.create(data).exec(function created (err, card) {
+
+                                    if (req._sails.hooks.pubsub) {
+                                        if (req.isSocket) {
+                                            Model.subscribe(req, card);
+                                            Model.introduce(card);
+                                        }
+
+                                        Model.publishCreate(card, !req.options.mirror && req);
                                     }
 
+                                    done(null, card);
                                 });
-                            }  else {
-
-                                res.json(500, { error: "Not enough balance" });
                             }
-                        }
+                        ], function(error, results) {
+                            req.session.user.isBusy = false;
+
+                            if(!error) {
+                                startGameQueue.push({gameId: data.game});
+
+                                res.status(201);
+                                res.ok(results[3].toJSON());
+                            }
+                        });
+                    }, function (error) {
+                        req.session.user.isBusy = false;
+                        return res.json({ error: error });
                     });
-                } else {
-
-                    res.json(500, { error: "You have exceeded the maximum amount of cards for this game"});
-                }
-            }, function (error) {
-
-                res.json(500, { error: error });
-            });
-
-        } else {
-            res.json(500, { error: "Need to be logged in to buy cards" });
-        }
+                });
+            } else {
+                req.session.user.isBusy = false;
+                res.json({ error: "You are not allowed to buy cards at the moment." });
+            }
+        }, function (error) {
+            req.session.user.isBusy = false;
+            res.json({ error: error });
+        });
     }
 };
