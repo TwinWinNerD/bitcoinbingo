@@ -105,8 +105,8 @@ module.exports = {
                                                     done(null);
                                                 } else {
                                                     result.users.add(data.user);
-                                                    result.save(function (error, result) {
-                                                        if(!err) {
+                                                    result.save(function (err, result) {
+                                                        if(!err && result) {
                                                             var user = {
                                                                 id: data.user,
                                                                 username: req.session.user.username,
