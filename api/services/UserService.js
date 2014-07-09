@@ -10,7 +10,23 @@ exports.getBalance = function (userId, confirmed) {
 
     async.parallel({
         deposits: function (done) {
-            Deposit.find().where( {user: userId, confirmed: { '>=': confirmed } }).sum('amount').exec(function (error, sum) {
+            Deposit.find().where({user: userId})
+                .where({ confirmed: { '>=': confirmed }})
+                .where({ depositType: { '!': 'Promotion' } })
+                .sum('amount').exec(function (error, sum) {
+                if(!error) {
+                    if(sum.length > 0) {
+                        done(null, sum[0].amount);
+                    } else {
+                        done(null, 0);
+                    }
+                } else {
+                    done(error);
+                }
+            });
+        },
+        promotion: function (done) {
+            Deposit.find().where( {user: userId, depositType: 'Promotion' }).sum('amount').exec(function (error, sum) {
                 if(!error) {
                     if(sum.length > 0) {
                         done(null, sum[0].amount);
@@ -34,10 +50,23 @@ exports.getBalance = function (userId, confirmed) {
                     done(error);
                 }
             });
+        },
+        cardsBought: function (done) {
+            Withdrawal.find().where( {user: userId, withdrawalType: 'Card' }).sum('amount').exec(function (error, sum) {
+                if(!error) {
+                    if(sum.length > 0) {
+                        done(null, sum[0].amount);
+                    } else {
+                        done(null, 0);
+                    }
+                } else {
+                    done(error);
+                }
+            });
         }
     }, function (error, results) {
         if (!error) {
-            deferred.resolve(results.deposits - results.withdrawals);
+            deferred.resolve(results);
         } else {
             deferred.reject("Error while determining balance");
         }
@@ -49,8 +78,8 @@ exports.getBalance = function (userId, confirmed) {
 exports.updateBalance = function (userId, amount) {
     var deferred = Q.defer();
 
-    exports.getBalance(userId, 0).then(function (balance) {
-        balance = Number(balance);
+    exports.getBalance(userId, 0).then(function (result) {
+        var balance = Number((result.deposits + result.promotion) - result.withdrawals);
         amount = Number(amount);
 
         if(amount < 0) {
