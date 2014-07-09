@@ -15,6 +15,11 @@ module.exports = {
             required: false
         },
 
+        hash: {
+            type: 'STRING',
+            required: false
+        },
+
         amount: {
             type: 'INTEGER',
             integer: true,
