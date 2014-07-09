@@ -56,7 +56,7 @@ module.exports.policies = {
 
     MessageController: {
         add: false,
-        create: ['isAuthenticated'],
+        create: ['isAuthenticated', 'notSpamming'],
         destroy: false,
         find: false,
         findOne: false,
