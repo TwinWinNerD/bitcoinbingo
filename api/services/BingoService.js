@@ -470,6 +470,25 @@ exports.minimumPlayersReached = function (gameId) {
     return deferred.promise;
 };
 
+exports.startGame = function (gameId) {
+    var deferred = Q.defer();
+
+    exports.minimumPlayersReached(gameId).then( function (result) {
+        if(result) {
+            Game.findOne(gameId).exec(function (err, result) {
+                deferred.resolve();
+                if(result.gameStatus === 'idle') {
+                    exports.settleRound(gameId, false);
+                }
+            })
+        } else {
+            deferred.resolve();
+        }
+    });
+
+    return deferred.promise;
+};
+
 function countDown(seconds) {
 
     var deferred, timer;
