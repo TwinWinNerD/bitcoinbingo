@@ -241,6 +241,8 @@
             var eventName = Ember.String.camelize(model).toLowerCase();
             io.socket.on(eventName, function (message) {
                 // Left here to help further debugging.
+                console.log(message);
+
                 if (message.verb === 'created') {
                     pushMessage(message);
                 }
