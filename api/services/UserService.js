@@ -78,6 +78,8 @@ exports.getBalance = function (userId, confirmed) {
 exports.updateBalance = function (userId, amount) {
     var deferred = Q.defer();
 
+    if(!amount) amount = 0;
+
     exports.getBalance(userId, 0).then(function (result) {
         var balance = Number((result.deposits + result.promotion) - result.withdrawals);
         amount = Number(amount);
