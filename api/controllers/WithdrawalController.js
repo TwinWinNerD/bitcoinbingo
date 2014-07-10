@@ -36,6 +36,14 @@ module.exports = {
             var promotion = Number(result.promotion);
             var cardsBought = Number(result.cardsBought);
 
+            data.amount -= 10000; // substract withdrawal fee
+
+            // minimum deposit 10000 satoshi / 0.1mBTC
+            if(data.amount < 10000) {
+                return res.json({ error: "To withdraw your promotion you need to spent it at least once." });
+            }
+
+
             if(cardsBought < promotion) {
                 return res.json({ error: "To withdraw your promotion you need to spent it at least once." });
             }
@@ -46,27 +54,37 @@ module.exports = {
                 return res.json({ error: "You can't withdraw this much. Please remember: deposits need to be confirmed at least once." });
             }
 
-            BlockchainService.sendTransaction(data.address, data.amount).then(function (result) {
-                console.log(result);
+            var userId = req.session.user.id;
 
-                if(typeof result.error !== 'undefined') {
-                    return res.json({ error: "We are having some problems with the hot wallet. Please try again later." });
+            Withdrawal.create({ amount: data.amount, user: userId, withdrawalType: 'Bitcoin', recipientAddress: data.address}).exec(function (err, withdrawal) {
+                if(!err && withdrawal) {
+                    BlockchainService.sendTransaction(data.address, data.amount).then(function (transaction) {
+                        console.log(result);
+
+                        if(typeof transaction.error !== 'undefined') {
+                            withdrawal.destroy(function (err) {
+                                if(!err) {
+                                    UserService.updateBalance(userId, 0).then(function (result) {
+                                        return res.json({ error: "We are having some problems with the hot wallet. Please try again later." });
+                                    });
+                                }
+                            })
+                        } else {
+                            UserService.updateBalance(userId).then(function (result) {
+
+                                withdrawal.hash = transaction.tx_hash;
+
+                                withdrawal.save(function (err) {
+                                    Withdrawal.publishCreate(withdrawal);
+                                });
+
+                            });
+                            return res.json(transaction);
+                        }
+                    });
+                } else {
+                    return res.json({ error: "We are having some problems creating a withdrawal for you. Please try again later." });
                 }
-
-                Withdrawal.create({ amount: data.amount, user: req.session.user.id, withdrawalType: 'Bitcoin', recipientAddress: data.address, hash: result.tx_hash}).exec(function (err, withdrawal) {
-                    console.log("inside withdrawal");
-                    console.log(err);
-                    console.log(withdrawal);
-
-                    if(!err) {
-                        UserService.updateBalance(data.user).then(function (result) {
-                            Withdrawal.publishCreate(withdrawal);
-                        });
-                    }
-                    return res.json(result);
-
-                });
-
             });
         });
     }
