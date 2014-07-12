@@ -44,6 +44,11 @@ module.exports = {
             defaultsTo: []
         },
 
+        countDown: {
+            type: 'INTEGER',
+            defaultsTo: 10
+        },
+
         bingoCards: {
             collection: 'bingoCard',
             via: 'game'

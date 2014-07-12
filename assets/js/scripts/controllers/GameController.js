@@ -62,6 +62,10 @@ App.GameController = Ember.ObjectController.extend({
         return false;
     }.property('model.gameStatus'),
 
+    isCountDown: function () {
+        return this.get('model.gameStatus') === 'countDown';
+    },
+
     playing: function () {
         if(this.get('model.gameStatus') === 'playing') {
             return true;
