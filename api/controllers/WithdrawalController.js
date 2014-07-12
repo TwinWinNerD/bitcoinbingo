@@ -31,7 +31,7 @@ module.exports = {
 
         withdrawalQueue.push({ userId: req.session.user.id }, function (err, result) {
             if(err) {
-                return res.json({ error: "You are not allowed to make this request so soon." });
+                return res.json({ error: "You are not allowed to make this request so soon. Please wait 10 seconds." });
             }
             var promotion = Number(result.promotion);
             var cardsBought = Number(result.cardsBought);
@@ -40,9 +40,8 @@ module.exports = {
 
             // minimum deposit 10000 satoshi / 0.1mBTC
             if(data.amount < 10000) {
-                return res.json({ error: "To withdraw your promotion you need to spent it at least once." });
+                return res.json({ error: "Your withdrawal amount is too low." });
             }
-
 
             if(cardsBought < promotion) {
                 return res.json({ error: "To withdraw your promotion you need to spent it at least once." });
