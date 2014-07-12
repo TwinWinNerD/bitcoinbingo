@@ -481,8 +481,10 @@
                         </a>
                     </li>
                 </ul>
-
-
+                <div>
+                    {{countDown}}
+                </div>
+                <br/>
                 {{#if session.isAuthenticated}}
                     {{#if canBuyCards}}
                     <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
@@ -707,7 +709,74 @@
     </div>
 </script>
 
+<script type="text/x-handlebars" data-template-name="withdraw">
+    <div class="page-content page-content-ease-in">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-title">
+                    <h1>Bitcoin Bingo
+                        <small>Withdraw</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
+                        <li>{{#link-to 'wallet' }} Wallet {{/link-to}}</li>
+                        <li class="active">Withdraw</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="portlet portlet-green">
+                    <div class="portlet-heading login-heading">
+                        <div class="portlet-title">
+                            <h4><strong>Withdraw</strong></h4>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="portlet-body">
+
+                        {{#if errorMessage}}
+                        <div class="alert alert-danger">
+                            <strong>Error:</strong> {{errorMessage}}
+                        </div>
+                        {{/if}}
+                        <form accept-charset="UTF-8" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="withdrawalAddress">Withdrawal Address</label>
+                                {{input class='form-control' id='withdrawalAddress' placeholder='Enter your receiving address here' value=withdrawalAddress}}
+
+                            </div>
+                            <div class="form-group">
+                                <label for="withdrawalAmount">Withdrawal Amount</label>
+                                <div class="pull-right"><small>Balance: {{satoshiToBits session.currentUser.balance}} Bits</small></div>
+                                {{input class='form-control' id='withdrawalAmount' value=withdrawalAmount}}
+                                <div><small>Minimum withdrawal: 100 Bits</small></div>
+                                <p class="help-block">Please note we substract a 100 Bits miners fee.</p>
+                            </div>
+                            <button id="withdrawButton" class="btn btn-red ladda-button" data-style="expand-left" {{action 'withdraw'}}>
+                            <span class="ladda-label">Withdraw</span>
+                            </button>
+                        </fieldset>
+                        </form>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5 col-md-offset-2">
+
+    </div>
+</script>
+
 <script type="text/x-handlebars" data-template-name="wallet">
+    {{outlet}}
     <div class="row">
         <div class="col-lg-12">
             <div class="page-title">

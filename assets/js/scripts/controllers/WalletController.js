@@ -1,4 +1,6 @@
 App.WalletController = Ember.ArrayController.extend({
+    errorMessage: null,
+    withdrawalAmount: 0,
     userDeposits: function () {
         var userId = this.get('session.content.id');
 
@@ -26,5 +28,30 @@ App.WalletController = Ember.ArrayController.extend({
     }.property('withdrawals'),
     last20userWithdrawals: function () {
         return this.get('userWithdrawals').toArray().slice(0, 20)
-    }.property('userWithdrawals.[]')
+    }.property('userWithdrawals.[]'),
+
+    actions: {
+        withdraw: function () {
+            var self = this;
+
+            var withdrawButton = Ladda.create(document.querySelector('#withdrawButton'));
+            withdrawButton.start();
+
+            var withdrawalAddress = this.get('withdrawalAddress');
+            var withdrawalAmount = this.get('withdrawalAmount') * 100; // Bits * 100 = satoshi's
+
+            var data = {
+                address: withdrawalAddress,
+                amount: withdrawalAmount
+            };
+
+            socket.post('/api/withdrawal', data, function (result) {
+                withdrawButton.stop();
+                console.log(result);
+                if(typeof result.error !== 'undefined') {
+                    self.set('errorMessage', result.error);
+                }
+            });
+        }
+    }
 });

@@ -70,6 +70,7 @@ App.Router.map(function () {
     this.route('login');
     this.route('register');
     this.route('wallet');
+    this.route('withdraw', { path: '/wallet/withdraw' });
     this.route('contact');
     this.resource('games', { path: '/' });
     this.resource('settings', { path: '/settings' });
