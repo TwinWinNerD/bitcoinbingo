@@ -19,6 +19,7 @@ module.exports = {
 
         if(typeof req.session.user !== "undefined" && req.session.user !== null) {
             data.user = req.session.user.username;
+            data.type = 'user';
 
             Message.create(data).exec(function created (err, newInstance) {
 

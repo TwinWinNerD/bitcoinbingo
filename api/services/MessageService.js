@@ -10,6 +10,7 @@ exports.sendSystemMessage = function (body, game) {
     message = {
         user: "System",
         body: body,
+        type: "system",
         game: game
     };
 

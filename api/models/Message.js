@@ -14,6 +14,11 @@ module.exports = {
           required: true
       },
 
+      type: {
+          type: 'STRING',
+          required: false
+      },
+
       body: {
           type: 'STRING',
           required: true
