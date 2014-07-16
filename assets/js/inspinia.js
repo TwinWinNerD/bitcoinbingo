@@ -119,3 +119,7 @@ jQuery.fn.swap = function (b) {
     t.parentNode.removeChild(t);
     return this;
 };
+
+function satoshiToBits(satoshi) {
+    return satoshi / 100;
+}

@@ -168,6 +168,8 @@ App.GameController = Ember.ObjectController.extend({
             tableClass = 'danger';
         }
 
+        tableClass += ' animated fadeInLeft';
+
         return tableClass;
     }.property('table.tableType'),
 

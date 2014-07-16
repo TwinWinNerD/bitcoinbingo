@@ -8,5 +8,9 @@ App.ApplicationView = Ember.View.extend({
         Ladda.bind('.ladda-button', {
             timeout: 2000
         });
+
+        $('.navbar-minimalize').click( function() {
+              $( "body" ).toggleClass("mini-navbar" );
+        });
     }
 });

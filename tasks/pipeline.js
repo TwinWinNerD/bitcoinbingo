@@ -15,7 +15,11 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-	'styles/**/*.css'
+	'css/bootstrap.min.css',
+	'css/animate.css',
+	'css/style.css',
+	'css/plugins/ladda/ladda-themeless.css',
+	'font-awesome/css/font-awesome.min.css'
 ];
 
 
@@ -30,9 +34,13 @@ var jsFilesToInject = [
     'js/dependencies/ember.js',
     'js/dependencies/ember-data.js',
     'js/dependencies/sails.io.js',
+    'js/dependencies/bootstrap.min.js',
+    'js/plugins/metisMenu/jquery.metisMenu.js',
     'js/plugins/slimscroll/jquery.slimscroll.min.js',
     'js/plugins/ladda/spin.min.js',
     'js/plugins/ladda/ladda.min.js',
+    'js/inspinia.js',
+    'js/plugins/pace/pace.min.js',
 	'js/dependencies/**/*.js',
 
 

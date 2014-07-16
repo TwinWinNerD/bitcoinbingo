@@ -1,220 +1,182 @@
 <script type="text/x-handlebars">
-
-    <nav class="navbar-top" role="navigation">
-
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle pull-right" data-toggle="collapse"
-                    data-target=".sidebar-collapse">
-                <i class="fa fa-bars"></i> Menu
-            </button>
-        </div>
-
-        <div class="nav-top">
-            <ul class="nav navbar-right">
-                <li>
-                    {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
-                </li>
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav" id="side-menu">
+                {{#link-to 'games' tagName="li" href=false}}<a href="#"><i class="fa fa-th-large"></i><span class="nav-label">Games</span></a>{{/link-to}}
 
                 {{#if session.isAuthenticated}}
-                <li>
-                    {{#link-to 'wallet'}} <i class="fa fa-btc"></i> {{satoshiToBits session.currentUser.balance}} Bits
-                    {{/link-to}}
-                </li>
+                    {{#link-to 'gamesHistory' tagName="li" href=false}}<a href="#"><i class="fa fa-history"></i><span class="nav-label">History</span></a>{{/link-to}}
+                    {{#link-to 'settings' tagName="li" href=false}}<a href="#"><i class="fa fa-gear"></i><span class="nav-label">Settings</span></a>{{/link-to}}
                 {{/if}}
 
-                <li class="dropdown">
+                {{#link-to 'contact' tagName="li" href=false}}<a href="#"><i class="fa fa-envelope"></i><span class="nav-label">Contact</span></a>{{/link-to}}
+            </ul>
+        </div>
+    </nav>
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary "><i class="fa fa-bars"></i> </a>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
+                    </li>
+
                     {{#if session.isAuthenticated}}
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-user"></i> {{session.currentUser.username}} <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li>
-                            {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
-                        </li>
-                        <li>
-                            <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
-                        </li>
-                    </ul>
-                    {{else}}
-                    {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
+                    <li>
+                        {{#link-to 'wallet'}} <i class="fa fa-btc"></i> {{satoshiToBits session.currentUser.balance}} Bits{{/link-to}}
+                    </li>
                     {{/if}}
-                </li>
-            </ul>
-        </div>
-    </nav>
 
-    <nav class="navbar-side" role="navigation">
-        <div class="navbar-collapse sidebar-collapse collapse">
-            <ul id="side" class="nav navbar-nav side-nav">
-                {{#if session.isAuthenticated}}
-                <li class="side-user hidden-xs">
-                    <p class="name tooltip-sidebar-logout">
-                        {{session.currentUser.username}}
-                        <a style="color: inherit" href="#" data-toggle="tooltip" data-placement="top" title="Logout"
-                           data-popup-ordinal="1" {{ action 'invalidateSession' }}><i class="fa fa-sign-out"></i></a>
-                    </p>
-                </li>
-                {{/if}}
-                <li>
-                    {{#link-to 'games' }} <i class="fa fa-dashboard"></i> Games{{/link-to}}
-                </li>
-                <li>
-                    {{#link-to '' }} <i class="fa fa-info-circle"></i> Help{{/link-to}}
-                </li>
-                {{#if session.isAuthenticated}}
-                <li>
-                    {{#link-to 'gamesHistory' }} <i class="fa fa-history"></i> History{{/link-to}}
-                </li>
-                <li>
-                    {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
-                </li>
-                {{/if}}
-                <li>
-                    {{#link-to 'contact'}} <i class="fa fa-envelope"></i> Contact{{/link-to}}
-                </li>
-            </ul>
-        </div>
-    </nav>
+                    <li class="dropdown">
+                        {{#if session.isAuthenticated}}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> {{session.currentUser.username}} <i class="fa fa-caret-down"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
+                            </li>
+                            <li>
+                                {{#link-to 'withdraw' }} <i class="fa fa-share"></i> Withdraw{{/link-to}}
+                            </li>
+                            <li>
+                                <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
+                            </li>
+                        </ul>
+                        {{else}}
+                        {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
+                        {{/if}}
+                    </li>
+                </ul>
+            </nav>
 
-    <div id="page-wrapper">
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                {{#link-to 'games'}}<h2>CoinBingo</h2>{{/link-to}}
+            </div>
+        </div>
         {{outlet}}
     </div>
 </script>
 
-<script type="text/x-handlebars" data-template-name="settings">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="page-title">
-                <h1>Bitcoin Bingo
-                    <small>Account Settings</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
-                    </li>
-                    <li class="active">Account Settings</li>
-                </ol>
-            </div>
-        </div>
+<script type="text/x-handlebars" data-template-name="loading">
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
     </div>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="portlet portlet-green">
-                <div class="portlet-heading login-heading">
-                    <div class="portlet-title">
+</script>
+
+
+<script type="text/x-handlebars" data-template-name="settings">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                         <h4><strong>Account Settings</strong></h4>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    {{#if errorMessage}}
-                    <div class="alert alert-danger">
-                        <strong>Saving settings failed:</strong> {{errorMessage}}
-                    </div>
-                    {{/if}}
-                    {{#if successMessage}}
-                    <div class="alert alert-success">
-                        <strong>Settings saved!</strong>
-                    </div>
-                    {{/if}}
-                    <form accept-charset="UTF-8" role="form"
-                    {{action 'saveSettings' on='submit'}}>
-                    <fieldset>
-                        <div class="form-group">
-                            <label for="clientSeed">Client seed</label>
-                            {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed'
-                            class='form-control' value=clientSeed}}
-                            <p class="help-block">
-                                Your client seed will be used for the random number generator to ensure fairness. Input anything you like.
-                            </p>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            {{input id='email' name='email' placeholder='Enter email' class='form-control' value=email}}
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            {{input id='password' name='password' placeholder='Enter Password' class='form-control'
-                            type='password' value=password}}
-                            <p class="help-block">
-                                Please set a password before logging out. Without your password you cannot login if you accidentally delete your cookies.
-                            </p>
-                        </div>
-                        <br>
-                        <button id="saveSettings" type="submit" class="btn btn-default ladda-button"
-                                data-style="expand-left">
-                            <span class="ladda-label">Save Settings</span>
-                        </button>
-                        {{#if isDirty}}
-                        <div class="pull-right">
-
+                    <div class="ibox-content">
+                        {{#if errorMessage}}
+                        <div class="alert alert-danger animated bounce">
+                            <strong>Saving settings failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
-                    </fieldset>
-                    </form>
+                        {{#if successMessage}}
+                        <div class="alert alert-success">
+                            <strong>Settings saved!</strong>
+                        </div>
+                        {{/if}}
+                        <form accept-charset="UTF-8" role="form"
+                        {{action 'saveSettings' on='submit'}}>
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="clientSeed">Client seed</label>
+                                {{input id='clientSeed' name='clientSeed' placeholder='Enter client seed'
+                                class='form-control' value=clientSeed}}
+                                <p class="help-block">
+                                    Your client seed will be used for the random number generator to ensure fairness. Input anything you like.
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                {{input id='email' name='email' placeholder='Enter email' class='form-control' value=email}}
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                {{input id='password' name='password' placeholder='Enter Password' class='form-control'
+                                type='password' value=password}}
+                                <p class="help-block">
+                                    Please set a password before logging out. Without your password you cannot login if you accidentally delete your cookies.
+                                    If have set a password and want to keep it, just leave the box empty.
+                                </p>
+                            </div>
+                            <br>
+                            <button id="saveSettings" type="submit" class="btn btn-primary ladda-button"
+                                    data-style="expand-left">
+                                <span class="ladda-label">Save Settings</span>
+                            </button>
+                        </fieldset>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
 </script>
 
 <script type="text/x-handlebars" data-template-name="gamesHistory">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="page-title">
-                <h1>Bitcoin Bingo
-                    <small>Own Games History</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
-                    </li>
-                    <li class="active">Own Games History</li>
-                </ol>
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <p>This is a list of your latest games you've played in. Click on them to view the result!</p>
+                <br/>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>This is a list of your latest games you've played in. Click on them to view the result!</p>
-            <br/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="portlet portlet-orange">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                         <h4>Games History</h4>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover games-list">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Watch</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each game in lastPersonalGames itemController='game'}}
-                            {{#link-to 'game' game.id tagName='tr'}}
-                                <td>{{game.id}}</td>
-                                <td>{{convertDateToLocale game.updatedAt}}</td>
-                                <td>{{game.gameStatus}}</td>
-                                <td>
-                                    {{#link-to 'game' id class='btn btn-sm btn-green'}}
-                                    <i class="fa fa-arrow-circle-right"></i>
-                                    Watch
-                                    {{/link-to}}
-                                </td>
-                            {{/link-to}}
-                            {{/each}}
-                            </tbody>
-                        </table>
+                    <div class="ibox-content">
+                        {{#if lastPersonalGames}}
+                        <div class="table-responsive">
+                            <table class="table table-hover games-list">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Watch</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each game in lastPersonalGames itemController='game'}}
+                                {{#link-to 'game' game.id tagName='tr' style='cursor: pointer;'}}
+                                    <td>{{game.id}}</td>
+                                    <td>{{convertDateToLocale game.updatedAt}}</td>
+                                    <td>{{game.gameStatus}}</td>
+                                    <td>
+                                        {{#link-to 'game' id class='btn btn-sm btn-primary'}}
+                                        <i class="fa fa-arrow-circle-right"></i>
+                                        Watch
+                                        {{/link-to}}
+                                    </td>
+                                {{/link-to}}
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        {{else}}
+                        <p>No games played yet.</p>
+                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -223,197 +185,140 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="games">
-
-<div class="page-content page-content-ease-in">
-
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="page-title">
-                <h1>Bitcoin Bingo
-                    <small>Games</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
-                    </li>
-                    <li class="active">Games</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <p>Choose from the lists of games below to play BINGO!</p>
-            <br/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="portlet portlet-green">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
+    <div class="wrapper wrapper-content animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                         <h4>Games</h4>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover games-list">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Type</th>
-                                <th>Card price</th>
-                                <th>Players</th>
-                                <th>Prize Pool</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each idleGames itemController='game'}}
-                                {{#link-to 'game' id tagName='tr' class=tableClass}}
-                                <td>{{identifier}}</td>
-                                <td>{{table.tableType}}</td>
-                                <td>{{cardPrice}} Bits</td>
-                                <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
-                                <td>{{prizePool}} Bits</td>
-                                <td>{{gameStatus}}</td>
-                                {{#if userParticipating}}
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-hover games-list">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Card price</th>
+                                    <th>Players</th>
+                                    <th>Prize Pool</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each idleGames itemController='game'}}
+                                    {{#link-to 'game' id tagName='tr' class=tableClass style='cursor: pointer'}}
+                                    <td>{{identifier}}</td>
+                                    <td>{{table.tableType}}</td>
+                                    <td>{{cardPrice}} Bits</td>
+                                    <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
+                                    <td>{{prizePool}} Bits</td>
+                                    <td>{{gameStatus}}</td>
+                                    {{#if userParticipating}}
+                                        <td>
+                                            {{#link-to 'game' id class='btn btn-sm btn-warning'}}
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                            Continue
+                                            {{/link-to}}
+                                        </td>
+                                    {{else}}
+                                        <td>
+                                            {{#link-to 'game' id class='btn btn-sm btn-primary'}}
+                                            <i class="fa fa-arrow-circle-right"></i>
+                                            Join
+                                            {{/link-to}}
+                                        </td>
+                                    {{/if}}
+                                    {{/link-to}}
+                                {{/each}}
+
+                                {{#each playingGames itemController='game'}}
+                                    {{#link-to 'game' id tagName='tr' class=tableClass style='cursor: pointer'}}
+                                    <td>{{identifier}}</td>
+                                    <td>{{table.tableType}}</td>
+                                    <td>{{cardPrice}} Bits</td>
+                                    <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
+                                    <td>{{prizePool}} Bits</td>
+                                    <td>{{gameStatus}}</td>
+                                    {{#if userParticipating}}
                                     <td>
-                                        {{#link-to 'game' id class='btn btn-sm btn-orange'}}
+                                        {{#link-to 'game' id class='btn btn-sm btn-warning'}}
                                         <i class="fa fa-arrow-circle-right"></i>
                                         Continue
                                         {{/link-to}}
                                     </td>
-                                {{else}}
+                                    {{else}}
                                     <td>
-                                        {{#link-to 'game' id class='btn btn-sm btn-green'}}
+                                        {{#link-to 'game' id class='btn btn-sm btn-primary'}}
                                         <i class="fa fa-arrow-circle-right"></i>
                                         Join
                                         {{/link-to}}
                                     </td>
-                                {{/if}}
-                                {{/link-to}}
-                            {{/each}}
-
-                            {{#each playingGames itemController='game'}}
-                                {{#link-to 'game' id tagName='tr' class=tableClass}}
+                                    {{/if}}
+                                    {{/link-to}}
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p>This list shows the latest finished games. Everyone can watch!</p>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Latest Finished Games</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-hover games-list">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
+                                    <th>Card price</th>
+                                    <th>Players</th>
+                                    <th>Prize Pool</th>
+                                    <th>Date</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each finishedGames itemController='game'}}
+                                {{#link-to 'game' id tagName='tr' class=tableClass style='cursor: pointer'}}
                                 <td>{{identifier}}</td>
                                 <td>{{table.tableType}}</td>
                                 <td>{{cardPrice}} Bits</td>
                                 <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
                                 <td>{{prizePool}} Bits</td>
-                                <td>{{gameStatus}}</td>
-                                {{#if userParticipating}}
+                                <td>{{convertDateToLocale updatedAt}}</td>
                                 <td>
-                                    {{#link-to 'game' id class='btn btn-sm btn-orange'}}
+                                    {{#link-to 'game' id class='btn btn-sm btn-primary'}}
                                     <i class="fa fa-arrow-circle-right"></i>
-                                    Continue
+                                    Watch
                                     {{/link-to}}
                                 </td>
-                                {{else}}
-                                <td>
-                                    {{#link-to 'game' id class='btn btn-sm btn-green'}}
-                                    <i class="fa fa-arrow-circle-right"></i>
-                                    Join
-                                    {{/link-to}}
-                                </td>
-                                {{/if}}
                                 {{/link-to}}
-                            {{/each}}
-                            </tbody>
-                        </table>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <p>This list shows the latest finished games. Everyone can watch!</p>
-    <br/>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="portlet portlet-red">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
-                        <h4>Latest Finished Games</h4>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover games-list">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Type</th>
-                                <th>Card price</th>
-                                <th>Players</th>
-                                <th>Prize Pool</th>
-                                <th>Date</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each finishedGames itemController='game'}}
-                            {{#link-to 'game' id tagName='tr' class=tableClass}}
-                            <td>{{identifier}}</td>
-                            <td>{{table.tableType}}</td>
-                            <td>{{cardPrice}} Bits</td>
-                            <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
-                            <td>{{prizePool}} Bits</td>
-                            <td>{{convertDateToLocale updatedAt}}</td>
-                            {{#if userParticipating}}
-                            <td>
-                                {{#link-to 'game' id class='btn btn-sm btn-orange'}}
-                                <i class="fa fa-arrow-circle-right"></i>
-                                Watch
-                                {{/link-to}}
-                            </td>
-                            {{else}}
-                            <td>
-                                {{#link-to 'game' id class='btn btn-sm btn-red'}}
-                                <i class="fa fa-arrow-circle-right"></i>
-                                Watch
-                                {{/link-to}}
-                            </td>
-                            {{/if}}
-                            {{/link-to}}
-                            {{/each}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
 </script>
 
 
 <script type="text/x-handlebars" data-template-name="game">
-
-    <div class="page-content page-content-ease-in">
-
-        <!-- begin PAGE TITLE ROW -->
+    <div class="wrapper wrapper-content animated fadeIn">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h1>
-                        Game
-                        <small>{{id}}</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><i class="fa fa-dashboard"></i> {{#link-to 'games' }}Bitcoin Bingo{{/link-to}}
-                        </li>
-                        <li class="active">Game</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-12 hide-outside">
+            <div class="col-md-12">
                 <div style="text-align: center;">
                     <span style="font-size: 40px">{{latestNumber}}&nbsp;&nbsp;</span>
                     <span style="font-size: 20px">
@@ -421,28 +326,27 @@
                         {{number}}&nbsp;
                         {{/each}}
                     </span>
-
                 </div>
-
             </div>
         </div>
 
-        <div class="row drawn-numbers">
-            <h3>Drawn numbers:</h3>
-            <ul id="h-drawn-numbers" data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in DARK BLUE have already been drawn." class="pagination help">
-                {{#each number in numbers itemController='number'}}
-                <li
-                {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
-                {{/each}}
-            </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Drawn numbers:</h3>
+                <ul data-container="body" data-toggle="popover" data-placement="top" data-content="The numbers marked in DARK BLUE have already been drawn." class="pagination help">
+                    {{#each number in numbers itemController='number'}}
+                    <li {{bind-attr class='number.isActive:active'}}><a>{{number.model}}</a></li>
+                    {{/each}}
+                </ul>
+            </div>
         </div>
 
         {{outlet modal}}
 
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-md-12">
                 {{#if errorMessage}}
-                <div class="alert alert-danger">
+                <div class="alert alert-danger animated bounce">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <strong>Error:</strong> {{errorMessage}}
                 </div>
@@ -451,34 +355,26 @@
         </div>
         <div class="row">
             <div class="col-lg-3">
-                <ul class="nav nav-pills nav-stacked help" data-toggle="popover" data-placement="top" data-content="Shows information about the game you are currently in">
-                    <li class="active">
-                        <a>
-                            <i class="fa fa-question fa-fw"></i>
-                            <abbr data-toggle="tooltip" title="The game status">Status</abbr>
-                            <span class="badge pull-right">{{gameStatus}}</span>
-                        </a>
+                <ul class="todo-list">
+                    <li>
+                        <i class="fa fa-question fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The game status">Status</abbr>
+                        <span class="badge badge-info pull-right">{{gameStatus}}</span>
                     </li>
-                    <li class="active">
-                        <a>
-                            <i class="fa fa-btc fa-fw"></i>
-                            <abbr data-toggle="tooltip" title="The first one to hit BINGO will win this amount">Bingo prize</abbr>
-                            <span class="badge pull-right">{{bingoPrize}} Bits</span>
-                        </a>
+                    <li>
+                        <i class="fa fa-btc fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The first one to hit BINGO will win this amount">Bingo prize</abbr>
+                        <span class="badge badge-info pull-right">{{bingoPrize}} Bits</span>
                     </li>
-                    <li class="active">
-                        <a>
-                            <i class="fa fa-btc fa-fw"></i>
-                            <abbr data-toggle="tooltip" title="The first one to hit the pattern will win this amount">Pattern prize</abbr>
-                            <span class="badge pull-right">{{patternPrize}} Bits</span>
-                        </a>
+                    <li>
+                        <i class="fa fa-btc fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The first one to hit the pattern will win this amount">Pattern prize</abbr>
+                        <span class="badge badge-info pull-right">{{patternPrize}} Bits</span>
                     </li>
-                    <li class="active">
-                        <a>
-                            <i class="fa fa-users fa-fw"></i>
-                            <abbr data-toggle="tooltip" title="Left shows the current amount of players. Right shows the minimum to start">Players</abbr>
-                            <span class="badge pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span>
-                        </a>
+                    <li>
+                        <i class="fa fa-users fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="Left shows the current amount of players. Right shows the minimum to start">Players</abbr>
+                        <span class="badge badge-info pull-right">{{amountOfPlayers}} / {{table.minimumPlayers}}</span>
                     </li>
                 </ul>
                 <div>
@@ -487,32 +383,29 @@
                 <br/>
                 {{#if session.isAuthenticated}}
                     {{#if canBuyCards}}
-                    <button id="buyCardButton" class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
+                    <button id="buyCardButton" class="btn btn-red btn-danger btn-block ladda-button" data-style="expand-left" {{action 'buyCard'}}>
                     <span class="ladda-label">Buy Card</span> (<i class="fa fa-btc"></i>{{cardPrice}} Bits)
                     </button>
                     {{else}}
-                    <button class="btn btn-red btn-block disabled">Buy Card</button>
+                    <button class="btn btn-danger btn-block disabled">Buy Card</button>
                     {{/if}}
                 {{/if}}
-
+                <br/>
                 {{#if finished}}
-                <button class="btn btn-red btn-block ladda-button" data-style="expand-left" {{action 'showWinnerModal'}}>
+                <button class="btn btn-primary btn-block ladda-button" data-style="expand-left" {{action 'showWinnerModal'}}>
                 <span class="ladda-label">Show Winners</span>
                 </button>
                 {{else}}
-                <button class="btn btn-red btn-block disabled">Show Winners</button>
+                <button class="btn btn-primary btn-block disabled">Show Winners</button>
                 {{/if}}
                 <br/>
-                <button id="game-help-button" class="btn btn-purple btn-block" data-toggle="tooltip" title="Click this button to show explanation windows for each element! You turn them back off simply by clicking this button once again.">Help!</button>
+                <button id="game-help-button" class="btn btn-info btn-block" data-toggle="tooltip" title="Click this button to show explanation windows for each element! You turn them back off simply by clicking this button once again.">Help!</button>
                 <br/>
-                <div class="portlet portlet-blue">
-                    <div class="portlet-heading">
-                        <div class="portlet-title">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                             <h4>Players</h4>
-                        </div>
-                        <div class="clearfix"></div>
                     </div>
-                    <div class="portlet-body">
+                    <div class="ibox-content">
                         <div class="table-responsive">
                             <table class="table">
                                 <thead>
@@ -559,15 +452,12 @@
                 <div class="clearfix"></div>
             </div>
             <div class="col-lg-4">
-                <div class="portlet portlet-default">
-                    <div class="portlet-heading">
-                        <div class="portlet-title">
-                            <h4><i class="fa fa-circle text-green"></i> Game chat</h4>
-                        </div>
-                        <div class="clearfix"></div>
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Game Chat</h4>
                     </div>
                     <div id="chat">
-                        <div class="portlet-body chat-widget" style="overflow: hidden; width: auto; height: 300px;">
+                        <div class="ibox-content chat-widget" style="overflow: hidden; width: auto; height: 300px;">
                             {{#each message in lastMessages}}
                             <div class="media">
                                 <div class="media-body">
@@ -579,17 +469,17 @@
                             </div>
                             {{/each}}
                         </div>
-                        {{#if session.isAuthenticated}}
-                        <div class="portlet-footer">
-                            <div class="input-group">
-                                {{input action='sendMessage' id='message' name='message' placeholder='Enter message'
-                                class='form-control' value=message}}
-                                <span class="input-group-btn">
-                                        <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
-                                </span>
-                            </div>
+                        <div>
+                            {{#if session.isAuthenticated}}
+                                <div class="input-group">
+                                    {{input action='sendMessage' id='message' name='message' placeholder='Enter message'
+                                    class='form-control' value=message}}
+                                    <span class="input-group-btn">
+                                            <button type="button" class="btn btn-success" {{action 'sendMessage'}}>Send</button>
+                                    </span>
+                                </div>
+                            {{/if}}
                         </div>
-                        {{/if}}
                     </div>
                 </div>
             </div>
@@ -600,37 +490,21 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="login">
-    <div class="page-content page-content-ease-in">
+    <div class="wrapper wrapper-content animated fadeIn">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h1>Bitcoin Bingo
-                        <small>Login</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
-                        <li class="active">Login</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="portlet portlet-green">
-                    <div class="portlet-heading login-heading">
-                        <div class="portlet-title">
-                            <h4><strong>Login to Bitcoin Bingo!</strong></h4>
-                        </div>
-                        <div class="clearfix"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Register on Coin Bingo</h5>
                     </div>
-                    <div class="portlet-body">
+                    <div class="ibox-content">
                         {{#if errorMessage}}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animated bounce">
                             <strong>Login failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
-                        <form accept-charset="UTF-8" role="form"
-                        {{action 'authenticate' on='submit'}}>
+                        <form accept-charset="UTF-8" role="form" {{action 'authenticate' on='submit'}}>
                         <fieldset>
                             <div class="form-group">
                                 {{input id='username' name='username' placeholder='Enter Username' class='form-control'
@@ -641,12 +515,12 @@
                                 type='password' value=password}}
                             </div>
                             <br>
-                            <button id="loginButton" type="submit" class="btn btn-default ladda-button"
+                            <button id="loginButton" type="submit" class="btn btn-success ladda-button"
                                     data-style="expand-left">
                                 <span class="ladda-label">Sign In</span>
                             </button>
                             <div class="pull-right">
-                                {{#link-to 'register' class='btn btn-success' }}Go To Register{{/link-to}}
+                                {{#link-to 'register' class='btn btn-primary' }}Go To Register{{/link-to}}
                             </div>
                         </fieldset>
                         </form>
@@ -658,32 +532,17 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="register">
-    <div class="page-content page-content-ease-in">
+    <div class="wrapper wrapper-content animated fadeIn">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h1>Bitcoin Bingo
-                        <small>Register</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
-                        <li class="active">Register</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="portlet portlet-green">
-                    <div class="portlet-heading login-heading">
-                        <div class="portlet-title">
-                            <h4><strong>Register on Bitcoin Bingo!</strong></h4>
-                        </div>
-                        <div class="clearfix"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Register on Coin Bingo</h5>
                     </div>
-                    <div class="portlet-body">
+                    <div class="ibox-content">
                         {{#if errorMessage}}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animated bounce">
                             <strong>Registration failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
@@ -694,12 +553,12 @@
                             {{input id='username' name='username' placeholder='Username' class='form-control'
                             value=username}}
                         </div>
-                        <button id="registerButton" type="submit" class="btn btn-default ladda-button"
+                        <button id="registerButton" type="submit" class="btn btn-success ladda-button"
                                 data-style="expand-left">
                             <span class="ladda-label">Create your account</span>
                         </button>
                         <div class="pull-right">
-                            {{#link-to 'login' class='btn btn-success' }}Go To Login{{/link-to}}
+                            {{#link-to 'login' class='btn btn-primary' }}Go To Login{{/link-to}}
                         </div>
                         </form>
                     </div>
@@ -710,34 +569,17 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="withdraw">
-    <div class="page-content page-content-ease-in">
+    <div class="wrapper wrapper-content animated fadeIn">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h1>Bitcoin Bingo
-                        <small>Withdraw</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
-                        <li>{{#link-to 'wallet' }} Wallet {{/link-to}}</li>
-                        <li class="active">Withdraw</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="portlet portlet-green">
-                    <div class="portlet-heading login-heading">
-                        <div class="portlet-title">
-                            <h4><strong>Withdraw</strong></h4>
-                        </div>
-                        <div class="clearfix"></div>
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4><strong>Withdraw</strong></h4>
                     </div>
-                    <div class="portlet-body">
-
+                    <div class="ibox-content">
                         {{#if errorMessage}}
-                        <div class="alert alert-danger">
+                        <div class="alert alert-danger animated bounce">
                             <strong>Error:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
@@ -755,15 +597,11 @@
                                 <div><small>Minimum withdrawal: 100 Bits</small></div>
                                 <p class="help-block">Please note we substract a 100 Bits miners fee.</p>
                             </div>
-                            <button id="withdrawButton" class="btn btn-red ladda-button" data-style="expand-left" {{action 'withdraw'}}>
+                            <button id="withdrawButton" class="btn btn-danger ladda-button" data-style="expand-left" {{action 'withdraw'}}>
                             <span class="ladda-label">Withdraw</span>
                             </button>
                         </fieldset>
                         </form>
-
-
-
-
                     </div>
                 </div>
             </div>
@@ -776,98 +614,79 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="wallet">
-    {{outlet}}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="page-title">
-                <h1>Bitcoin Bingo
-                    <small>Wallet</small>
-                </h1>
-                <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i> <a id="ember2300" class="ember-view active" href="#/">Bitcoin
-                        Bingo</a>
-                    </li>
-                    <li class="active">Wallet</li>
-                </ol>
+    <div class="wrapper wrapper-content animated fadeIn">
+        {{outlet}}
+        <div class="row">
+            <div class="col-md-4">
+            {{#if session.currentUser.depositAddress}}
+                <label for="depositAddress">Deposit Address</label>
+                {{input class='form-control' id='depositAddress' readonly=true value=session.currentUser.depositAddress}}
+                <p class="help-block">You can deposit to this address and play right away! After one confirmation you can withdraw your coins.</p>
+            {{else}}
+                Due to a server error we couldn't generate a deposit address for you. Please try again in a couple minutes.
+            {{/if}}
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-        {{#if session.currentUser.depositAddress}}
-            <label for="depositAddress">Deposit Address</label>
-            {{input class='form-control' id='depositAddress' readonly=true value=session.currentUser.depositAddress}}
-            <p class="help-block">You can deposit to this address and play right away! After one confirmation you can withdraw your coins.</p>
-        {{else}}
-            Due to a server error we couldn't generate a deposit address for you. Please try again in a couple minutes.
-        {{/if}}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="portlet portlet-red">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                         <h4>Withdrawals</h4>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each withdrawal in last20userWithdrawals}}
-                            <tr>
-                                <td>{{withdrawal.id}}</td>
-                                <td>{{convertDateToLocale withdrawal.createdAt}}</td>
-                                <td>{{satoshiToBits withdrawal.amount}} Bits</td>
-                                <td>{{withdrawal.withdrawalType}}</td>
-                            </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each withdrawal in last20userWithdrawals}}
+                                <tr class="animated fadeInLeft">
+                                    <td>{{withdrawal.id}}</td>
+                                    <td>{{convertDateToLocale withdrawal.createdAt}}</td>
+                                    <td>{{satoshiToBits withdrawal.amount}} Bits</td>
+                                    <td>{{withdrawal.withdrawalType}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-6">
-            <div class="portlet portlet-blue">
-                <div class="portlet-heading">
-                    <div class="portlet-title">
+            <div class="col-md-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
                         <h4>Deposits</h4>
                     </div>
-                    <div class="clearfix"></div>
-                </div>
-                <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Date</th>
-                                <th>Amount</th>
-                                <th>Type</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {{#each deposit in last20userDeposits}}
-                            <tr>
-                                <td>{{deposit.id}}</td>
-                                <td>{{convertDateToLocale deposit.createdAt}}</td>
-                                <td>{{satoshiToBits deposit.amount}} Bits</td>
-                                <td>{{deposit.depositType}}</td>
-                            </tr>
-                            {{/each}}
-                            </tbody>
-                        </table>
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Type</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each deposit in last20userDeposits}}
+                                <tr class="animated fadeInLeft">
+                                    <td>{{deposit.id}}</td>
+                                    <td>{{convertDateToLocale deposit.createdAt}}</td>
+                                    <td>{{satoshiToBits deposit.amount}} Bits</td>
+                                    <td>{{deposit.depositType}}</td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -942,30 +761,14 @@
 </script>
 
 <script type="text/x-handlebars" data-template-name="contact">
-    <div class="page-content page-content-ease-in">
+    <div class="wrapper wrapper-content animated fadeIn">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="page-title">
-                    <h1>Bitcoin Bingo
-                        <small>Contact</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li>{{#link-to 'games' }} <i class="fa fa-dashboard"></i> Bitcoin Bingo{{/link-to}}</li>
-                        <li class="active">Contact</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="portlet portlet-green">
-                    <div class="portlet-heading login-heading">
-                        <div class="portlet-title">
-                            <h4><strong>Contact Us!</strong></h4>
-                        </div>
-                        <div class="clearfix"></div>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Contact Us!</h4>
                     </div>
-                    <div class="portlet-body" id="uservoice">
+                    <div class="ibox-content" id="uservoice">
                         <p>Please use the form in the right bottom of your browser to contact us.</p>
                         <p>You can use it on any page and even include a screenshot!</p>
                     </div>
