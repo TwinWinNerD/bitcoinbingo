@@ -230,7 +230,7 @@ App.GameController = Ember.ObjectController.extend({
                 };
 
                 socket.post('/api/message', data, function (result) {
-                    if(result) {
+                    if(result && typeof result.error === "undefined") {
                         result.game = game;
                         store.createRecord('message', result);
                     }
