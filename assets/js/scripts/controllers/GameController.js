@@ -114,8 +114,12 @@ App.GameController = Ember.ObjectController.extend({
     gameMessages: function () {
         var gameId = this.get('id');
 
-        return this.get('store').filter('message', function (message) {
-            return (message.get('game.id') === gameId);
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: ['createdAt'],
+            sortAscending: true,
+            content: this.get('store').filter('message', function (message) {
+                return (message.get('game.id') === gameId);
+            })
         });
     }.property('modelMessages'),
 
@@ -212,28 +216,28 @@ App.GameController = Ember.ObjectController.extend({
         },
 
         sendMessage: function () {
-            var store, game, messages, message, record, user, self;
+            var store, game, messages, message, self;
 
             store = this.store;
             game = this.get('model');
+            gameId = this.get('model.id');
             messages = this.get('messages');
             message = this.get('message');
-            user = this.get('session.username');
             self = this;
 
             self.set('message','');
 
             if(message.trim() !== "") {
-                record = store.createRecord('message', {
-                    game: game,
-                    body: message,
-                    user: user
-                });
+                var data = {
+                    game: gameId,
+                    body: message
+                };
 
-                record.save().then(function (newMessage) {
-                    messages.pushObject(newMessage);
-                }, function (error) {
-                    // handle error
+                socket.post('/api/message', data, function (result) {
+                    if(result) {
+                        result.game = game;
+                        store.createRecord('message', result);
+                    }
                 });
             }
         }
