@@ -461,15 +461,24 @@
                     </div>
                     <div id="chat">
                         <div class="ibox-content chat-widget" style="overflow: hidden; width: auto; height: 300px;">
-                            {{#each message in lastMessages}}
-                            <div class="media">
-                                <div class="media-body">
-                                    <h5 class="media-heading"><strong>{{message.user}}</strong>
+                            {{#each message in lastMessages itemController='message'}}
+                            {{#if message.isSystemMessage}}
+                                <div class="media-body alert alert-info">
+                                    <h5 class="media-heading">
                                         <span class="small pull-right">{{convertDateToLocale message.createdAt}}</span>
                                     </h5>
                                     <p>{{message.body}}</p>
                                 </div>
-                            </div>
+                            {{else}}
+                                <div class="media">
+                                    <div class="media-body">
+                                        <h5 class="media-heading"><strong>{{message.user}}</strong>
+                                            <span class="small pull-right">{{convertDateToLocale message.createdAt}}</span>
+                                        </h5>
+                                        <p>{{message.body}}</p>
+                                    </div>
+                                </div>
+                            {{/if}}
                             {{/each}}
                         </div>
                         <div>
