@@ -216,7 +216,7 @@ App.GameController = Ember.ObjectController.extend({
         },
 
         sendMessage: function () {
-            var store, game, messages, message, self;
+            var store, game, messages, message, self, gameId;
 
             store = this.store;
             game = this.get('model');
