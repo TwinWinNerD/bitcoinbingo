@@ -44,7 +44,10 @@ module.exports = {
             }
 
             if(cardsBought < promotion) {
-                return res.json({ error: "To withdraw your promotion you need to spent it at least once." });
+                return res.json({ error:
+                    "To withdraw your promotion you need to spent it at least once. " +
+                    "You have only spent " + cardsBought / 100 + " Bits. " +
+                        "The required amount is " + promotion / 100 + " Bits." });
             }
 
             var balance = Number((result.deposits + result.promotion) - result.withdrawals);
