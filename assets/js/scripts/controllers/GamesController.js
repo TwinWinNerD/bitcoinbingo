@@ -18,6 +18,9 @@ App.GamesController = Ember.ArrayController.extend({
                 return (game.get('gameStatus') === "finished");
             })
         });
-    }.property('modelFinishedGames')
+    }.property('modelFinishedGames'),
+    latestFinishedGames: function () {
+        return this.get('finishedGames').toArray().slice(0, 5);
+    }.property('finishedGames.[]')
 
 });
