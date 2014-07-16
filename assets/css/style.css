@@ -3024,3 +3024,18 @@ table.table-mail tr td {
            -webkit-transform: scaleY(1.0);
        }
 }
+
+.pagination .active a {
+    background-color: #1AB394;
+    color: #FFFFFF;
+}
+
+.table-card tbody tr td.active {
+    background-color: #1AB394;
+    color: #FFFFFF;
+}
+
+.table-card tbody tr td.pattern {
+    background-color: #f8ac59;
+    color: #FFFFFF;
+}
