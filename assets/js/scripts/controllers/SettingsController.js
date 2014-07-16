@@ -15,6 +15,10 @@ App.SettingsController = Ember.ObjectController.extend({
             clientSeed = this.get('clientSeed');
             self = this;
 
+            if(clientSeed.length > 20) {
+               return self.set('errorMessage', "Client seed should be 20 characters max");
+            }
+
             self.set('errorMessage', null);
             self.set('successMessage', null);
 
@@ -42,7 +46,6 @@ App.SettingsController = Ember.ObjectController.extend({
                     self.set('clientSeed', clientSeed);
                     self.set('successMessage', true);
                 }
-
             });
         }
     }

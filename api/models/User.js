@@ -34,6 +34,7 @@ module.exports = {
         clientSeed: {
             type: 'STRING',
             required: false,
+            maxLength: 20,
             defaultsTo: ""
         },
 
