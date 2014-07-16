@@ -203,8 +203,8 @@ App.GameController = Ember.ObjectController.extend({
                     game: game
                 });
 
+                game.set('errorMessage', null);
                 bingoCard.save().then(function (newBingoCard) {
-                    game.set('errorMessage', null);
                     bingoCards.pushObject(newBingoCard);
                     buyCardButton.stop();
                 }, function (error) {

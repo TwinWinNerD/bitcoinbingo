@@ -45,9 +45,9 @@ App.WalletController = Ember.ArrayController.extend({
                 amount: withdrawalAmount
             };
 
+            self.set('errorMessage', null);
             socket.post('/api/withdrawal', data, function (result) {
                 withdrawButton.stop();
-                console.log(result);
                 if(typeof result.error !== 'undefined') {
                     self.set('errorMessage', result.error);
                 }

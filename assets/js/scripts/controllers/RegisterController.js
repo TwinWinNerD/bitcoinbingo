@@ -10,6 +10,7 @@ App.RegisterController = Ember.Controller.extend(Ember.SimpleAuth.ApplicationRou
             username = this.get('username');
             self = this;
 
+            self.set('errorMessage', null);
             socket.post('/api/user', {
                 username: username
             }, function(response) {
