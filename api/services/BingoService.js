@@ -95,12 +95,7 @@ exports.settleRound = function (gameId, instant) {
         }, function (error) {
 
         }, function (second) {
-
-            Game.update(gameId, { countDown: second }).exec(function (err, result) {
-                Game.publishUpdate(gameId, result, [null]);
-            });
-
-//            MessageService.sendSystemMessage("Game starting in " + second + " seconds", gameId);
+            MessageService.sendSystemMessage("Game starting in " + second + " seconds", gameId);
         });
 
     });
@@ -500,6 +495,8 @@ function countDown(seconds) {
     deferred = Q.defer();
 
     timer = setInterval( function () {
+
+        console.log("Starting game in", seconds);
 
         deferred.notify(seconds);
 
