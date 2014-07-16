@@ -4,7 +4,6 @@ App.Game = DS.Model.extend({
     drawnNumbers: DS.attr(),
     pattern: DS.attr(),
     gameStatus: DS.attr(),
-    countDown: DS.attr(),
     table: DS.belongsTo('table'),
     bingoCards: DS.hasMany('bingoCard'),
     messages: DS.hasMany('message'),
