@@ -1,1 +1,1 @@
-web: sails lift --prod
+web: sails lift
