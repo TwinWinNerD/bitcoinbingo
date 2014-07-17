@@ -77,6 +77,7 @@ module.exports = {
                                 withdrawal.hash = transaction.tx_hash;
 
                                 withdrawal.save(function (err) {
+                                    StatisticsService.emitStatistics();
                                     Withdrawal.publishCreate(withdrawal);
                                 });
 

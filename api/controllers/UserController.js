@@ -32,6 +32,8 @@ module.exports = {
                                 if(deposit) {
                                     Deposit.publishCreate(deposit);
 
+                                    StatisticsService.emitStatistics();
+
                                     req.session.user = user;
                                     res.send(user);
                                 }

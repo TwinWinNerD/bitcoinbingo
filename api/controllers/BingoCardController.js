@@ -132,7 +132,7 @@ module.exports = {
 
                             if(!error) {
                                 startGameQueue.push({gameId: data.game});
-
+                                StatisticsService.emitStatistics();
                                 res.status(201);
                                 res.ok(results[3].toJSON());
                             }
