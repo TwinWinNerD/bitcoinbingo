@@ -126,7 +126,7 @@ module.exports = {
             "minimumPlayers": 2,
             "maximumPlayers": 2,
             "maximumCards": 10,
-            "cardPrice": 2500,
+            "cardPrice": 25000,
             "tableType": "medium"
         }).exec(function (err, table) {
 
@@ -149,7 +149,7 @@ module.exports = {
             "minimumPlayers": 4,
             "maximumPlayers": 100,
             "maximumCards": 10,
-            "cardPrice": 5000,
+            "cardPrice": 50000,
             "tableType": "medium"
         }).exec(function (err, table) {
 
@@ -173,7 +173,7 @@ module.exports = {
             "minimumPlayers": 4,
             "maximumPlayers": 100,
             "maximumCards": 10,
-            "cardPrice": 10000,
+            "cardPrice": 100000,
             "tableType": "hard"
         }).exec(function (err, table) {
 
@@ -197,7 +197,7 @@ module.exports = {
             "minimumPlayers": 3,
             "maximumPlayers": 100,
             "maximumCards": 10,
-            "cardPrice": 25000,
+            "cardPrice": 250000,
             "tableType": "hard"
         }).exec(function (err, table) {
 
