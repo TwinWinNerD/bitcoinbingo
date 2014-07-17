@@ -15,6 +15,13 @@ module.exports = {
         var confirmed = (confirmations > 0) ? 1 : 0;
         var secret = req.param('secret');
 
+        console.log(amount);
+        console.log(address);
+        console.log(hash);
+        console.log(confirmations);
+        console.log(confirmed);
+        console.log(sails.config.blockchain.secret);
+
         if(secret !== sails.config.blockchain.secret) return res.badRequest('invalid secret');
 
         User.findOne().where({ depositAddress: address }).exec(function (err, user) {
