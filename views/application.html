@@ -409,22 +409,11 @@
                             <h4>Players</h4>
                     </div>
                     <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Name</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {{#each player in players}}
-                                <tr>
-                                    <td>{{player.username}}</td>
-                                </tr>
-                                {{/each}}
-                                </tbody>
-                            </table>
-                        </div>
+                        <ul class="list-group clear-list m-t">
+                            {{#each player in players}}
+                            <li class="list-group-item">{{player.username}}</li>
+                            {{/each}}
+                        </ul>
                     </div>
                 </div>
             </div>
