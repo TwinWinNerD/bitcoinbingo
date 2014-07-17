@@ -121,6 +121,102 @@ module.exports = {
         });
 
     },
+    hardGames: function (req, res) {
+        Table.create({
+            "minimumPlayers": 2,
+            "maximumPlayers": 2,
+            "maximumCards": 10,
+            "cardPrice": 2500,
+            "tableType": "medium"
+        }).exec(function (err, table) {
+
+            Game.create({
+                table: table.id,
+                gameStatus: "idle",
+                serverSeed: SeedService.generateServerSeed(),
+                pattern: PatternService.getRandomPattern()
+            }).exec(function (error, game) {
+                if(!error) {
+
+                    Game.publishCreate(game);
+
+                    res.ok();
+
+                }
+            });
+        });
+        Table.create({
+            "minimumPlayers": 4,
+            "maximumPlayers": 100,
+            "maximumCards": 10,
+            "cardPrice": 5000,
+            "tableType": "medium"
+        }).exec(function (err, table) {
+
+            Game.create({
+                table: table.id,
+                gameStatus: "idle",
+                serverSeed: SeedService.generateServerSeed(),
+                pattern: PatternService.getRandomPattern()
+            }).exec(function (error, game) {
+                if(!error) {
+
+                    Game.publishCreate(game);
+
+                    res.ok();
+
+                }
+            });
+        });
+
+        Table.create({
+            "minimumPlayers": 4,
+            "maximumPlayers": 100,
+            "maximumCards": 10,
+            "cardPrice": 10000,
+            "tableType": "hard"
+        }).exec(function (err, table) {
+
+            Game.create({
+                table: table.id,
+                gameStatus: "idle",
+                serverSeed: SeedService.generateServerSeed(),
+                pattern: PatternService.getRandomPattern()
+            }).exec(function (error, game) {
+                if(!error) {
+
+                    Game.publishCreate(game);
+
+                    res.ok();
+
+                }
+            });
+        });
+
+        Table.create({
+            "minimumPlayers": 3,
+            "maximumPlayers": 100,
+            "maximumCards": 10,
+            "cardPrice": 25000,
+            "tableType": "hard"
+        }).exec(function (err, table) {
+
+            Game.create({
+                table: table.id,
+                gameStatus: "idle",
+                serverSeed: SeedService.generateServerSeed(),
+                pattern: PatternService.getRandomPattern()
+            }).exec(function (error, game) {
+                if(!error) {
+
+                    Game.publishCreate(game);
+
+                    res.ok();
+
+                }
+            });
+        });
+    },
 
     testData: function(req, res) {
 
