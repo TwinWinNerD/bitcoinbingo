@@ -1,5 +1,6 @@
 App.WalletController = Ember.ArrayController.extend({
     errorMessage: null,
+    successMessage: null,
     withdrawalAmount: 0,
     userDeposits: function () {
         var userId = this.get('session.content.id');
@@ -50,6 +51,9 @@ App.WalletController = Ember.ArrayController.extend({
                 withdrawButton.stop();
                 if(typeof result.error !== 'undefined') {
                     self.set('errorMessage', result.error);
+                } else {
+                    var message = result.message + '<a href="https://blockchain.info/nl/tx/"' + result.tx_hash + '">Transaction</a>';
+                    self.set('successMessage', message);
                 }
             });
         }

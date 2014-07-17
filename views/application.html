@@ -653,6 +653,11 @@
                             <strong>Error:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
+                        {{#if successMessage}}
+                        <div class="alert alert-success animated bounce">
+                            {{successMessage}}
+                        </div>
+                        {{/if}}
                         <form accept-charset="UTF-8" role="form">
                         <fieldset>
                             <div class="form-group">

@@ -36,10 +36,9 @@ module.exports = {
             var promotion = Number(result.promotion);
             var cardsBought = Number(result.cardsBought);
 
-            data.amount -= 10000; // substract withdrawal fee
 
             // minimum deposit 10000 satoshi / 0.1mBTC
-            if(data.amount < 10000) {
+            if(data.amount-1000 < 10000) {
                 return res.json({ error: "Your withdrawal amount is too low." });
             }
 
@@ -60,7 +59,7 @@ module.exports = {
 
             Withdrawal.create({ amount: data.amount, user: userId, withdrawalType: 'Bitcoin', recipientAddress: data.address}).exec(function (err, withdrawal) {
                 if(!err && withdrawal) {
-                    BlockchainService.sendTransaction(data.address, data.amount).then(function (transaction) {
+                    BlockchainService.sendTransaction(data.address, data.amount-1000).then(function (transaction) {
                         console.log(result);
 
                         if(typeof transaction.error !== 'undefined') {
