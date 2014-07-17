@@ -59,7 +59,7 @@ module.exports = {
 
             Withdrawal.create({ amount: data.amount, user: userId, withdrawalType: 'Bitcoin', recipientAddress: data.address}).exec(function (err, withdrawal) {
                 if(!err && withdrawal) {
-                    BlockchainService.sendTransaction(data.address, data.amount-1000).then(function (transaction) {
+                    BlockchainService.sendTransaction(data.address, data.amount-10000).then(function (transaction) {
                         console.log(result);
 
                         if(typeof transaction.error !== 'undefined') {
