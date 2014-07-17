@@ -15,6 +15,10 @@ module.exports = {
         var confirmed = (confirmations > 0) ? 1 : 0;
         var secret = req.param('secret');
 
+        if(amount < 0) {
+            return res.ok('ok');
+        }
+
         console.log(amount);
         console.log(address);
         console.log(hash);
