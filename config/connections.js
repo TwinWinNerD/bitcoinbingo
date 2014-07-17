@@ -28,7 +28,22 @@ module.exports.connections = {
         adapter: 'sails-mongo',
         url: process.env.MONGO_URL,
         schema: true
+    },
+    bitcoinBingoMySQL: {
+        module   : 'sails-mysql',
+        host     : process.env.MYSQL_HOST,
+        port     : process.env.MYSQL_PORT,
+        user     : process.env.MYSQL_USER,
+        password : process.env.MYSQL_PASSWORD,
+        database : process.env.MYSQL_DATABASE
     }
+};
+
+module.exports.blockchain = {
+    alias: process.env.BLOCK_ALIAS,
+    password: process.env.BLOCK_PASSWORD,
+    password2: process.env.BLOCK_PASSWORD2,
+    secret: process.env.BLOCK_SECRET
 };
 
 
