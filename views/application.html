@@ -37,20 +37,20 @@
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li>
-                                {{#link-to 'settings' }} <i class="fa fa-gear"></i> Settings{{/link-to}}
+                                {{#link-to 'settings' }} <i class="fa fa-gear fa-fw"></i>Settings{{/link-to}}
                             </li>
                             <li>
-                                {{#link-to 'wallet' }} <i class="fa fa-btc"></i>Wallet{{/link-to}}
+                                {{#link-to 'wallet' }} <i class="fa fa-btc fa-fw"></i>Wallet{{/link-to}}
                             </li>
                             <li>
-                                {{#link-to 'withdraw' }} <i class="fa fa-share"></i> Withdraw{{/link-to}}
+                                {{#link-to 'withdraw' }} <i class="fa fa-share fa-fw"></i>Withdraw{{/link-to}}
                             </li>
                             <li>
-                                <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out"></i> Logout</a>
+                                <a href="#" {{ action 'invalidateSession' }}> <i class="fa fa-sign-out fa-fw"></i>Logout</a>
                             </li>
                         </ul>
                         {{else}}
-                        {{#link-to 'login'}} <i class="fa fa-sign-in"></i> Login{{/link-to}}
+                        {{#link-to 'login'}} <i class="fa fa-sign-in fa-fw"></i>Login{{/link-to}}
                         {{/if}}
                     </li>
                 </ul>
