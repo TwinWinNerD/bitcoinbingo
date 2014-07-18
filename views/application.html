@@ -616,15 +616,13 @@
                             <strong>Registration failed:</strong> {{errorMessage}}
                         </div>
                         {{/if}}
-                        <form accept-charset="UTF-8" role="form"
-                        {{action 'register' on='submit'}}>
+                        <form accept-charset="UTF-8" role="form" >
                         <div class="form-group">
                             <label for="username">Username</label>
                             {{input id='username' name='username' placeholder='Username' class='form-control'
                             value=username}}
                         </div>
-                        <button id="registerButton" type="submit" class="btn btn-success ladda-button"
-                                data-style="expand-left">
+                        <button id="registerButton" type="submit" class="btn btn-success ladda-button disabled" disabled="disabled" data-style="expand-left" {{action 'register'}}>
                             <span class="ladda-label">Create your account</span>
                         </button>
                         <div class="pull-right">
