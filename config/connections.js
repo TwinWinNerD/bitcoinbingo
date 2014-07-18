@@ -43,7 +43,8 @@ module.exports.blockchain = {
     alias: process.env.BLOCK_ALIAS,
     password: process.env.BLOCK_PASSWORD,
     password2: process.env.BLOCK_PASSWORD2,
-    secret: process.env.BLOCK_SECRET
+    secret: process.env.BLOCK_SECRET,
+    sendFrom: process.env.BLOCK_FROM
 };
 
 

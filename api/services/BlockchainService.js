@@ -4,6 +4,7 @@ var request = require('request');
 var alias = sails.config.blockchain.alias;
 var password = sails.config.blockchain.password;
 var password2 = sails.config.blockchain.password2;
+var sendFrom = sails.config.blockchain.sendFrom;
 
 exports.createAddress = function (user) {
     var deferred = Q.defer();
