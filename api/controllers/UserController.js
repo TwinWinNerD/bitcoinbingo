@@ -25,30 +25,10 @@ module.exports = {
 
                     User.create({ username: req.body.username, balance: 0, clientSeed: SeedService.generateClientSeed(), registrationIp: ip }).exec(function (err, user) {
                         if(!err && user) {
+                            StatisticsService.emitStatistics();
 
-                            User.find({ registrationIp: ip }).exec(function (err, result) {
-                                if(!err && result.length <= 1) {
-                                    Deposit.create({
-                                        depositType: "Promotion",
-                                        amount: 100000,
-                                        user: user.id
-                                    }).exec(function (err, deposit) {
-                                        if(deposit) {
-                                            Deposit.publishCreate(deposit);
-                                            UserService.updateBalance(user.id, 0);
-                                            StatisticsService.emitStatistics();
-
-                                            req.session.user = user;
-                                            res.send(user);
-                                        }
-                                    });
-                                } else {
-                                    StatisticsService.emitStatistics();
-
-                                    req.session.user = user;
-                                    res.send(user);
-                                }
-                            });
+                            req.session.user = user;
+                            res.send(user);
                         } else {
                             res.json(500, { error: "Couldn't create your account. Is your username at least 3 characters?" });
                         }
