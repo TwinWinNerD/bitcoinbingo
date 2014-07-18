@@ -48,6 +48,10 @@ module.exports = {
             defaultsTo: 0
         },
 
+        registrationIp: {
+            type: 'STRING'
+        },
+
         bingoCards: {
             collection: 'bingoCard',
             via: 'user'

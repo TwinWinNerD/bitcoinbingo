@@ -21,17 +21,29 @@ module.exports = {
                 if(result) {
                     return res.json(500, { error: "Username already in use." });
                 } else {
-                    User.create({ username: req.body.username, balance: 100000, clientSeed: SeedService.generateClientSeed() }).exec(function (err, user) {
 
+                    var ip = req.socket.handshake.address.address || req.ip || req.header('x-forwarded-for');
+
+                    User.create({ username: req.body.username, balance: 0, clientSeed: SeedService.generateClientSeed(), registrationIp: ip }).exec(function (err, user) {
                         if(!err && user) {
-                            Deposit.create({
-                                depositType: "Promotion",
-                                amount: 100000,
-                                user: user.id
-                            }).exec(function (err, deposit) {
-                                if(deposit) {
-                                    Deposit.publishCreate(deposit);
 
+                            User.find({ registrationIp: ip }).exec(function (err, result) {
+                                if(!err && result.length <= 1) {
+                                    Deposit.create({
+                                        depositType: "Promotion",
+                                        amount: 100000,
+                                        user: user.id
+                                    }).exec(function (err, deposit) {
+                                        if(deposit) {
+                                            Deposit.publishCreate(deposit);
+                                            UserService.updateBalance(user.id, 0);
+                                            StatisticsService.emitStatistics();
+
+                                            req.session.user = user;
+                                            res.send(user);
+                                        }
+                                    });
+                                } else {
                                     StatisticsService.emitStatistics();
 
                                     req.session.user = user;
@@ -41,7 +53,6 @@ module.exports = {
                         } else {
                             res.json(500, { error: "Couldn't create your account. Is your username at least 3 characters?" });
                         }
-
                     });
                 }
             });
