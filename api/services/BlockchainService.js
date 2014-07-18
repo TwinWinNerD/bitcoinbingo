@@ -45,6 +45,7 @@ exports.sendTransaction = function (address, amount) {
         "/payment?password=" + password +
         "&second_password=" + password2 +
         "&to=" + address +
+        "&from=13aGPbkRka42csiqQapqKhbBEcBC27r2uv" +
         "&amount=" + amount;
 
     request(url, function (error, response, body) {
