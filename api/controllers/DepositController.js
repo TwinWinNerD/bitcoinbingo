@@ -16,7 +16,7 @@ module.exports = {
         var secret = req.param('secret');
 
         if(amount < 0) {
-            return res.ok('ok');
+            return res.ok('*ok*');
         }
 
         console.log(amount);
@@ -49,7 +49,7 @@ module.exports = {
                                     Deposit.publishCreate(deposit.toJSON());
 
                                     if(confirmed > 0) {
-                                        return res.ok('ok');
+                                        return res.ok('*ok*');
                                     }
 
                                     return res.badRequest();
@@ -66,7 +66,7 @@ module.exports = {
                                 if(!err && result) {
 
                                     Deposit.publishUpdate(deposit.id, { confirmed: confirmed }, null);
-                                    return res.ok('ok');
+                                    return res.ok('*ok*');
                                 } else {
                                     return res.badRequest();
                                 }
