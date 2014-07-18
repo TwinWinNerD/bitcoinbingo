@@ -21,8 +21,7 @@ module.exports = {
                 if(result) {
                     return res.json(500, { error: "Username already in use." });
                 } else {
-
-                    var ip = req.socket.handshake.address.address || req.ip || req.header('x-forwarded-for');
+                    var ip = req.socket.handshake.headers['x-forwarded-for'] || req.socket.handshake.address.address;
 
                     User.create({ username: req.body.username, balance: 0, clientSeed: SeedService.generateClientSeed(), registrationIp: ip }).exec(function (err, user) {
                         if(!err && user) {
