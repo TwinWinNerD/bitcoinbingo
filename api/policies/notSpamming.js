@@ -1,5 +1,5 @@
 var RateLimiter = require('limiter').RateLimiter;
-var limiter = new RateLimiter(1, 250, true);
+var limiter = new RateLimiter(1, 100, true);
 
 module.exports = function(req, res, next) {
 
