@@ -290,6 +290,11 @@
         <div class="col-md-1"></div>
         <div class="row">
             <div class="col-md-12">
+                <p>The list belows shows all available games. Just click on a game below to start!</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <h4>Games</h4>
@@ -367,8 +372,11 @@
                 </div>
             </div>
         </div>
-        <p>This list shows the latest finished games. Everyone can watch!</p>
-        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <p>This list shows the latest finished games. Everyone can watch!</p>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="ibox float-e-margins">
@@ -641,6 +649,8 @@
                         <h5>Register on Coin Bingo</h5>
                     </div>
                     <div class="ibox-content">
+                        <p><strong>CoinBingo</strong> is a 75-ball realtime multiplayer Bingo game where players can buy cards with Bitcoin. Just click on a game below to start! We only need a username</p>
+                        <p>Don't want to register? {{#link-to 'games'}}Take a sneak peak now{{/link-to}}</p>
                         {{#if errorMessage}}
                         <div class="alert alert-danger animated bounce">
                             <strong>Registration failed:</strong> {{errorMessage}}
