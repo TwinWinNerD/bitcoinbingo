@@ -722,8 +722,8 @@
         <div class="row">
             <div class="col-md-4">
             {{#if session.currentUser.depositAddress}}
-                <label for="depositAddress">Deposit Address</label>
-                {{input class='form-control' id='depositAddress' readonly=true value=session.currentUser.depositAddress}}
+                <label>Deposit Address</label>
+                <div id='depositAddress' class='well' rel="popover" data-toggle="popover">{{session.currentUser.depositAddress}}</div>
                 <p class="help-block">You can deposit to this address and play right away! After one confirmation you can {{#link-to 'withdraw'}}withdraw{{/link-to}} your coins.</p>
             {{else}}
                 Due to a server error we couldn't generate a deposit address for you. Please try again in a couple minutes.
