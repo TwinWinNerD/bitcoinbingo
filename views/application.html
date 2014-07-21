@@ -11,6 +11,36 @@
 
                 {{#link-to 'contact' tagName="li" href=false}}<a href="#"><i class="fa fa-envelope"></i><span class="nav-label">Contact</span></a>{{/link-to}}
             </ul>
+            <div id="general-chat">
+                <div class="ibox float-e-margins" style="margin-top: 10px;">
+                    <div class="ibox-title">
+                        <h4>General Chat</h4>
+                    </div>
+                    <div class="ibox-content">
+                        {{#each message in lastMessages}}
+                        <div class="media">
+                            <div class="media-body">
+                                <h5 class="media-heading"><strong>{{message.user}}</strong>
+                                    <span class="small pull-right">{{convertDateToLocale message.createdAt}}</span>
+                                </h5>
+                                <p>{{message.body}}</p>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                    <div>
+                        {{#if session.isAuthenticated}}
+                        <div class="input-group">
+                            {{input action='sendChatMessage' id='chatMessage' name='chatMessage' placeholder='Enter message'
+                            class='form-control' value=chatMessage}}
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success" {{action 'sendChatMessage'}}>Send</button>
+                        </span>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
         </div>
     </nav>
     <div id="page-wrapper" class="gray-bg">
