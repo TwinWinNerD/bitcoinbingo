@@ -30,50 +30,84 @@ module.exports = {
 
         User.findOne().where({ depositAddress: address }).exec(function (err, user) {
             if(!err && user) {
+                async.series([
+                    function (done) {
+                        Deposit.findOne().where({ hash: hash}).exec(function (err, deposit) {
+                            if(!err && !deposit) {
+                                Deposit.create({
+                                    amount: amount,
+                                    depositType: 'Bitcoin',
+                                    hash: hash,
+                                    confirmed: confirmed,
+                                    user: user.id
+                                }).exec(function (err, deposit) {
 
-                Deposit.findOne().where({ hash: hash}).exec(function (err, deposit) {
+                                    if(!err && deposit) {
 
-                    if(!err && !deposit) {
+                                        UserService.updateBalance(user.id, 0).then(function (result) {
+                                            Deposit.publishCreate(deposit.toJSON());
 
-                        Deposit.create({
-                            amount: amount,
-                            depositType: 'bitcoin',
-                            hash: hash,
-                            confirmed: confirmed,
-                            user: user.id
-                        }).exec(function (err, deposit) {
+                                            if(confirmed > 0) {
+                                                done(null, true);
+                                            }
 
-                            if(!err && deposit) {
+                                            done(true);
+                                        });
 
-                                UserService.updateBalance(user.id, 0).then(function (result) {
-                                    Deposit.publishCreate(deposit.toJSON());
-
-                                    if(confirmed > 0) {
-                                        return res.ok('*ok*');
+                                    } else {
+                                        done(true);
                                     }
-
-                                    return res.badRequest();
                                 });
+                            } else if(deposit) {
 
-                            } else {
-                                return res.badRequest();
+                                if(confirmed > 0) {
+                                    Deposit.update(deposit.id, { confirmed: confirmed }).exec(function (err, result) {
+                                        if(!err && result) {
+
+                                            Deposit.publishUpdate(deposit.id, { confirmed: confirmed }, null);
+                                            done(null, true);
+                                        } else {
+                                            done(true);
+                                        }
+                                    });
+                                } else {
+                                    done(true);
+                                }
                             }
                         });
-                    } else if(deposit) {
+                    },
+                    function (done) {
+                        Deposit.find().where({ user: user.id }).exec(function (err, deposits) {
+                            if(!err && deposits.length <= 1 && amount < 1000000) {
+                                Deposit.create({
+                                    amount: amount,
+                                    depositType: 'Promotion',
+                                    confirmed: 1,
+                                    user: user.id
+                                }).exec(function (err, deposit) {
+                                    if(!err && deposit) {
 
-                        if(confirmed > 0) {
-                            Deposit.update(deposit.id, { confirmed: confirmed }).exec(function (err, result) {
-                                if(!err && result) {
+                                        UserService.updateBalance(user.id, 0).then(function (result) {
+                                            Deposit.publishCreate(deposit.toJSON());
 
-                                    Deposit.publishUpdate(deposit.id, { confirmed: confirmed }, null);
-                                    return res.ok('*ok*');
-                                } else {
-                                    return res.badRequest();
-                                }
-                            });
-                        } else {
-                            return res.badRequest();
-                        }
+                                            done(null, true);
+
+                                        });
+
+                                    } else {
+                                        done(true);
+                                    }
+                                });
+                            } else {
+                                done(true);
+                            }
+                        });
+                    }
+                ], function (err, result) {
+                    if(!err && result) {
+                        return res.ok('*ok*');
+                    } else {
+                        return res.badRequest();
                     }
                 });
             } else {
