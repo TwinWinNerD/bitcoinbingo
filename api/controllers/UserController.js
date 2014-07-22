@@ -30,7 +30,7 @@ module.exports = {
                                 if(!err && result.length <= 1) {
                                     Deposit.create({
                                         depositType: "Promotion",
-                                        amount: 100000,
+                                        amount: 1000,
                                         user: user.id
                                     }).exec(function (err, deposit) {
                                         if(deposit) {
