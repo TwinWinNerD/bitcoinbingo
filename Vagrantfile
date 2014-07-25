@@ -10,6 +10,10 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.0.box"
   config.ssh.forward_agent = true
 
+  config.vm.synced_folder ".", "/vagrant", :nfs => true
+
+  config.vm.network "private_network", ip: "192.168.123.123"
+
   config.vm.network :forwarded_port, guest: 1337, host: 1337
 
   config.vm.provision :chef_solo do |chef|
