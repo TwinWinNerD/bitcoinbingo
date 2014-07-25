@@ -30,6 +30,14 @@ exports.generateServerSeed = function () {
     return generateSeed(64);
 };
 
+exports.seedToInt = function (seed) {
+    var hash = crypto.createHash('sha512');
+
+    hash.update(seed);
+
+    return parseInt(hash.digest('hex'), 16);
+};
+
 exports.generateMasterSeed = function (game) {
 
     var masterSeed;
