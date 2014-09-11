@@ -7,26 +7,26 @@
  *
  */
 
-var actionUtil = require( './../actionUtil' );
+var actionUtil = require('./../actionUtil');
 
-module.exports = function ( req, res, next ) {
+module.exports = function (req, res, next) {
 
-    var Model = actionUtil.parseModel( req );
+  var Model = actionUtil.parseModel(req);
 
-    if ( Model.protectedAttributes ) {
-        var attributes = Model.protectedAttributes();
-        _.each( attributes, function ( attr ) {
-            if ( req.params.hasOwnProperty( attr ) ) {
-                delete req.params[ attr ];
-            }
-            if ( req.query.hasOwnProperty( attr ) ) {
-                delete req.query[ attr ];
-            }
-            if ( req.body.hasOwnProperty( attr ) ) {
-                delete req.body[ attr ];
-            }
+  if (Model.protectedAttributes) {
+    var attributes = Model.protectedAttributes();
+    _.each(attributes, function (attr) {
+      if (req.params.hasOwnProperty(attr)) {
+        delete req.params[ attr ];
+      }
+      if (req.query.hasOwnProperty(attr)) {
+        delete req.query[ attr ];
+      }
+      if (req.body.hasOwnProperty(attr)) {
+        delete req.body[ attr ];
+      }
 
-        } );
-    }
-    return next();
+    });
+  }
+  return next();
 };

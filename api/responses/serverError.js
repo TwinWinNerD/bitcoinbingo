@@ -1,6 +1,6 @@
 /**
  * 500 (Server Error) Handler
- * 
+ *
  * Usage:
  * return res.serverError(err);
  *
@@ -19,8 +19,8 @@ module.exports = function serverError (errors) {
   var sails = req._sails;
 
   var viewFilePath = '500',
-    statusCode = 500,
-    i, errorToLog, errorToJSON;
+      statusCode = 500,
+      i, errorToLog, errorToJSON;
 
   var result = {
     status: statusCode
@@ -62,7 +62,7 @@ module.exports = function serverError (errors) {
 
 
   // Make data more readable for view locals
-  var locals = _.mapValues(result, function readabilify(value) {
+  var locals = _.mapValues(result, function readabilify (value) {
     if (sails.util.isArray(value)) {
       return _.map(value, sails.util.inspect);
     }
@@ -74,7 +74,7 @@ module.exports = function serverError (errors) {
 
 
   // And try to render view
-  res.render(viewFilePath, locals, function(err) {
+  res.render(viewFilePath, locals, function (err) {
     // But if the view doesn't exist, or a rendering error occured, just send JSON
     if (err) return res.json(result);
 

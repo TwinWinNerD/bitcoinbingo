@@ -2,8 +2,7 @@
  * Module dependencies
  */
 var util = require('util'),
-    actionUtil = require('../actionUtil');
-
+actionUtil = require('../actionUtil');
 
 
 /**
@@ -23,31 +22,31 @@ var util = require('util'),
 
 module.exports = function findOneRecord (req, res) {
 
-    var Model = actionUtil.parseModel(req);
-    var pk = actionUtil.requirePk(req);
+  var Model = actionUtil.parseModel(req);
+  var pk = actionUtil.requirePk(req);
 
-    var query = Model.findOne(pk);
+  var query = Model.findOne(pk);
 
-    switch(req.options.model) {
-        case 'user':
-            break;
-        case 'table':
-            break;
-        default:
-            query = actionUtil.populateEach(query, req.options);
-            break;
+  switch (req.options.model) {
+    case 'user':
+      break;
+    case 'table':
+      break;
+    default:
+      query = actionUtil.populateEach(query, req.options);
+      break;
+  }
+
+  query.exec(function found (err, matchingRecord) {
+    if (err) return res.serverError(err);
+    if (!matchingRecord) return res.notFound('No record found with the specified `id`.');
+
+    if (sails.hooks.pubsub && req.isSocket) {
+      Model.subscribe(req, matchingRecord);
+      actionUtil.subscribeDeep(req, matchingRecord);
     }
 
-    query.exec(function found(err, matchingRecord) {
-        if (err) return res.serverError(err);
-        if(!matchingRecord) return res.notFound('No record found with the specified `id`.');
-
-        if (sails.hooks.pubsub && req.isSocket) {
-            Model.subscribe(req, matchingRecord);
-            actionUtil.subscribeDeep(req, matchingRecord);
-        }
-
-        res.ok(matchingRecord);
-    });
+    res.ok(matchingRecord);
+  });
 
 };

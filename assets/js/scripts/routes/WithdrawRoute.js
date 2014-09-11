@@ -1,3 +1,3 @@
 App.WithdrawRoute = Ember.Route.extend({
-    controllerName: 'wallet'
+  controllerName: 'wallet'
 });

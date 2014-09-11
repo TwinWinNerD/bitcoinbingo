@@ -1,3 +1,3 @@
 Ember.LinkView.reopen({
-    attributeBindings: ["style"]
+  attributeBindings: ["style"]
 });

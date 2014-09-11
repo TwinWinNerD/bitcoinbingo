@@ -20,31 +20,31 @@
 
 module.exports.connections = {
 
-    localDiskDb: {
-        adapter: 'sails-disk'
-    },
+  localDiskDb: {
+    adapter: 'sails-disk'
+  },
 
-    bitcoinBingoMongo: {
-        adapter: 'sails-mongo',
-        url: process.env.MONGO_URL,
-        schema: true
-    },
-    bitcoinBingoMySQL: {
-        module   : 'sails-mysql',
-        host     : process.env.DB_HOST,
-        port     : process.env.DB_PORT,
-        user     : process.env.DB_USER,
-        password : process.env.DB_PASS,
-        database : process.env.DB_NAME
-    }
+  bitcoinBingoMongo: {
+    adapter: 'sails-mongo',
+    url: process.env.MONGO_URL,
+    schema: true
+  },
+  bitcoinBingoMySQL: {
+    module: 'sails-mysql',
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
+  }
 };
 
 module.exports.blockchain = {
-    alias: process.env.BLOCK_ALIAS,
-    password: process.env.BLOCK_PASSWORD,
-    password2: process.env.BLOCK_PASSWORD2,
-    secret: process.env.BLOCK_SECRET,
-    sendFrom: process.env.BLOCK_FROM
+  alias: process.env.BLOCK_ALIAS,
+  password: process.env.BLOCK_PASSWORD,
+  password2: process.env.BLOCK_PASSWORD2,
+  secret: process.env.BLOCK_SECRET,
+  sendFrom: process.env.BLOCK_FROM
 };
 
 

@@ -1,5 +1,5 @@
 App.LoginRoute = Ember.Route.extend({
-    setupController: function(controller, model) {
-        controller.set('errorMessage', null);
-    }
+  setupController: function (controller, model) {
+    controller.set('errorMessage', null);
+  }
 });

@@ -3,26 +3,26 @@ var Q;
 Q = require('q');
 
 exports.sendSystemMessage = function (body, game) {
-    var message, deferred;
+  var message, deferred;
 
-    deferred = Q.defer();
+  deferred = Q.defer();
 
-    message = {
-        user: "System",
-        body: body,
-        type: "system",
-        game: game
-    };
+  message = {
+    user: "System",
+    body: body,
+    type: "system",
+    game: game
+  };
 
-    Message.create(message).exec(function (error, newInstance) {
-        if(!error && newInstance) {
+  Message.create(message).exec(function (error, newInstance) {
+    if (!error && newInstance) {
 
-            Message.publishCreate(newInstance);
+      Message.publishCreate(newInstance);
 
-            deferred.resolve(true);
-        }
+      deferred.resolve(true);
+    }
 
-    });
+  });
 
-    return deferred.promise;
+  return deferred.promise;
 };

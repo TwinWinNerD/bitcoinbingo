@@ -1,4 +1,4 @@
 App.ApplicationAdapter = DS.SailsSocketAdapter.extend({
-    namespace: '/api',
-    log: true
+  namespace: '/api',
+  log: true
 });

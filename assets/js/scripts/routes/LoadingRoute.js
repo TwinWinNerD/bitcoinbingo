@@ -1,9 +1,9 @@
 App.LoadingRoute = Ember.Route.extend({
-  activate: function() {
+  activate: function () {
     this._super();
     return Pace.restart();
   },
-  deactivate: function() {
+  deactivate: function () {
     this._super();
     return Pace.stop();
   }

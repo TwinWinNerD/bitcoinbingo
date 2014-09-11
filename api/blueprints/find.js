@@ -2,8 +2,7 @@
  * Module dependencies
  */
 var util = require('util'),
-    actionUtil = require('../actionUtil');
-
+actionUtil = require('../actionUtil');
 
 
 /**
@@ -26,48 +25,50 @@ var util = require('util'),
 
 module.exports = function findRecords (req, res) {
 
-    // Look up the model
-    var Model = actionUtil.parseModel(req);
+  // Look up the model
+  var Model = actionUtil.parseModel(req);
 
 
-    // If an `id` param was specified, use the findOne blueprint action
-    // to grab the particular instance with its primary key === the value
-    // of the `id` param.   (mainly here for compatibility for 0.9, where
-    // there was no separate `findOne` action)
-    if ( actionUtil.parsePk(req) ) {
-        return require('./findOne')(req,res);
+  // If an `id` param was specified, use the findOne blueprint action
+  // to grab the particular instance with its primary key === the value
+  // of the `id` param.   (mainly here for compatibility for 0.9, where
+  // there was no separate `findOne` action)
+  if (actionUtil.parsePk(req)) {
+    return require('./findOne')(req, res);
+  }
+
+  // Lookup for records that match the specified criteria
+  var query = Model.find()
+    .where(actionUtil.parseCriteria(req))
+    .limit(actionUtil.parseLimit(req))
+    .skip(actionUtil.parseSkip(req))
+    .sort(actionUtil.parseSort(req));
+  // TODO: .populateEach(req.options);
+
+  query = actionUtil.populateEach(query, req.options);
+
+  query.exec(function found (err, matchingRecords) {
+    if (err) return res.serverError(err);
+
+    // Only `.watch()` for new instances of the model if
+    // `autoWatch` is enabled.
+    if (req._sails.hooks.pubsub && req.isSocket) {
+      Model.subscribe(req, matchingRecords);
+      if (req.options.autoWatch) {
+        Model.watch(req);
+      }
+
+      // subscribe users to new game instances
+      if (req.options.model === 'game' || req.options.model === 'deposit' || req.options.model === 'withdrawal' || req.options.model === 'chat') {
+        Model.watch(req);
+      }
+
+      // Also subscribe to instances of all associated models
+      _.each(matchingRecords, function (record) {
+        actionUtil.subscribeDeep(req, record);
+      });
     }
 
-    // Lookup for records that match the specified criteria
-    var query = Model.find()
-        .where( actionUtil.parseCriteria(req) )
-        .limit( actionUtil.parseLimit(req) )
-        .skip( actionUtil.parseSkip(req) )
-        .sort( actionUtil.parseSort(req) );
-    // TODO: .populateEach(req.options);
-
-    query = actionUtil.populateEach(query, req.options);
-
-    query.exec(function found(err, matchingRecords) {
-        if (err) return res.serverError(err);
-
-        // Only `.watch()` for new instances of the model if
-        // `autoWatch` is enabled.
-        if (req._sails.hooks.pubsub && req.isSocket) {
-            Model.subscribe(req, matchingRecords);
-            if (req.options.autoWatch) { Model.watch(req); }
-
-            // subscribe users to new game instances
-            if(req.options.model === 'game' || req.options.model === 'deposit' || req.options.model === 'withdrawal' || req.options.model === 'chat') {
-                Model.watch(req);
-            }
-
-            // Also subscribe to instances of all associated models
-            _.each(matchingRecords, function (record) {
-                actionUtil.subscribeDeep(req, record);
-            });
-        }
-
-        res.ok(matchingRecords);
-    });
+    res.ok(matchingRecords);
+  });
 };

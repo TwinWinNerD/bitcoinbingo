@@ -1,22 +1,22 @@
 App.WinnerModalView = Ember.View.extend({
-	didInsertElement: function() {
-	    Ember.run.next(this,function(){
-	    	this.$('.modal, .modal-backdrop').addClass('in');
-	    });
-	},
+  didInsertElement: function () {
+    Ember.run.next(this, function () {
+      this.$('.modal, .modal-backdrop').addClass('in');
+    });
+  },
 
-	layoutName: 'modal_layout',
+  layoutName: 'modal_layout',
 
-	actions: {
+  actions: {
 
-		close: function() {
-			var view = this;
+    close: function () {
+      var view = this;
 
-			this.$('.modal, .modal-backdrop').one("transitionend", function(ev) {
-				view.controller.send('close');
-			});
-    
-    		this.$('.modal').removeClass('in');
-		}
-	}
+      this.$('.modal, .modal-backdrop').one("transitionend", function (ev) {
+        view.controller.send('close');
+      });
+
+      this.$('.modal').removeClass('in');
+    }
+  }
 });
