@@ -29,7 +29,7 @@
     "q": "~1.0.1",
     "rc": "~0.3.3",
     "request": "^2.36.0",
-    "sails": "~0.10.0-rc9",
+    "sails": "~0.10.0",
     "sails-disk": "~0.10.0",
     "sails-generate-auth": "^0.1.2",
     "sails-mongo": "^0.10.0-rc3",
