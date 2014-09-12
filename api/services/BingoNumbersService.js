@@ -1,3 +1,5 @@
+var Random = require('random-js');
+
 module.exports = function () {
 
   for (var i = 1; i <= 75; i++) {
@@ -8,17 +10,7 @@ module.exports = function () {
 module.exports.prototype = [];
 
 module.exports.prototype.shuffle = function (seed) {
+  var engine = Random.engines.mt19937().seed(seed);
 
-  var temp, j;
-
-  for (var i = 0; i < this.length; i++) {
-
-    // Select a "random" position.
-    j = (seed % (i + 1) + i) % this.length;
-
-    // Swap the current element with the "random" one.
-    temp = this[i];
-    this[i] = this[j];
-    this[j] = temp;
-  }
+  return Random.shuffle(engine, this);
 };
