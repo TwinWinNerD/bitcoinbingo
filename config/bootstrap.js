@@ -9,8 +9,12 @@
  */
 
 module.exports.bootstrap = function (cb) {
-
-  // It's very important to trigger this callack method when you are finished
-  // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+  User.query("ALTER TABLE `user` CHANGE `balance` `balance` INT(11) UNSIGNED", function (err, result) {
+      if(!err && result) {
+        cb();
+      } else {
+        console.log(err);
+        console.log(result);
+      }
+    });
 };
