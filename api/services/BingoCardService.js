@@ -5,10 +5,7 @@ Q = require('q');
 async = require('async');
 
 exports.calculateTotalPrice = function (gameId, amountOfCards) {
-
-  var deferred;
-
-  deferred = Q.defer();
+  var deferred = Q.defer();
 
   Game.findOne(gameId).populate('table').exec(function (error, result) {
     if (error) {
@@ -22,68 +19,39 @@ exports.calculateTotalPrice = function (gameId, amountOfCards) {
   return deferred.promise;
 };
 
-exports.isUserAllowedToBuyCards = function (game, user) {
+exports.isUserAllowedToBuyCards = function (gameId, userId) {
+  var deferred = Q.defer();
 
-  var deferred;
-
-  deferred = Q.defer();
-
-  Game.findOne({ id: game}).populate('table').exec(function (error, result) {
-    if (error) {
-
-      deferred.reject(error);
-    } else if (result.gameStatus !== "idle" && result.gameStatus !== "countDown") {
-
-      deferred.reject("Game is already started or finished");
-
-    } else {
-
-      async.parallel({
-        amountOfCards: function (done) {
-          BingoCardService.countCards({
-            game: game,
-            user: user
-          }).then(function (amount) {
-            done(null, amount);
-          });
-        },
-        maximumCards: function (done) {
-          Game.findOne({ id: game}).populate('table').exec(function (error, result) {
-            if (error) {
-              done(error);
-            } else {
-              done(null, result.table.maximumCards);
-            }
-          });
-        }
-      }, function (error, result) {
-        if (!error) {
-          if (result.amountOfCards >= result.maximumCards) {
+  Game.findOne({ id: gameId })
+    .populate('table')
+    .exec(function (error, result) {
+      if (error) {
+        deferred.reject(error);
+      } else if (result.status !== "idle" && result.status !== "countDown") {
+        deferred.reject("Game is already started or finished");
+      } else {
+        BingoCardService.countCards(gameId, userId).then(function (amount) {
+          if (amount >= result.table.maximumCards) {
             deferred.resolve(false);
           } else {
             deferred.resolve(true);
           }
-        }
-      });
-
-    }
-  });
-
+        });
+      }
+    });
 
   return deferred.promise;
 };
 
+exports.countCards = function (gameId, userId) {
+  var deferred = Q.defer();
 
-exports.countCards = function (whereStatement) {
-
-  var queryObject, deferred;
-
-  queryObject = new QueryService(whereStatement);
-  deferred = Q.defer();
-
-  BingoCard.count(queryObject).exec(function (error, result) {
-    if (error) {
-      deferred.reject(error);
+  BingoCard.count({ where: {
+    game: gameId,
+    user: userId
+  }}).exec(function (err, result) {
+    if (err) {
+      deferred.reject(err);
     } else {
       deferred.resolve(result);
     }
@@ -93,7 +61,6 @@ exports.countCards = function (whereStatement) {
 };
 
 exports.generateSquares = function (serverSeed, clientSeed, nonce) {
-
   var squares, hash, squareIndex, characterIndex, subsitute, decimal, hashCharacters;
 
   squares = [
