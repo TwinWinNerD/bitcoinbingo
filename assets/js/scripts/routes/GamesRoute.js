@@ -2,24 +2,24 @@ App.GamesRoute = Ember.Route.extend({
   model: function () {
     if (!this.controllerFor('games').get('loadedGames')) {
       return Ember.RSVP.hash({
-        modelIdleGames: this.store.find('game', { gameStatus: 'idle' }),
-        modelCountDownGames: this.store.find('game', { gameStatus: 'countDown' }),
-        modelPlayingGames: this.store.find('game', { gameStatus: 'playing' }),
-        modelFinishedGames: this.store.find('game', { 'gameStatus': 'finished', 'limit': 5, 'sort': 'updatedAt DESC' })
+        modelIdleGames: this.store.find('game', { status: 'idle' }),
+        modelCountDownGames: this.store.find('game', { status: 'countDown' }),
+        modelPlayingGames: this.store.find('game', { status: 'playing' }),
+        modelFinishedGames: this.store.find('game', { 'status': 'finished', 'limit': 5, 'sort': 'updatedAt DESC' })
       });
     } else {
       return Ember.RSVP.hash({
         modelIdleGames: this.store.filter('game', function (game) {
-          return (game.get('gameStatus') === "idle")
+          return (game.get('status') === "idle")
         }),
         modelCountDownGames: this.store.filter('game', function (game) {
-          return (game.get('gameStatus') === "countDown")
+          return (game.get('status') === "countDown")
         }),
         modelPlayingGames: this.store.filter('game', function (game) {
-          return (game.get('gameStatus') === "playing");
+          return (game.get('status') === "playing");
         }),
         modelFinishedGames: this.store.filter('game', function (game) {
-          return (game.get('gameStatus') === "finished");
+          return (game.get('status') === "finished");
         })
       });
     }

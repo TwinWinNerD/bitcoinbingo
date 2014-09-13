@@ -56,25 +56,25 @@ App.GameController = Ember.ObjectController.extend({
   }.property('ownBingoCards.[]'),
 
   idle: function () {
-    if (this.get('model.gameStatus') === 'idle' || this.get('model.gameStatus') === 'countDown') {
+    if (this.get('model.status') === 'idle' || this.get('model.status') === 'countDown') {
       return true;
     }
     return false;
-  }.property('model.gameStatus'),
+  }.property('model.status'),
 
   playing: function () {
-    if (this.get('model.gameStatus') === 'playing') {
+    if (this.get('model.status') === 'playing') {
       return true;
     }
     return false;
-  }.property('model.gameStatus'),
+  }.property('model.status'),
 
   finished: function () {
-    if (this.get('model.gameStatus') === 'finished') {
+    if (this.get('model.status') === 'finished') {
       return true;
     }
     return false;
-  }.property('model.gameStatus'),
+  }.property('model.status'),
 
   cardPrice: function () {
     return satoshiToBits(this.get('model.table.cardPrice'));
@@ -88,7 +88,7 @@ App.GameController = Ember.ObjectController.extend({
     if (drawnNumbers.length > 0) {
       latestNumber = drawnNumbers[drawnNumbers.length - 1];
 
-      if (this.get('model.gameStatus') === 'playing') {
+      if (this.get('model.status') === 'playing') {
         document.getElementById("sound_number_" + latestNumber).play();
       }
 

@@ -3,7 +3,7 @@ App.Game = DS.Model.extend({
   numbers: DS.attr(),
   drawnNumbers: DS.attr(),
   pattern: DS.attr(),
-  gameStatus: DS.attr(),
+  status: DS.attr(),
   table: DS.belongsTo('table'),
   bingoCards: DS.hasMany('bingoCard'),
   messages: DS.hasMany('message'),

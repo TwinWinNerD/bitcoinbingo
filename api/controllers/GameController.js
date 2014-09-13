@@ -18,7 +18,7 @@ module.exports = {
     if (typeof actionUtil.parseCriteria(req).user !== 'undefined') {
       query = User.findOne(actionUtil.parseCriteria(req).user)
         .populate('games', {
-          where: { gameStatus: "finished"},
+          where: { status: "finished"},
           skip: actionUtil.parseSkip(req),
           limit: actionUtil.parseLimit(req),
           sort: actionUtil.parseSort(req)
@@ -97,7 +97,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -120,7 +120,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -144,7 +144,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -168,7 +168,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -192,7 +192,7 @@ module.exports = {
     }).exec(function (err, table) {
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -216,7 +216,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -240,7 +240,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -264,7 +264,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -288,7 +288,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
@@ -312,7 +312,7 @@ module.exports = {
 
       Game.create({
         table: table.id,
-        gameStatus: "idle",
+        status: "idle",
         serverSeed: SeedService.generateServerSeed(),
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {

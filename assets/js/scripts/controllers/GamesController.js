@@ -2,12 +2,12 @@ App.GamesController = Ember.ArrayController.extend({
   itemController: 'game',
   idleGames: function () {
     return this.store.filter('game', function (game) {
-      return (game.get('gameStatus') === "idle" || game.get('gameStatus') === "countDown");
+      return (game.get('status') === "idle" || game.get('status') === "countDown");
     });
   }.property('modelIdleGames', 'modelCountDownGames'),
   playingGames: function () {
     return this.store.filter('game', function (game) {
-      return (game.get('gameStatus') === "playing");
+      return (game.get('status') === "playing");
     });
   }.property('modelPlayingGames'),
   finishedGames: function () {
@@ -15,7 +15,7 @@ App.GamesController = Ember.ArrayController.extend({
       sortProperties: ['updatedAt'],
       sortAscending: false,
       content: this.store.filter('game', function (game) {
-        return (game.get('gameStatus') === "finished");
+        return (game.get('status') === "finished");
       })
     });
   }.property('modelFinishedGames'),

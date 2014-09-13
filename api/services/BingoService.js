@@ -11,12 +11,12 @@ exports.updateGameStatus = function (gameId, status) {
 
   Game.findOne(gameId)
     .exec(function (error, game) {
-      Game.update(gameId, { gameStatus: status }).exec(function (error, result) {
+      Game.update(gameId, { status: status }).exec(function (error, result) {
         if (error) {
           deferred.reject(error);
         } else {
           deferred.resolve();
-          Game.publishUpdate(gameId, { gameStatus: status, updatedAt: result[0].updatedAt }, null, { previous: game.toJSON() });
+          Game.publishUpdate(gameId, { status: status, updatedAt: result[0].updatedAt }, null, { previous: game.toJSON() });
         }
       });
     });
@@ -44,19 +44,19 @@ exports.settleRound = function (gameId, instant) {
             if (error) {
               deferred.reject(error);
             } else {
-              if (game.gameStatus === "playing" || game.gameStatus === "finished") {
+              if (game.status === "playing" || game.status === "finished") {
                 exports.runSimulation(game, instant).then(function (winners) {
 
                   rewardWinners(game, winners).then(function (result) {
                     if (result) {
                       exports.updateGameStatus(gameId, "finished").then(function () {
-                        game.gameStatus = "finished";
+                        game.status = "finished";
 
                         Game.create({
                           minimumPlayers: game.minimumPlayers,
                           maximumPlayers: game.maximumPlayers,
                           table: game.table.id,
-                          gameStatus: "idle",
+                          status: "idle",
                           serverSeed: SeedService.generateServerSeed(),
                           pattern: PatternService.getRandomPattern(),
                         }).exec(function (error, result) {
@@ -476,7 +476,7 @@ exports.startGame = function (gameId) {
     if (result) {
       Game.findOne(gameId).exec(function (err, result) {
         deferred.resolve();
-        if (result.gameStatus === 'idle') {
+        if (result.status === 'idle') {
           exports.settleRound(gameId, false);
         }
       })
