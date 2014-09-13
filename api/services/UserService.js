@@ -1,9 +1,22 @@
-var Q, async;
+var Q = require('q');
+var async = require('async');
 
-Q = require('q');
-async = require('async');
+exports.getBalance = function (userId) {
+  var deferred = Q.defer();
 
-exports.getBalance = function (userId, confirmed) {
+  User.findOne(userId)
+    .exec(function (err, result) {
+      if(err && !result) {
+        deferred.reject(err);
+      } else {
+       deferred.resolve(result.balance);
+      }
+    });
+
+  return deferred.promise;
+};
+
+exports.calculateBalance = function (userId, confirmed) {
   var deferred = Q.defer();
 
   if (!confirmed) confirmed = 0;
@@ -75,30 +88,41 @@ exports.getBalance = function (userId, confirmed) {
   return deferred.promise;
 };
 
-exports.updateBalance = function (userId, amount) {
+exports.addBalance = function (userId, amount) {
   var deferred = Q.defer();
 
-  if (!amount) amount = 0;
+  var query = 'UPDATE `user` SET `balance`=`balance`+' + amount + ' WHERE id=' + userId;
 
-  exports.getBalance(userId, 0).then(function (result) {
-    var balance = Number((result.deposits + result.promotion) - result.withdrawals);
-    amount = Number(amount);
-
-    if (amount < 0) {
-      balance -= amount;
-    } else {
-      balance += amount;
-    }
-
-    User.update(userId, { balance: balance }).exec(function (err, result) {
-      if (!err && result) {
+  User.query(query, function (err, result) {
+    if (!err && result) {
+      exports.getBalance(userId).then(function (balance) {
         User.publishUpdate(userId, { balance: balance }, null);
 
-        deferred.resolve(result);
-      } else {
-        deferred.reject(err);
-      }
-    });
+        deferred.resolve(balance);
+      });
+    } else {
+      deferred.reject(err);
+    }
+  });
+
+  return deferred.promise;
+};
+
+exports.substractBalance = function (userId, amount) {
+  var deferred = Q.defer();
+
+  var query = 'UPDATE `user` SET `balance`=`balance`-' + amount + ' WHERE id=' + userId;
+
+  User.query(query, function (err, result) {
+    if (!err && result) {
+      exports.getBalance(userId).then(function (balance) {
+        User.publishUpdate(userId, { balance: balance }, null);
+
+        deferred.resolve(balance);
+      });
+    } else {
+      deferred.reject(err);
+    }
   });
 
   return deferred.promise;

@@ -45,7 +45,7 @@ module.exports = {
 
               if (!err && deposit) {
 
-                UserService.updateBalance(user.id, 0).then(function (result) {
+                UserService.addBalance(user.id, amount).then(function (result) {
                   Deposit.publishCreate(deposit.toJSON());
 
                   if (confirmed > 0) {

@@ -16,7 +16,7 @@ var withdrawalQueue = async.queue(function (task, callback) {
       callback(true);
     }
 
-    UserService.getBalance(task.userId, 1).then(function (result) {
+    UserService.calculateBalance(task.userId, 1).then(function (result) {
       if (result) {
         callback(null, result);
       }
@@ -64,13 +64,13 @@ module.exports = {
             if (typeof transaction.error !== 'undefined') {
               withdrawal.destroy(function (err) {
                 if (!err) {
-                  UserService.updateBalance(userId, 0).then(function (result) {
+                  UserService.addBalance(userId, data.amount).then(function (result) {
                     return res.json({ error: "We are having some problems with the hot wallet. Please try again later." });
                   });
                 }
               })
             } else {
-              UserService.updateBalance(userId).then(function (result) {
+              UserService.substractBalance(userId, data.amount).then(function (result) {
 
                 withdrawal.hash = transaction.tx_hash;
 

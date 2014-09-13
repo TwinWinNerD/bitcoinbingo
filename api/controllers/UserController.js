@@ -35,7 +35,7 @@ module.exports = {
                   }).exec(function (err, deposit) {
                     if (deposit) {
                       Deposit.publishCreate(deposit);
-                      UserService.updateBalance(user.id, 0);
+                      UserService.addBalance(user.id, 1000);
                       StatisticsService.emitStatistics();
 
                       req.session.user = user;
