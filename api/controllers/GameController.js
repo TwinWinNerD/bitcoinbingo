@@ -1,26 +1,13 @@
-/**
- * GameController.js
- *
- * @description ::
- * @docs        :: http://sailsjs.org/#!documentation/controllers
- */
-
-var actionUtil;
-
-actionUtil = require('../actionUtil');
+var actionUtil = require('../actionUtil');
 
 module.exports = {
 
   find: function (req, res) {
-    var Model = actionUtil.parseModel(req);
-
-    // Lookup for records that match the specified criteria
-    var query = Model.find()
+    var query = Game.find()
       .where(actionUtil.parseCriteria(req))
       .limit(actionUtil.parseLimit(req))
       .skip(actionUtil.parseSkip(req))
       .sort(actionUtil.parseSort(req));
-
 
     query.populate('table');
     query.populate('bingoCards');
@@ -44,13 +31,8 @@ module.exports = {
       if (err) return res.serverError(err);
 
       if (req._sails.hooks.pubsub && req.isSocket) {
-        Model.subscribe(req, matchingRecords);
-        if (req.options.autoWatch) {
-          Model.watch(req);
-        }
-
-        // subscribe users to new game instances
-        Model.watch(req);
+        Game.subscribe(req, matchingRecords);
+        Game.watch(req);
       }
 
       var returnRecords = [];
@@ -62,20 +44,14 @@ module.exports = {
         } catch (e) {
           return res.forbidden();
         }
-
       }
 
-      // remove data that needs to stay hidden
       for (var i = 0; i < matchingRecords.length; i++) {
         var game = matchingRecords[i];
 
         for (var j = 0; j < game.users.length; j++) {
-
           if (typeof game.users[j] !== "undefined") {
-
             if (typeof game.users[j].email !== "undefined") delete game.users[j].email;
-            // if(typeof game.users[j].balance !== "undefined") delete game.users[j].balance;
-
           }
         }
 
@@ -87,11 +63,9 @@ module.exports = {
   },
 
   findOne: function (req, res) {
-    var Model = actionUtil.parseModel(req);
     var pk = actionUtil.requirePk(req);
 
     var query = Model.findOne(pk);
-
     query = actionUtil.populateEach(query, req.options);
 
     query.exec(function found (err, matchingRecord) {
@@ -99,30 +73,19 @@ module.exports = {
       if (!matchingRecord) return res.notFound('No record found with the specified `id`.');
 
       if (sails.hooks.pubsub && req.isSocket) {
-        Model.subscribe(req, matchingRecord);
+        Game.subscribe(req, matchingRecord);
       }
 
       for (var i = 0; i < matchingRecord.users.length; i++) {
         if (typeof matchingRecord.users[i] !== "undefined") {
-
           if (typeof matchingRecord.users[i].email !== "undefined") delete matchingRecord.users[i].email;
-          // if (typeof matchingRecord.users[i].balance !== "undefined") delete matchingRecord.users[i].balance;
-
         }
       }
 
       res.ok(matchingRecord);
-
     });
   },
 
-  play: function (req, res) {
-
-    BingoService.settleRound(req.param('gameId'), false).then(function (result) {
-      res.ok(result);
-    });
-
-  },
   hardGames: function (req, res) {
     Table.create({
       "minimumPlayers": 2,
@@ -210,11 +173,9 @@ module.exports = {
         pattern: PatternService.getRandomPattern()
       }).exec(function (error, game) {
         if (!error) {
-
           Game.publishCreate(game);
 
           res.ok();
-
         }
       });
     });
