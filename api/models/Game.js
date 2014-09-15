@@ -1,30 +1,17 @@
-/**
- * Game.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs    :: http://sailsjs.org/#!documentation/models
- */
-
-var crypto;
-
-crypto = require('crypto');
+var crypto = require('crypto');
 
 module.exports = {
-
   attributes: {
-
     serverSeed: {
-      type: 'STRING',
+      type: 'string',
       notNull: true,
       required: true
     },
-
-    gameStatus: {
-      type: 'STRING',
+    status: {
+      type: 'string',
       alpha: true,
       required: true
     },
-
     numbers: {
       type: 'array',
       defaultsTo: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -33,56 +20,44 @@ module.exports = {
         46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
         61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75]
     },
-
     drawnNumbers: {
       type: 'array',
       defaultsTo: []
     },
-
     pattern: {
       type: 'array',
       defaultsTo: []
     },
-
     bingoCards: {
       collection: 'bingoCard',
       via: 'game'
     },
-
     table: {
       model: 'table',
       required: true
     },
-
     winners: {
       collection: 'winner',
       via: 'game'
     },
-
     messages: {
       collection: 'message',
       via: 'game'
     },
-
     users: {
       collection: 'user',
       via: 'games'
     },
-
     toJSON: function () {
-      var obj;
-
-      obj = this.toObject();
+      var obj= this.toObject();
 
       obj.serverSeedHash = crypto.createHash('sha256').update(obj.serverSeed).digest('hex');
 
-      if (obj.gameStatus !== "finished") {
+      if (obj.status !== "finished") {
         obj.serverSeed = "";
       }
 
       return obj;
     }
-
   }
-
 };
