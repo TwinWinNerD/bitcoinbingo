@@ -2,7 +2,7 @@ var chai = chai || require('chai');
 
 var should = chai.should();
 
-describe.only('UserService', function() {
+describe('UserService', function () {
   var user;
 
   before(function (done) {
