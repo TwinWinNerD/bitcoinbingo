@@ -52,7 +52,6 @@ module.exports.models = {
           // If this is a many-to-many association, do a publishAdd for the
           // other side.
           if (reverseAssociation.type == 'collection') {
-            console.log(values);
             ReferencedModel.publishAdd(val, reverseAssociation.alias, values, req, {noReverse: true});
           }
 
