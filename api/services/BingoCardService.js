@@ -4,6 +4,48 @@ crypto = require('crypto');
 Q = require('q');
 async = require('async');
 
+exports.buyCards = function (gameId, userId, cards) {
+  var deferred = Q.defer();
+
+  var amount = cards.length;
+
+  Game.findOne(gameId)
+    .populate('table')
+    .exec(function (err, result) {
+      if(!err && result) {
+        var withdrawalAmount = amount * result.table.cardPrice;
+
+        WithdrawalService.createWithdrawal(userId, withdrawalAmount, 'buy cards')
+          .then(function () {
+            var query = 'UPDATE `bingocard` SET bought=1 WHERE `id` IN ('
+              + cards + ') AND user=' + userId;
+
+            BingoCard.query(query, function (err, result) {
+                if(!err && result) {
+                  BingoCard.find()
+                    .where({ user: userId, game: gameId, bought: 1})
+                    .exec(function (err, result) {
+                      if(!err && result) {
+                        deferred.resolve(result);
+                      } else {
+                        deferred.reject(err);
+                      }
+                    });
+                } else {
+                  deferred.reject(err);
+                }
+              });
+          }, function () {
+            deferred.reject("Couldn't buy cards");
+          });
+      } else {
+        deferred.reject("Couldn't find the game");
+      }
+    });
+
+  return deferred.promise;
+};
+
 exports.calculateTotalPrice = function (gameId, amountOfCards) {
   var deferred = Q.defer();
 
