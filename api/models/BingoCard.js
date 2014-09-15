@@ -1,9 +1,11 @@
 module.exports = {
   attributes: {
-    clientSeed: {
-      type: 'STRING',
-      maxLength: 20,
-      notNull: true
+    bought: {
+      type: 'integer',
+      defaultsTo: 0
+    },
+    nonce: {
+      type: 'integer'
     },
     game: {
       model: 'game',
@@ -16,7 +18,7 @@ module.exports = {
     toJSON: function () {
       var obj = this.toObject();
 
-      obj.squares = BingoCardService.generateSquares(obj.game.serverSeed, obj.clientSeed, obj.id);
+      obj.squares = BingoCardService.generateSquares(obj.game.serverSeed, obj.nonce);
 
       return obj;
     }
