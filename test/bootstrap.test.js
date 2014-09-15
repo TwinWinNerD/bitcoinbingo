@@ -1,6 +1,8 @@
 var Sails = require('sails');
 
 before(function(done) {
+  this.timeout(10000);
+  
   Sails.lift({
     connections: {
       bitcoinBingoMySQL: {
