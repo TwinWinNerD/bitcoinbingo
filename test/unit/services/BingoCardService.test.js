@@ -75,6 +75,26 @@ describe('BingoCardService', function () {
     });
   });
 
+  describe('#buyCards()', function () {
+    before(function (done) {
+      var cards = [];
+      cards.push(bingoCard.id);
+
+      BingoCardService.buyCards(game.id, user.id, cards)
+        .then(function (result) {
+          done();
+        });
+    });
+
+    it('should now have 1 card that is bought', function (done) {
+      BingoCard.findOne(bingoCard.id)
+        .exec(function (err, result) {
+          result.bought.should.equal(1);
+          done();
+        });
+    })
+  });
+
   describe('#isUserAllowedToBuyCards()', function () {
     it('should not allow the user to buy cards', function (done) {
       BingoCardService.isUserAllowedToBuyCards(game.id, user.id)
@@ -101,27 +121,32 @@ describe('BingoCardService', function () {
     async.auto([
       function (done) {
         User.destroy(user.id)
-          .exec(function(err) {
+          .exec(function () {
             done();
           });
       },
       function (done) {
         Table.destroy(table.id)
-          .exec(function(err) {
+          .exec(function () {
             done();
           });
       },
       function (done) {
         Game.destroy(game.id)
-          .exec(function(err) {
+          .exec(function () {
             done();
           });
       },
       function (done) {
         BingoCard.destroy(bingoCard.id)
-          .exec(function(err) {
+          .exec(function () {
             done();
           });
+      }, function (done) {
+        Withdrawal.destroy({ user: user.id})
+          .exec(function () {
+            done();
+          })
       }
     ], function (err, result) {
       done();
