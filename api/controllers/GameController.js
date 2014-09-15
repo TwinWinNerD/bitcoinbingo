@@ -65,7 +65,7 @@ module.exports = {
   findOne: function (req, res) {
     var pk = actionUtil.requirePk(req);
 
-    var query = Model.findOne(pk);
+    var query = Game.findOne(pk);
     query = actionUtil.populateEach(query, req.options);
 
     query.exec(function found (err, matchingRecord) {
