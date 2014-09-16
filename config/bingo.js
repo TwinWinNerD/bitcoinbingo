@@ -1,3 +1,3 @@
 module.exports.bingo = {
-  jackpotPercentage: 0.5
+  tableJackpotPercentage: 0.5,
 };
