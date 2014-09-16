@@ -321,7 +321,7 @@
                                     <td>{{cardPrice}} Bits</td>
                                     <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
                                     <td>{{prizePool}} Bits</td>
-                                    <td>{{gameStatus}}</td>
+                                    <td>{{status}}</td>
                                     {{#if userParticipating}}
                                         <td>
                                             {{#link-to 'game' id class='btn btn-sm btn-warning'}}
@@ -347,7 +347,7 @@
                                     <td>{{cardPrice}} Bits</td>
                                     <td>{{amountOfPlayers}} / {{table.minimumPlayers}}</td>
                                     <td>{{prizePool}} Bits</td>
-                                    <td>{{gameStatus}}</td>
+                                    <td>{{status}}</td>
                                     {{#if userParticipating}}
                                     <td>
                                         {{#link-to 'game' id class='btn btn-sm btn-warning'}}
@@ -469,7 +469,7 @@
                     <li>
                         <i class="fa fa-question fa-fw"></i>
                         <abbr data-toggle="tooltip" title="The game status">Status</abbr>
-                        <span class="badge badge-info pull-right">{{gameStatus}}</span>
+                        <span class="badge badge-info pull-right">{{status}}</span>
                     </li>
                     <li>
                         <i class="fa fa-btc fa-fw"></i>
