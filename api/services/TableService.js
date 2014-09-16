@@ -1,9 +1,7 @@
 var Q = require('q');
 
-exports.jackpotPercentage = 0.5;
-
 exports.calculateJackpot = function (amount) {
-  return (amount / 100) * exports.jackpotPercentage;
+  return (amount / 100) * sails.config.bingo.jackpotPercentage;
 };
 
 exports.addJackpot = function (tableId, amount) {
