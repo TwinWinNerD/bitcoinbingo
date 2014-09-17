@@ -28,6 +28,10 @@ module.exports = {
       type: 'array',
       defaultsTo: []
     },
+    prizePool: {
+      type: 'integer',
+      defaultsTo: 0
+    },
     bingoCards: {
       collection: 'bingoCard',
       via: 'game'
