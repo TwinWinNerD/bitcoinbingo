@@ -31,7 +31,7 @@ describe('GameService', function () {
     });
   });
 
-  describe('#addPrizePool', function () {
+  describe('#addPrizePool()', function () {
     it('should have a prizePool of 0', function () {
       game.prizePool.should.equal(0);
     });
@@ -48,6 +48,24 @@ describe('GameService', function () {
       GameService.addPrizePool(game.id, 100)
         .then(function (result) {
           result.prizePool.should.equal(200);
+          done();
+        });
+    });
+  });
+
+  describe('#removePrizePool()', function () {
+    it('should update prizePool to 100', function (done) {
+      GameService.removePrizePool(game.id, 100)
+        .then(function (result) {
+          result.prizePool.should.equal(100);
+          done();
+        });
+    });
+
+    it('should update prizePool to 0', function (done) {
+      GameService.removePrizePool(game.id, 100)
+        .then(function (result) {
+          result.prizePool.should.equal(0);
           done();
         });
     });
