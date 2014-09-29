@@ -24,6 +24,25 @@ exports.findNextNonce = function (params) {
 
   return deferred.promise;
 };
+
+exports.removeCurrentCards = function (params) {
+  var deferred = Q.defer();
+
+  if(!params.gameId) deferred.reject("`gameId` required");
+  if(!params.userId) deferred.reject("`userId` required");
+
+  BingoCard.destroy({ user: params.userId, game: params.gameId })
+    .exec(function (err) {
+      if(!err) {
+        deferred.resolve(true);
+      } else {
+        deferred.reject(err);
+      }
+    });
+
+  return deferred.promise;
+};
+
 exports.buyCards = function (gameId, userId, cards) {
   var deferred = Q.defer();
 
