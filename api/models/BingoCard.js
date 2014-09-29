@@ -9,7 +9,8 @@ module.exports = {
       defaultsTo: 0
     },
     nonce: {
-      type: 'integer'
+      type: 'integer',
+      required: true
     },
     game: {
       model: 'game',
