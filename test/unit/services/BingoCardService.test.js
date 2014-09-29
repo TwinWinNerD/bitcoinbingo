@@ -44,6 +44,78 @@ describe('BingoCardService', function () {
     });
   });
 
+  describe('#findNextNonce()', function () {
+    var params;
+    it('should return 0 if no bingoCard belongs to this player', function (done) {
+      params = {
+        gameId: game.id
+      };
+
+      BingoCardService.findNextNonce(params)
+        .then(function (result) {
+          result.should.equal(0);
+          done();
+        });
+    });
+
+    it('should return 1 if a bingoCard with nonce 0 exists', function (done) {
+      params = {
+        gameId: game.id,
+        userId: user.id
+      };
+
+      BingoCard.create({
+        user: user.id,
+        game: game.id,
+        clientSeed: 'clientSeed',
+        nonce: 0
+      }).exec(function (err, result) {
+        bingoCard = result;
+
+        BingoCardService.findNextNonce(params)
+          .then(function (result) {
+            result.should.equal(1);
+
+            BingoCard.destroy(bingoCard.id)
+              .exec(function () {
+                done();
+              });
+          });
+      });
+    });
+
+    it('should return 2 if a bingoCard with nonce 1 exists', function (done) {
+      params = {
+        gameId: game.id,
+        userId: user.id
+      };
+
+      BingoCard.create([{
+        user: user.id,
+        game: game.id,
+        clientSeed: 'clientSeed',
+        nonce: 0
+      },{
+        user: user.id,
+        game: game.id,
+        clientSeed: 'clientSeed',
+        nonce: 1
+      }]).exec(function (err, result) {
+        bingoCard = result;
+
+        BingoCardService.findNextNonce(params)
+          .then(function (result) {
+            result.should.equal(2);
+
+            BingoCard.destroy(bingoCard.id)
+              .exec(function () {
+                done();
+              });
+          });
+      });
+    });
+  });
+
   describe('#countCards()', function () {
     it('should correctly count the cards', function (done) {
       BingoCardService.countCards(game.id, user.id)
