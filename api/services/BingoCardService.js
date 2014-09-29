@@ -1,8 +1,51 @@
-var crypto, Q, async;
+var crypto = require('crypto');
+var Q = require('q');
+var async = require('async');
 
-crypto = require('crypto');
-Q = require('q');
-async = require('async');
+exports.generateCards = function (params) {
+  var deferred = Q.defer();
+
+  if(!params.gameId) deferred.reject("`gameId` required");
+  if(!params.userId) deferred.reject("`userId` required");
+  if(!params.clientSeed) deferred.reject("`clientSeed` required");
+  if(!params.amount) params.amount = 20;
+
+  exports.findNextNonce(params)
+    .then(function (result) {
+      exports.removeCurrentCards(params)
+        .then(function () {
+          var nonce = result;
+          var amount = params.amount;
+          var cards = [];
+
+          for(var i = 0; i < amount; i++) {
+            var card = {
+              clientSeed: params.clientSeed,
+              nonce: nonce,
+              user: params.userId,
+              game: params.gameId
+            };
+            cards.push(card);
+            nonce++;
+          }
+
+          BingoCard.create(cards)
+            .exec(function (err, result) {
+              if(!err && result) {
+                deferred.resolve(result);
+              } else {
+                deferred.reject(err);
+              }
+            });
+        }, function (err) {
+          deferred.reject(err);
+        });
+    }, function (err) {
+      deferred.reject(err);
+    });
+
+  return deferred.promise;
+};
 
 exports.findNextNonce = function (params) {
   var deferred = Q.defer();
