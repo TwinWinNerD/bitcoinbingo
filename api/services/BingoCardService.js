@@ -4,6 +4,26 @@ crypto = require('crypto');
 Q = require('q');
 async = require('async');
 
+exports.findNextNonce = function (params) {
+  var deferred = Q.defer();
+
+  if(!params.gameId) deferred.reject("`gameId` required");
+  if(!params.userId) deferred.reject("`userId` required");
+
+  BingoCard.findOne({ user: params.userId, game: params.gameId })
+    .sort('nonce DESC')
+    .exec(function (err, result) {
+      if(err) {
+        deferred.reject(err);
+      } else if(!result) {
+        deferred.resolve(0);
+      } else {
+        deferred.resolve(result.nonce + 1);
+      }
+    });
+
+  return deferred.promise;
+};
 exports.buyCards = function (gameId, userId, cards) {
   var deferred = Q.defer();
 
