@@ -130,7 +130,8 @@ describe('BingoCardService', function () {
         BingoCard.create({
           user: user.id,
           game: game.id,
-          clientSeed: 'clientSeed'
+          clientSeed: 'clientSeed',
+          nonce: 0
         }).exec(function (err, result) {
           bingoCard = result;
           done();
