@@ -48,14 +48,15 @@ describe('BingoCardService', function () {
     var params;
     it('should return 0 if no bingoCard belongs to this player', function (done) {
       params = {
-        gameId: game.id
+        gameId: game.id,
+        userId: user.id
       };
 
       BingoCardService.findNextNonce(params)
         .then(function (result) {
           result.should.equal(0);
           done();
-        });
+        }, done);
     });
 
     it('should return 1 if a bingoCard with nonce 0 exists', function (done) {
@@ -187,7 +188,62 @@ describe('BingoCardService', function () {
             });
         });
     });
+  });
 
+  describe('#generateCards()', function () {
+    var cards;
+    it('should generate 20 new cards using client seed', function (done) {
+      var params = {
+        clientSeed: 'clientSeed',
+        gameId: game.id,
+        userId: user.id
+      };
+
+      BingoCardService.generateCards(params)
+        .then(function (result) {
+          result.length.should.equal(20);
+          done();
+        }, done);
+    });
+
+    it('should remove current cards when regenerating', function (done) {
+      var params = {
+        clientSeed: 'clientSeed',
+        gameId: game.id,
+        userId: user.id
+      };
+
+      BingoCardService.generateCards(params)
+        .then(function (result) {
+          cards = result;
+          result.length.should.equal(20);
+          done();
+        }, done);
+    });
+
+    it('should now return 41 for next nonce', function (done) {
+      var params = {
+        gameId: game.id,
+        userId: user.id
+      };
+
+      BingoCardService.findNextNonce(params)
+        .then(function (result) {
+          result.should.equal(41);
+          done();
+        }, done);
+    });
+
+    after(function (done) {
+      var params = {
+        gameId: game.id,
+        userId: user.id
+      };
+      BingoCardService.removeCurrentCards(params)
+        .then(function () {
+          done();
+        });
+    });
   });
 
   after(function (done) {
