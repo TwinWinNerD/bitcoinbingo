@@ -23,7 +23,7 @@ module.exports.policies = {
     create: true,
     destroy: false,
     find: false,
-    findOne: ['isAuthenticated', 'isUser'],
+    findOne: ['isAuthenticated'],
     update: ['isAuthenticated', 'isUser', 'protectedAttributes']
   },
 
