@@ -63,28 +63,36 @@ module.exports = {
   findOne: function (req, res) {
     var pk = actionUtil.requirePk(req);
 
-    var query = User.findOne(pk);
-
-    query.exec(function found (err, user) {
+    User.findOne(pk)
+      .exec(function (err, user) {
       if (err) return res.serverError(err);
       if (!user) return res.notFound('No record found with the specified `id`.');
 
-      if (typeof user.depositAddress === "undefined" || user.depositAddress === "") {
+      if(req.session.user && req.session.user === user.id) {
+        if (!user.depositAddress || user.depositAddress === "") {
+          BlockchainService.createAddress(user).then(function (result) {
+            if (result.address) {
+              User.update(user.id, { depositAddress: result.address }).exec(function (err, result) {
+                User.publishUpdate(user.id, { depositAddress: result.address }, null);
+              });
+            }
+          });
+        }
 
-        BlockchainService.createAddress(user).then(function (result) {
-          if (result.address) {
-            User.update(user.id, { depositAddress: result.address }).exec(function (err, result) {
-              User.publishUpdate(user.id, { depositAddress: result.address }, null);
-            });
-          }
-        });
-      }
+        if (sails.hooks.pubsub && req.isSocket) {
+          User.subscribe(req, user);
+          actionUtil.subscribeDeep(req, user);
+        }
+        return res.ok(user);
+      } else {
+        var publicInfo = {
+          id: user.id,
+          clientSeed: user.clientSeed,
+          username: user.username
+        };
 
-      if (sails.hooks.pubsub && req.isSocket) {
-        User.subscribe(req, user);
-        actionUtil.subscribeDeep(req, user);
+        return res.ok(publicInfo);
       }
-      res.ok(user);
     });
   }
 
