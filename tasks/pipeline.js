@@ -14,46 +14,31 @@
 //
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
-var cssFilesToInject = [
-	'css/bootstrap.min.css',
-	'css/animate.css',
-	'css/style.css',
-	'css/plugins/ladda/ladda-themeless.css',
-	'font-awesome/css/font-awesome.min.css'
-];
+var cssFilesToInject = [];
 
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
+  'js/dependencies/jquery/jquery-2.1.1.min.js',
+  'js/dependencies/angular/angular.js',
+  'js/dependencies/plugins/jquery-ui/jquery-ui.js',
+  'js/dependencies/bootstrap/bootstrap.js',
+  'js/dependencies/plugins/metisMenu/jquery.metisMenu.js',
+  'js/dependencies/plugins/pace/pace.min.js',
+  'js/dependencies/plugins/slimscroll/jquery.slimscroll.min.js',
+  'js/dependencies/inspinia.js',
 
-	// Dependencies like sails.io.js, jQuery, or Angular
-	// are brought in here
-    'js/dependencies/jquery.min.js',
-    'js/dependencies/handlebars-1.3.0.js',
-    'js/dependencies/ember.js',
-    'js/dependencies/ember-data.js',
-    'js/dependencies/sails.io.js',
-    'js/dependencies/bootstrap.min.js',
-    'js/plugins/metisMenu/jquery.metisMenu.js',
-    'js/plugins/slimscroll/jquery.slimscroll.min.js',
-    'js/plugins/ladda/spin.min.js',
-    'js/plugins/ladda/ladda.min.js',
-    'js/inspinia.js',
-    'js/plugins/pace/pace.min.js',
-	'js/dependencies/**/*.js',
+  'js/dependencies/ui-router/angular-ui-router.min.js',
+  'js/dependencies/bootstrap/ui-bootstrap-tpls-0.11.0.min.js',
 
+  'js/dependencies/sails.io.js',
+  'js/dependencies/ngsails.io.js',
 
-
-    // All of the rest of your client-side js files
-	// will be injected here in no particular order.
-	'js/scripts/app.js',
-	'js/scripts/adapters/*.js',
-	'js/scripts/serializers/*.js',
-	'js/scripts/routes/*.js',
-	'js/scripts/models/*.js',
-	'js/scripts/controllers/*.js',
-	'js/scripts/**/*.js'
+  'js/app/app.js',
+  'js/app/config.js',
+  'js/app/directives.js',
+  'js/app/controllers/*.js',
 ];
 
 
@@ -67,25 +52,19 @@ var jsFilesToInject = [
 // templates get spit out to the same file.  Be sure and check out `tasks/README.md`
 // for information on customizing and installing new tasks.
 var templateFilesToInject = [
-	'templates/**/*.html'
+  'templates/**/*.html'
 ];
-
-
-
-
-
-
 
 
 // Prefix relative paths to source files so they point to the proper locations
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
-module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
-	return '.tmp/public/' + path;
+module.exports.cssFilesToInject = cssFilesToInject.map(function (path) {
+  return '.tmp/public/' + path;
 });
-module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
-	return '.tmp/public/' + path;
+module.exports.jsFilesToInject = jsFilesToInject.map(function (path) {
+  return '.tmp/public/' + path;
 });
-module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
-	return 'assets/' + path;
+module.exports.templateFilesToInject = templateFilesToInject.map(function (path) {
+  return 'assets/' + path;
 });

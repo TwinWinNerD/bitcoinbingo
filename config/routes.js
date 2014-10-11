@@ -22,7 +22,7 @@
 module.exports.routes = {
 
   '/': {
-    view: 'application'
+    view: 'layout'
   },
 
   // Custom routes here...

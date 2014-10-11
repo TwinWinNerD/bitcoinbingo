@@ -10,7 +10,6 @@ module.exports = {
       .sort(actionUtil.parseSort(req));
 
     query.populate('table');
-    query.populate('bingoCards');
     query.populate('users');
 
     var requestGamesHistory = false;
@@ -65,24 +64,49 @@ module.exports = {
   findOne: function (req, res) {
     var pk = actionUtil.requirePk(req);
 
-    var query = Game.findOne(pk);
-    query = actionUtil.populateEach(query, req.options);
-
-    query.exec(function found (err, matchingRecord) {
+    Game.findOne(pk)
+      .populate('table')
+      .populate('messages')
+      .populate('users')
+      .exec(function (err, result) {
       if (err) return res.serverError(err);
-      if (!matchingRecord) return res.notFound('No record found with the specified `id`.');
+      if (!result) return res.notFound('No record found with the specified `id`.');
 
       if (sails.hooks.pubsub && req.isSocket) {
-        Game.subscribe(req, matchingRecord);
+        Game.subscribe(req, result);
       }
 
-      for (var i = 0; i < matchingRecord.users.length; i++) {
-        if (typeof matchingRecord.users[i] !== "undefined") {
-          if (typeof matchingRecord.users[i].email !== "undefined") delete matchingRecord.users[i].email;
+      var users = result.users;
+      var foundUser = false;
+
+      for (var i = 0; i < users.length; i++) {
+        var user = users[i];
+        if (user.email) delete result.email;
+
+        if (req.session.user && user.id === req.session.user.id) {
+          foundUser = true;
         }
       }
 
-      res.ok(matchingRecord);
+      var game = result;
+
+      if(!foundUser && (game.status === "idle" || game.status === "countdown") && req.session.user) {
+        var params = {
+          gameId: game.id,
+          userId: req.session.user.id,
+          clientSeed: req.session.user.clientSeed
+        };
+
+        BingoCardService.generateCards(params)
+          .then(function (result) {
+            game.bingoCards.push(result);
+            return res.json(game);
+          }, function (err) {
+            return res.serverError("Something went wrong");
+          });
+      } else {
+        return res.json(game);
+      }
     });
   },
 

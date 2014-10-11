@@ -1,98 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CoinBingo</title>
+    <title page-title>CoinBingo - Play bingo online</title>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/animate.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/plugins/ladda/ladda-themeless.css">
+    <link rel="stylesheet" href="/css/animate.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
 
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-52563633-1', 'auto');
-        ga('send', 'pageview');
-
-    </script>
+    <!--STYLES-->
+    
+    <!--STYLES END-->
 
 </head>
-
-<body>
+<body ng-app="coinbingo" ng-controller="GamesController">
     <div id="wrapper">
-        <%- body %>
-        <!--SCRIPTS-->
-        <script src="/js/dependencies/jquery.min.js"></script>
-        <script src="/js/dependencies/handlebars-1.3.0.js"></script>
-        <script src="/js/dependencies/ember.js"></script>
-        <script src="/js/dependencies/ember-data.js"></script>
-        <script src="/js/dependencies/sails.io.js"></script>
-        <script src="/js/dependencies/bootstrap.min.js"></script>
-        <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-        <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-        <script src="/js/plugins/ladda/spin.min.js"></script>
-        <script src="/js/plugins/ladda/ladda.min.js"></script>
-        <script src="/js/inspinia.js"></script>
-        <script src="/js/plugins/pace/pace.min.js"></script>
-        <script src="/js/dependencies/browser-update.js"></script>
-        <script src="/js/dependencies/ember-data-sails-adapter.js"></script>
-        <script src="/js/dependencies/ember-simple-auth.js"></script>
-        <script src="/js/dependencies/underscore-min.js"></script>
-        <script src="/js/scripts/app.js"></script>
-        <script src="/js/scripts/adapters/ApplicationAdapter.js"></script>
-        <script src="/js/scripts/serializers/ApplicationSerializer.js"></script>
-        <script src="/js/scripts/routes/ApplicationRoute.js"></script>
-        <script src="/js/scripts/routes/GameRoute.js"></script>
-        <script src="/js/scripts/routes/GamesHistoryRoute.js"></script>
-        <script src="/js/scripts/routes/GamesRoute.js"></script>
-        <script src="/js/scripts/routes/LoadingRoute.js"></script>
-        <script src="/js/scripts/routes/LoginRoute.js"></script>
-        <script src="/js/scripts/routes/RegisterRoute.js"></script>
-        <script src="/js/scripts/routes/SettingsRoute.js"></script>
-        <script src="/js/scripts/routes/WalletRoute.js"></script>
-        <script src="/js/scripts/routes/WithdrawRoute.js"></script>
-        <script src="/js/scripts/models/BingoCardModel.js"></script>
-        <script src="/js/scripts/models/ChatModel.js"></script>
-        <script src="/js/scripts/models/DepositModel.js"></script>
-        <script src="/js/scripts/models/GameModel.js"></script>
-        <script src="/js/scripts/models/MessageModel.js"></script>
-        <script src="/js/scripts/models/TableModel.js"></script>
-        <script src="/js/scripts/models/UserModel.js"></script>
-        <script src="/js/scripts/models/WinnerModel.js"></script>
-        <script src="/js/scripts/models/WithdrawalModel.js"></script>
-        <script src="/js/scripts/controllers/ApplicationController.js"></script>
-        <script src="/js/scripts/controllers/BingoCardController.js"></script>
-        <script src="/js/scripts/controllers/GameController.js"></script>
-        <script src="/js/scripts/controllers/GamesController.js"></script>
-        <script src="/js/scripts/controllers/GamesHistoryController.js"></script>
-        <script src="/js/scripts/controllers/LoginController.js"></script>
-        <script src="/js/scripts/controllers/MessageController.js"></script>
-        <script src="/js/scripts/controllers/NumberController.js"></script>
-        <script src="/js/scripts/controllers/RegisterController.js"></script>
-        <script src="/js/scripts/controllers/SettingsController.js"></script>
-        <script src="/js/scripts/controllers/WalletController.js"></script>
-        <script src="/js/scripts/helpers/HandlebarsConvertDate.js"></script>
-        <script src="/js/scripts/helpers/HandlebarsSatoshiToBits.js"></script>
-        <script src="/js/scripts/views/ApplicationView.js"></script>
-        <script src="/js/scripts/views/GameView.js"></script>
-        <script src="/js/scripts/views/GamesView.js"></script>
-        <script src="/js/scripts/views/LinkView.js"></script>
-        <script src="/js/scripts/views/RegisterView.js"></script>
-        <script src="/js/scripts/views/WalletView.js"></script>
-        <script src="/js/scripts/views/WinnerModalView.js"></script>
-        <!--SCRIPTS END-->
+        <div ng-include="'views/common/navigation.html'"></div>
+        <div id="page-wrapper" class="gray-bg">
 
-        <% for(var i = 1; i <= 75; i++) {%>
-        <audio id="sound_number_<%= i %>" src="/sounds/Number_<%= i %>.mp3" type="audio/mpeg"></audio>
-        <% } %>
+            <div ng-include="'views/common/topnavbar.html'"></div>
+
+            <div ui-view></div>
+
+            <div ng-include="'views/common/footer.html'"></div>
+        </div>
     </div>
+    <!--SCRIPTS-->
+    <script src="/js/dependencies/jquery/jquery-2.1.1.min.js"></script>
+    <script src="/js/dependencies/angular/angular.js"></script>
+    <script src="/js/dependencies/plugins/jquery-ui/jquery-ui.js"></script>
+    <script src="/js/dependencies/bootstrap/bootstrap.js"></script>
+    <script src="/js/dependencies/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/dependencies/plugins/pace/pace.min.js"></script>
+    <script src="/js/dependencies/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/dependencies/inspinia.js"></script>
+    <script src="/js/dependencies/ui-router/angular-ui-router.min.js"></script>
+    <script src="/js/dependencies/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/dependencies/ngsails.io.js"></script>
+    <script src="/js/app/app.js"></script>
+    <script src="/js/app/config.js"></script>
+    <script src="/js/app/directives.js"></script>
+    <script src="/js/app/controllers/gameController.js"></script>
+    <script src="/js/app/controllers/gamesController.js"></script>
+    <script src="/js/app/controllers/loginController.js"></script>
+    <!--SCRIPTS END-->
 </body>
 </html>

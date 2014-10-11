@@ -1,0 +1,43 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Games</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Card price</th>
+                                <th>Players</th>
+                                <th>Prize Pool</th>
+                                <th>Jackpot</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="game in games" ng-click="go(game)" style="cursor: pointer;">
+                                    <td>{{game.id}}</td>
+                                    <td>{{game.table.tableType}}</td>
+                                    <td>{{game.table.cardPrice}}</td>
+                                    <td>{{game.users.length}}</td>
+                                    <td>{{game.prizePool}}</td>
+                                    <td>{{game.table.jackpot}}</td>
+                                    <td>{{game.status}}</td>
+                                    <td>
+                                        <a href="#/game/{{game.id}}" class="btn btn-sm btn-primary">Go <i class="fa fa-arrow-circle-right"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

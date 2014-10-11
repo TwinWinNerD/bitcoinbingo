@@ -14,8 +14,8 @@ exports.getStatistics = function () {
       });
     },
     cardsBought: function (done) {
-      BingoCard.count().exec(function (err, result) {
-        if (!err && result) {
+      BingoCard.count({ bought: 1 }).exec(function (err, result) {
+        if (!err) {
           done(null, result);
         } else {
           done(err);
@@ -23,7 +23,10 @@ exports.getStatistics = function () {
       });
     },
     wagered: function (done) {
-      BingoCard.query('SELECT sum(cardPrice) as wagered FROM `bingocard` JOIN `game` ON `bingocard`.`game` = `game`.`id` JOIN `table` ON `game`.`table` = `table`.`id`', function (err, result) {
+      BingoCard.query('SELECT sum(cardPrice) as wagered FROM `bingocard` ' +
+        'JOIN `game` ON `bingocard`.`game` = `game`.`id` ' +
+        'JOIN `table` ON `game`.`table` = `table`.`id` ' +
+        'WHERE `bingocard`.`bought`=1', function (err, result) {
         if (!err && result) {
           done(null, result[0].wagered);
         } else {

@@ -360,7 +360,7 @@ var io="undefined"==typeof module?{}:module.exports;(function(){(function(a,b){v
 
 
 
-    // We'll be adding methods to `io.SocketNamespace.prototype`, the prototype for the 
+    // We'll be adding methods to `io.SocketNamespace.prototype`, the prototype for the
     // Socket instance returned when the browser connects with `io.connect()`
     var Socket = io.SocketNamespace;
 
@@ -579,10 +579,10 @@ var io="undefined"==typeof module?{}:module.exports;(function(){(function(a,b){v
 
       // The environment we're running in.
       // (logs are not displayed when this is set to 'production')
-      // 
+      //
       // Defaults to development unless this script was fetched from a URL
       // that ends in `*.min.js` or '#production' (may also be manually overridden.)
-      // 
+      //
       environment: urlThisScriptWasFetchedFrom.match(/(\#production|\.min\.js)/g) ? 'production' : 'development'
     };
 
@@ -619,13 +619,13 @@ var io="undefined"==typeof module?{}:module.exports;(function(){(function(a,b){v
 
 
     // io.socket
-    // 
+    //
     // The eager instance of Socket which will automatically try to connect
     // using the host that this js file was served from.
-    // 
+    //
     // This can be disabled or configured by setting `io.socket.options` within the
     // first cycle of the event loop.
-    // 
+    //
 
     // In the mean time, this eager socket will be defined as a TmpSocket
     // so that events bound by the user before the first cycle of the event

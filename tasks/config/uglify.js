@@ -15,7 +15,10 @@ module.exports = function(grunt) {
 		dist: {
 			src: ['.tmp/public/concat/production.js'],
 			dest: '.tmp/public/min/production.js'
-		}
+		},
+    options: {
+      mangle: false
+    }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-uglify');
