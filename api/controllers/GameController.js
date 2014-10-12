@@ -97,12 +97,19 @@ module.exports = {
           clientSeed: req.session.user.clientSeed
         };
 
-        BingoCardService.generateCards(params)
+        BingoCardService.countCards(params.gameId, params.userId)
           .then(function (result) {
-            game.bingoCards.push(result);
-            return res.json(game);
-          }, function (err) {
-            return res.serverError("Something went wrong");
+            if(result <= 0) {
+              BingoCardService.generateCards(params)
+                .then(function (result) {
+                  game.bingoCards.push(result);
+                  return res.json(game);
+                }, function (err) {
+                  return res.serverError("Something went wrong");
+                });
+            } else {
+              return res.json(game);
+            }
           });
       } else {
         return res.json(game);
