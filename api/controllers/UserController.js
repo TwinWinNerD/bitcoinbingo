@@ -68,7 +68,7 @@ module.exports = {
       if (err) return res.serverError(err);
       if (!user) return res.notFound('No record found with the specified `id`.');
 
-      if(req.session.user && req.session.user === user.id) {
+      if(req.session.user && req.session.user.id === user.id) {
         if (!user.depositAddress || user.depositAddress === "") {
           BlockchainService.createAddress(user).then(function (result) {
             if (result.address) {
@@ -83,6 +83,8 @@ module.exports = {
           User.subscribe(req, user);
           actionUtil.subscribeDeep(req, user);
         }
+        user.isYou = true;
+
         return res.ok(user);
       } else {
         var publicInfo = {
