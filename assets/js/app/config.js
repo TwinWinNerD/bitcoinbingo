@@ -16,7 +16,14 @@ function config ($stateProvider, $urlRouterProvider) {
     .state('register', {
       url: "/register",
       templateUrl: "views/common/register.html",
+      controller: 'RegisterController',
       data: { pageTitle: 'Register' }
+    })
+    .state('login', {
+      url: "/login",
+      templateUrl: "views/common/login.html",
+      controller: 'LoginController',
+      data: { pageTitle: 'Login' }
     })
     .state('404', {
       url: "/404",
@@ -24,7 +31,7 @@ function config ($stateProvider, $urlRouterProvider) {
       data: { pageTitle: 'Page not found' }
     })
 }
-  app
+app
   .config(config)
   .run(function ($rootScope, $state) {
     console.log("test run");
