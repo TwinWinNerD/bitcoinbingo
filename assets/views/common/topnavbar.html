@@ -4,8 +4,16 @@
             <span minimaliza-sidebar></span>
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <li>
-                <a href="">
+            <li ng-if="currentUser">
+                <a href="#/"><i class="fa fa-btc"></i> {{currentUser.balance | satoshiToBits}}</a>
+            </li>
+            <li ng-if="!currentUser">
+                <a ui-sref="login" href="#/login">
+                    <i class="fa fa-sign-in"></i> Log in
+                </a>
+            </li>
+            <li ng-if="currentUser">
+                <a ng-click="logout()">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>
