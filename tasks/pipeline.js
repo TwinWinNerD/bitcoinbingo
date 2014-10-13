@@ -22,6 +22,7 @@ var cssFilesToInject = [];
 var jsFilesToInject = [
   'js/dependencies/jquery/jquery-2.1.1.min.js',
   'js/dependencies/angular/angular.js',
+  'js/dependencies/angular/angular-cookies.js',
   'js/dependencies/plugins/jquery-ui/jquery-ui.js',
   'js/dependencies/bootstrap/bootstrap.js',
   'js/dependencies/plugins/metisMenu/jquery.metisMenu.js',
@@ -37,8 +38,10 @@ var jsFilesToInject = [
 
   'js/app/app.js',
   'js/app/config.js',
-  'js/app/directives.js',
+  'js/app/services/*.js',
+  'js/app/filters/*.js',
   'js/app/controllers/*.js',
+  'js/app/directives.js',
 ];
 
 
