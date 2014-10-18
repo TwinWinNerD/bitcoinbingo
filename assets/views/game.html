@@ -1,3 +1,127 @@
 <div class="wrapper wrapper-content animated fadeIn">
-    {{game.id}}
+    <div class="row">
+        <div class="col-md-12">
+            <div style="text-align: center;">
+                <span style="font-size: 40px">75&nbsp;&nbsp;</span>
+                    <span style="font-size: 20px" ng-repeat="number in game.drawnNumbers">
+                        {{number}}
+                    </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Drawn numbers:</h3>
+            <ul class="pagination" >
+                <li ng-repeat="number in game.numbers"><a>{{number}}</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger animated bounce" ng-if="error">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Error:</strong> {{error}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <!--<div class="col-md-12">-->
+                <!--<div class="bingoCard">-->
+                    <!--<div class="row" ng-repeat="row in game.pattern" ng-init="rowIndex = $index">-->
+                        <!--<div class="col-md-5ths number" ng-repeat="number in row track by $index" ng-class="{'pattern': number == 1, 'blank': number != 1}"></div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="col-md-12">
+                <form name="buyCards" class="form-horizontal">
+                    <input id="amountOfCards" class="form-control" data-slider-id='amountOfCards' ng-model="amountOfCards" type="text" data-slider-min="1" data-slider-max="20" data-slider-step="1" data-slider-value="0"/>
+                </form>
+                <button class="btn btn-primary btn-block" ng-click="buySelectedCards()">Buy the selected cards</button>
+            </div>
+            <div class="col-md-12">
+                <ul class="todo-list">
+                    <li>
+                        <i class="fa fa-question fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The game status">Status</abbr>
+                        <span class="badge badge-info pull-right">{{game.status}}</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-btc fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The first one to hit BINGO will win this amount">Bingo prize</abbr>
+                        <span class="badge badge-info pull-right">{{game.prizePool / 70}} Bits</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-btc fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="The first one to hit the pattern will win this amount">Pattern prize</abbr>
+                        <span class="badge badge-info pull-right">{{game.prizePool / 30}} Bits</span>
+                    </li>
+                    <li>
+                        <i class="fa fa-users fa-fw"></i>
+                        <abbr data-toggle="tooltip" title="Left shows the current amount of players. Right shows the minimum to start">Players</abbr>
+                        <span class="badge badge-info pull-right">{{game.users.length}} / {{game.table.minimumPlayers}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h4>Players</h4>
+                    </div>
+                    <div class="ibox-content">
+                        <ul class="list-group clear-list m-t">
+                            <li class="list-group-item" ng-repeat="user in game.users">{{user.username}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 help" data-toggle="popover" data-placement="top" data-html="true" data-content="All your cards appear here.<br/> Numbers marked in <span class='yellow-bg'> orange</span> show the current pattern.<br/>Numbers marked in <span class='navy-bg'> green</span> have been drawn already.">
+            <div class="col-md-5 bingoCard m-l-md"
+                 ng-repeat="bingoCard in bingoCards | orderBy:[orderByDrawnNumbers, orderByNonce]:true"
+                 ng-click="selectCard()"
+                 ng-class="{'navy-bg': bingoCard.bought, 'yellow-bg': bingoCard.buy, 'lazur-bg': !bingoCard.buy && !bingoCard.bought}">
+                <div class="row" ng-repeat="row in bingoCard.squares" ng-init="rowIndex = $index">
+                    <div class="col-md-5ths col-xs-5ths col-sm-5ths" ng-repeat="number in row" ng-class="{'btn-danger': game.drawnNumbers.indexOf(number) !== -1}">
+                        <div class="number" ng-if="number !== 0">{{number}}</div>
+                        <div class="number" ng-if="number === 0">X</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 help" data-toggle="popover" data-placement="top" data-html="true" data-content="Here you can chat with other players in this game.">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h4>Game Chat</h4>
+                </div>
+                <div id="chat">
+                    <div class="ibox-content chat-widget">
+                        <div class="media" ng-repeat="message in game.messages">
+                            <div class="media-body" ng-if="message.type == 'user'">
+                                <h5 class="media-heading"><strong>{{message.user}}</strong>
+                                    <span class="small pull-right">{{message.createdAt}}</span>
+                                </h5>
+                                <p>{{message.body}}</p>
+                            </div>
+                            <div class="media-body alert alert-info" ng-if="message.type == 'system'">
+                                <h5 class="media-heading">
+                                    <span class="small pull-right">{{message.createdAt}}</span>
+                                </h5>
+                                <p>{{message.body}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="currentUser">
+                        <div class="input-group">
+                            <input type="text" id="message" name="message" placeholder="Enter message" class="form-control"/>
+                                <span class="input-group-btn">
+                                        <button type="button" class="btn btn-success">Send</button>
+                                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,20 +1,16 @@
 function LoginController ($scope, Auth, $location) {
-  $scope.error = {};
-  $scope.user = {};
-
-  $scope.login = function(form) {
-    Auth.login('password', {
-        'email': $scope.user.email,
-        'password': $scope.user.password
+  $scope.login = function () {
+    $scope.error = null;
+    Auth.login({
+        username: $scope.username,
+        password: $scope.password
       },
-      function(err) {
-        $scope.errors = {};
-
-        if (!err) {
-          $location.path('/');
-        } else {
-          console.log(err);
-        }
+      function (user) {
+        $scope.setCurrentUser(user);
+        $location.path('/');
+      },
+      function (err) {
+        $scope.error = err.error;
       });
   };
 }

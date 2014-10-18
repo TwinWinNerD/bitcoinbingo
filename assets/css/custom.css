@@ -1,0 +1,81 @@
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+.pace .pace-progress {
+    left: 0;
+}
+
+.slider.slider-horizontal {
+    width: 100%;
+    height: 20px;
+}
+
+div.bingoCard {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    padding: 0;
+}
+
+div.bingoCard .number {
+    padding: 5px;
+    text-align: center;
+}
+
+div.bingoCard.selected {
+    background-color: #1ab394;
+    color: #fff;
+}
+
+div.bingoCard .pattern {
+    background-color: blue;
+}
+
+div.bingoCard .blank {
+    background-color: #fff;
+}
+
+.bingoCard .row {
+    margin: 0;
+}
+
+.bingoCard
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding-left: 0;
+    padding-right: 0;
+}

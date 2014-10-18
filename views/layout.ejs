@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="coinbingo">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title page-title>CoinBingo - Play bingo online</title>
+    <base href="/"/>
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/animate.min.css">
     <link rel="stylesheet" href="/css/style.min.css">
     <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/dependencies/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
 
     <!--STYLES-->
     
     <!--STYLES END-->
 
 </head>
-<body ng-app="coinbingo">
+<body ng-controller="ApplicationController" class="fixed-nav fixed-sidebar">
     <div id="wrapper">
         <div ng-include="'views/common/navigation.html'"></div>
         <div id="page-wrapper" class="gray-bg">
-
             <div ng-include="'views/common/topnavbar.html'"></div>
-
+            {{error}}
             <div ui-view></div>
 
             <div ng-include="'views/common/footer.html'"></div>
@@ -30,23 +32,30 @@
     </div>
     <!--SCRIPTS-->
     <script src="/js/dependencies/jquery/jquery-2.1.1.min.js"></script>
-    <script src="/js/dependencies/angular/angular.js"></script>
+    <script src="/dependencies/angular/angular.js"></script>
+    <script src="/dependencies/angular-cookies/angular-cookies.js"></script>
+    <script src="/dependencies/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="/js/dependencies/plugins/jquery-ui/jquery-ui.js"></script>
     <script src="/js/dependencies/bootstrap/bootstrap.js"></script>
     <script src="/js/dependencies/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/js/dependencies/plugins/pace/pace.min.js"></script>
     <script src="/js/dependencies/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="/js/dependencies/inspinia.js"></script>
-    <script src="/js/dependencies/ui-router/angular-ui-router.min.js"></script>
+    <script src="/dependencies/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js"></script>
     <script src="/js/dependencies/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
     <script src="/js/dependencies/sails.io.js"></script>
     <script src="/js/dependencies/ngsails.io.js"></script>
     <script src="/js/app/app.js"></script>
     <script src="/js/app/config.js"></script>
-    <script src="/js/app/directives.js"></script>
+    <script src="/js/app/services/auth.js"></script>
+    <script src="/js/app/services/session.js"></script>
+    <script src="/js/app/filters/satoshiTo.js"></script>
+    <script src="/js/app/controllers/applicationController.js"></script>
     <script src="/js/app/controllers/gameController.js"></script>
     <script src="/js/app/controllers/gamesController.js"></script>
     <script src="/js/app/controllers/loginController.js"></script>
+    <script src="/js/app/controllers/registerController.js"></script>
+    <script src="/js/app/directives.js"></script>
     <!--SCRIPTS END-->
 </body>
 </html>

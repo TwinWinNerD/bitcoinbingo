@@ -21,16 +21,17 @@ var cssFilesToInject = [];
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
   'js/dependencies/jquery/jquery-2.1.1.min.js',
-  'js/dependencies/angular/angular.js',
-  'js/dependencies/angular/angular-cookies.js',
+  'dependencies/angular/angular.js',
+  'dependencies/angular-cookies/angular-cookies.js',
+  'dependencies/angular-ui-router/release/angular-ui-router.js',
   'js/dependencies/plugins/jquery-ui/jquery-ui.js',
   'js/dependencies/bootstrap/bootstrap.js',
   'js/dependencies/plugins/metisMenu/jquery.metisMenu.js',
   'js/dependencies/plugins/pace/pace.min.js',
   'js/dependencies/plugins/slimscroll/jquery.slimscroll.min.js',
   'js/dependencies/inspinia.js',
+  'dependencies/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
 
-  'js/dependencies/ui-router/angular-ui-router.min.js',
   'js/dependencies/bootstrap/ui-bootstrap-tpls-0.11.0.min.js',
 
   'js/dependencies/sails.io.js',

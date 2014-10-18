@@ -8,23 +8,20 @@
                 </div>
                 <div class="ibox-content">
                     <p><strong>CoinBingo</strong> is a 75-ball realtime multiplayer Bingo game where players can buy cards with Bitcoin. Just click on a game below to start! We only need a username</p>
-                    <p>Don't want to register? {{#link-to 'games'}}Take a sneak peak now{{/link-to}}</p>
-                    {{#if errorMessage}}
-                    <div class="alert alert-danger animated bounce">
-                        <strong>Registration failed:</strong> {{errorMessage}}
+                    <p>Don't want to register? <a href="/">Take a sneak peak now</a></p>
+                    <div ng-if="error" class="alert alert-danger animated bounce">
+                        <strong>Registration failed:</strong> {{error}}
                     </div>
-                    {{/if}}
-                    <form accept-charset="UTF-8" role="form" >
+                    <form accept-charset="UTF-8" role="form" ng-submit="register()">
                         <div class="form-group">
                             <label for="username">Username</label>
-                            {{input id='username' name='username' placeholder='Username' class='form-control'
-                            value=username}}
+                            <input type="text" class='form-control' data-ng-model="username" id="username" name="username" value="" autofocus/>
                         </div>
-                        <button id="registerButton" type="submit" class="btn btn-success ladda-button disabled" disabled="disabled" data-style="expand-left" {{action 'register'}}>
-                        <span class="ladda-label">Create your account</span>
+                        <button id="registerButton" type="submit" class="btn btn-success ladda-button" data-style="expand-left">
+                            <span class="ladda-label">Create your account</span>
                         </button>
                         <div class="pull-right">
-                            {{#link-to 'login' class='btn btn-primary' }}Go To Login{{/link-to}}
+                            <a href="login" class='btn btn-primary'>Go to login</a>
                         </div>
                     </form>
                 </div>

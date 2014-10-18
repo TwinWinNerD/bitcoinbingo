@@ -1,14 +1,14 @@
 <div class="row border-bottom">
-    <nav class="navbar navbar-static-top white-bg" role="navigation" style="margin-bottom: 0">
+    <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
-            <span minimaliza-sidebar></span>
+            <h1 class="m">CoinBingo</h1>
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li ng-if="currentUser">
-                <a href="#/"><i class="fa fa-btc"></i> {{currentUser.balance | satoshiToBits}}</a>
+                <a href="/"><i class="fa fa-btc"></i> {{currentUser.balance | satoshiToBits}}</a>
             </li>
             <li ng-if="!currentUser">
-                <a ui-sref="login" href="#/login">
+                <a ui-sref="login" href="login">
                     <i class="fa fa-sign-in"></i> Log in
                 </a>
             </li>
