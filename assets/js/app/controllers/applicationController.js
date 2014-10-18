@@ -39,6 +39,14 @@ function ApplicationController ($scope, $cookieStore, $location, $sailsSocket, S
     });
   };
 
+
+  $sailsSocket.subscribe('user', function (result) {
+    if(result.verb === 'updated') {
+      console.log(result.data);
+      angular.extend($scope.currentUser, result.data);
+    }
+  });
+
   $scope.findCurrentUser();
 }
 
