@@ -154,13 +154,7 @@ exports.isUserAllowedToBuyCards = function (gameId, userId) {
       } else if (result.status !== "idle" && result.status !== "countDown") {
         deferred.reject("Game is already started or finished");
       } else {
-        BingoCardService.countCards(gameId, userId).then(function (amount) {
-          if (amount >= result.table.maximumCards) {
-            deferred.resolve(false);
-          } else {
-            deferred.resolve(true);
-          }
-        });
+        deferred.resolve(true);
       }
     });
 
