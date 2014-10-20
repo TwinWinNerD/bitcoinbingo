@@ -100,7 +100,7 @@ exports.buyCards = function (gameId, userId, cards) {
         WithdrawalService.createWithdrawal(userId, withdrawalAmount, 'buy cards')
           .then(function () {
             var query = 'UPDATE `bingocard` SET bought=1 WHERE `id` IN ('
-              + cards + ') AND user=' + userId;
+              + cards + ') AND bought=0 AND user=' + userId;
 
             BingoCard.query(query, function (err, result) {
                 if(!err && result) {
