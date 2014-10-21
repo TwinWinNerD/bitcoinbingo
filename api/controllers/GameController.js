@@ -218,7 +218,7 @@ module.exports = {
       "minimumPlayers": 2,
       "maximumPlayers": 2,
       "maximumCards": 10,
-      "cardPrice": 1000,
+      "cardPrice": 10000,
       "tableType": "beginner"
     }).exec(function (err, table) {
       Game.create({
@@ -241,7 +241,7 @@ module.exports = {
       "minimumPlayers": 4,
       "maximumPlayers": 10,
       "maximumCards": 10,
-      "cardPrice": 1000,
+      "cardPrice": 10000,
       "tableType": "beginner"
     }).exec(function (err, table) {
 
@@ -265,7 +265,7 @@ module.exports = {
       "minimumPlayers": 10,
       "maximumPlayers": 100,
       "maximumCards": 10,
-      "cardPrice": 1000,
+      "cardPrice": 10000,
       "tableType": "beginner"
     }).exec(function (err, table) {
 
@@ -289,7 +289,7 @@ module.exports = {
       "minimumPlayers": 2,
       "maximumPlayers": 2,
       "maximumCards": 10,
-      "cardPrice": 10000,
+      "cardPrice": 100000,
       "tableType": "medium"
     }).exec(function (err, table) {
 
@@ -313,7 +313,7 @@ module.exports = {
       "minimumPlayers": 4,
       "maximumPlayers": 100,
       "maximumCards": 10,
-      "cardPrice": 10000,
+      "cardPrice": 100000,
       "tableType": "medium"
     }).exec(function (err, table) {
 
@@ -337,7 +337,7 @@ module.exports = {
       "minimumPlayers": 2,
       "maximumPlayers": 2,
       "maximumCards": 10,
-      "cardPrice": 100000,
+      "cardPrice": 1000000,
       "tableType": "hard"
     }).exec(function (err, table) {
 
