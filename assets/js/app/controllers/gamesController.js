@@ -1,11 +1,15 @@
 function GamesController ($scope, $sailsSocket, $location) {
-  $scope.games = [];
+  $scope.idleGames = [];
 
-  $sailsSocket.get('/api/game').then(function (result) {
+  $sailsSocket.get('/api/game', {
+    data: {
+      status: 'idle'
+    }
+  }).then(function (result) {
     for(var i = 0; i < result.data.length; i++) {
       var game = result.data[i];
       game.trClass = getGameTrClass(game);
-      $scope.games.push(game);
+      $scope.idleGames.push(game);
     }
   });
 

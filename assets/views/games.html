@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h4>Games</h4>
+                    <h4>Idle Games</h4>
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
@@ -17,11 +17,10 @@
                                 <th>Prize Pool</th>
                                 <th>Jackpot</th>
                                 <th>Status</th>
-                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="game in games" ng-click="go(game)" style="cursor: pointer;"
+                                <tr ng-repeat="game in idleGames" ng-click="go(game)" style="cursor: pointer;"
                                         ng-class="game.trClass">
                                     <td>{{game.id}}</td>
                                     <td>{{game.table.tableType}}</td>
@@ -30,9 +29,6 @@
                                     <td>{{game.prizePool | satoshiToMBTC}}</td>
                                     <td>{{game.table.jackpot | satoshiToMBTC}}</td>
                                     <td>{{game.status}}</td>
-                                    <td>
-                                        <a href="#/game/{{game.id}}" class="btn btn-sm btn-primary">Go <i class="fa fa-arrow-circle-right"></i></a>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
