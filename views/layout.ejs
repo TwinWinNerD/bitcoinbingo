@@ -23,6 +23,13 @@
 <body ng-controller="ApplicationController" class="fixed-nav fixed-sidebar">
     <div id="wrapper">
         <div ng-include="'views/common/navigation.html'"></div>
+        <growl-notifications></growl-notifications>
+        <div ng-repeat="(id, notification) in notifications track by id">
+            <growl-notification>
+                {{notification}}
+            </growl-notification>
+        </div>
+
         <div id="page-wrapper" class="gray-bg">
             <div ng-include="'views/common/topnavbar.html'"></div>
             {{error}}
@@ -40,6 +47,7 @@
     <script src="/dependencies/angular-ladda/dist/angular-ladda.min.js"></script>
     <script src="/dependencies/angular-cookies/angular-cookies.js"></script>
     <script src="/dependencies/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/dependencies/angular-growl-notifications/dist/angular-growl-notifications.js"></script>
     <script src="/js/dependencies/plugins/jquery-ui/jquery-ui.js"></script>
     <script src="/js/dependencies/bootstrap/bootstrap.js"></script>
     <script src="/js/dependencies/plugins/metisMenu/jquery.metisMenu.js"></script>

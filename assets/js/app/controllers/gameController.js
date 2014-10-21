@@ -67,6 +67,8 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
           $scope.error = null;
 
           $scope.bingoCards = _.merge($scope.bingoCards, result.data);
+
+          $scope.addNotification("Successfully bought cards");
         }
       }, function (err) {
         $scope.buyingCards = false;

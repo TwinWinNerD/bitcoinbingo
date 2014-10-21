@@ -1,6 +1,16 @@
 function ApplicationController ($scope, $cookieStore, $location, $sailsSocket, Session, Auth) {
   $scope.currentUser = $cookieStore.get('user') ? { id: $cookieStore.get('user') } : null;
 
+  var notificationsCount = 0;
+  $scope.notifications = {};
+  $scope.addNotification = function(notification){
+    var i;
+
+    if(!notification) return;
+
+    i = notificationsCount++;
+    $scope.notifications[i] = notification;
+  };
 
   $scope.setCurrentUser = function (user) {
     $cookieStore.put('user', user.id);

@@ -28,6 +28,7 @@ var jsFilesToInject = [
   'dependencies/angular-ladda/dist/angular-ladda.min.js',
   'dependencies/angular-cookies/angular-cookies.js',
   'dependencies/angular-ui-router/release/angular-ui-router.js',
+  'dependencies/angular-growl-notifications/dist/angular-growl-notifications.js',
   'js/dependencies/plugins/jquery-ui/jquery-ui.js',
   'js/dependencies/bootstrap/bootstrap.js',
   'js/dependencies/plugins/metisMenu/jquery.metisMenu.js',
