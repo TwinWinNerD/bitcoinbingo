@@ -15,5 +15,5 @@ function LoginController ($scope, Auth, $location) {
   };
 }
 
-app
+angular.module('coinbingo')
   .controller('LoginController', LoginController);

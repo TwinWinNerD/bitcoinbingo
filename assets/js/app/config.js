@@ -33,7 +33,7 @@ function config ($stateProvider, $urlRouterProvider, $locationProvider) {
 
   $locationProvider.html5Mode(true);
 }
-app
+angular.module('coinbingo')
   .config(config)
   .run(function ($rootScope, $state) {
     $rootScope.$state = $state;

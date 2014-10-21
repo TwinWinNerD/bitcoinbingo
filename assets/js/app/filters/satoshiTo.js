@@ -1,4 +1,4 @@
-app
+angular.module('coinbingo')
   .filter('satoshiToBits', function() {
     return function(input) {
       input = (input / 100);

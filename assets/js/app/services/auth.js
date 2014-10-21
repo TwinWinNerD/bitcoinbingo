@@ -1,4 +1,4 @@
-app
+angular.module('coinbingo')
   .factory('Auth', function ($sailsSocket, $location, $cookieStore, Session) {
 
     return {

@@ -89,8 +89,7 @@ function minimalizaSidebar ($timeout) {
  *
  * Pass all functions into module
  */
-angular
-  .module('coinbingo')
+angular.module('coinbingo')
   .directive('pageTitle', pageTitle);
 //  .directive('sideNavigation', sideNavigation)
 //  .directive('iboxTools', iboxTools)

@@ -27,5 +27,5 @@ function getGameTrClass(game) {
   }
 }
 
-app
+angular.module('coinbingo')
   .controller('GamesController', GamesController);

@@ -17,5 +17,5 @@ function RegisterController ($scope, Auth, $location) {
   };
 }
 
-app
+angular.module('coinbingo')
   .controller('RegisterController', RegisterController);

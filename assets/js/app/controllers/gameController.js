@@ -132,5 +132,5 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
   });
 }
 
-app
+angular.module('coinbingo')
   .controller('GameController', GameController);

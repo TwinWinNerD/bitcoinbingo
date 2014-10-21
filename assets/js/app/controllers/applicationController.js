@@ -50,5 +50,5 @@ function ApplicationController ($scope, $cookieStore, $location, $sailsSocket, S
   $scope.findCurrentUser();
 }
 
-app
+angular.module('coinbingo')
   .controller('ApplicationController', ApplicationController);
