@@ -48,20 +48,20 @@ module.exports = {
                       }
                     }, function (err, result) {
                       if(!err && result) {
-                        res.ok(boughtCards);
+                        return res.ok(boughtCards);
                       } else {
-                        return res.badRequest();
+                        return res.json({ error: err });
                       }
                     })
                   } else {
-                    return res.badRequest();
+                    return res.json({ error: err });
                   }
                 });
             }, function (err) {
-              return res.badRequest();
+              return res.json({ error: err });
             });
         } else {
-          return res.badRequest();
+          return res.json({ error: "You can't buy any card at this moment."});
         }
       }, function (err) {
         return res.json({ error: err });

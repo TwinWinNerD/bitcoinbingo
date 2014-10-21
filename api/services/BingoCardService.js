@@ -118,7 +118,7 @@ exports.buyCards = function (gameId, userId, cards) {
                 }
               });
           }, function () {
-            deferred.reject("Couldn't buy cards");
+            deferred.reject("Your balance is too low.");
           });
       } else {
         deferred.reject("Couldn't find the game");

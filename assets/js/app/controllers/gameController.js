@@ -69,7 +69,8 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
           $scope.bingoCards = _.merge($scope.bingoCards, result.data);
         }
       }, function (err) {
-        $scope.error = err;
+        $scope.buyingCards = false;
+        $scope.error = err.data;
       });
   };
 
