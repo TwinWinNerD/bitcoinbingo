@@ -15,6 +15,7 @@ exports.addJackpot = function (tableId, amount) {
       Table.findOne(tableId)
         .exec(function (err, result) {
           if(!err && result) {
+            Table.publishUpdate(tableId, result);
             deferred.resolve(result);
           } else {
             deferred.reject(err);
