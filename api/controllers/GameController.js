@@ -219,6 +219,7 @@ module.exports = {
       "maximumPlayers": 2,
       "maximumCards": 10,
       "cardPrice": 10000,
+      "jackpot": 10000 * 10,
       "tableType": "beginner"
     }).exec(function (err, table) {
       Game.create({
@@ -242,6 +243,7 @@ module.exports = {
       "maximumPlayers": 10,
       "maximumCards": 10,
       "cardPrice": 10000,
+      "jackpot": 10000 * 10,
       "tableType": "beginner"
     }).exec(function (err, table) {
 
@@ -266,6 +268,7 @@ module.exports = {
       "maximumPlayers": 100,
       "maximumCards": 10,
       "cardPrice": 10000,
+      "jackpot": 10000 * 10,
       "tableType": "beginner"
     }).exec(function (err, table) {
 
@@ -290,6 +293,7 @@ module.exports = {
       "maximumPlayers": 2,
       "maximumCards": 10,
       "cardPrice": 100000,
+      "jackpot": 100000 * 10,
       "tableType": "medium"
     }).exec(function (err, table) {
 
@@ -314,6 +318,7 @@ module.exports = {
       "maximumPlayers": 100,
       "maximumCards": 10,
       "cardPrice": 100000,
+      "jackpot": 100000 * 10,
       "tableType": "medium"
     }).exec(function (err, table) {
 
@@ -338,6 +343,7 @@ module.exports = {
       "maximumPlayers": 2,
       "maximumCards": 10,
       "cardPrice": 1000000,
+      "jackpot": 1000000 * 10,
       "tableType": "hard"
     }).exec(function (err, table) {
 
