@@ -1,5 +1,6 @@
 var app = angular.module('coinbingo', [
   'ui.router',
   'ngCookies',
-  'sails.io'
+  'sails.io',
+  'angular-ladda'
 ]);
