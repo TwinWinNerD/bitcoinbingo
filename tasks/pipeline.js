@@ -22,6 +22,10 @@ var cssFilesToInject = [];
 var jsFilesToInject = [
   'js/dependencies/jquery/jquery-2.1.1.min.js',
   'dependencies/angular/angular.js',
+  'dependencies/lodash/dist/lodash.js',
+  'dependencies/ladda/js/spin.js',
+  'dependencies/ladda/js/ladda.js',
+  'dependencies/angular-ladda/dist/angular-ladda.min.js',
   'dependencies/angular-cookies/angular-cookies.js',
   'dependencies/angular-ui-router/release/angular-ui-router.js',
   'js/dependencies/plugins/jquery-ui/jquery-ui.js',
