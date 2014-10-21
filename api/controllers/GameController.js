@@ -32,6 +32,10 @@ module.exports = {
       if (req._sails.hooks.pubsub && req.isSocket) {
         Game.subscribe(req, matchingRecords);
         Game.watch(req);
+
+        _.each(matchingRecords, function (record) {
+          actionUtil.subscribeDeep(req, record);
+        });
       }
 
       var returnRecords = [];
