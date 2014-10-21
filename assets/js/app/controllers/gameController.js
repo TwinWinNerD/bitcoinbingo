@@ -37,6 +37,7 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
   };
 
   $scope.buySelectedCards = function () {
+    $scope.error = null;
     var bingoCards = $scope.bingoCards;
     var bingoCardsToBuy = [];
 
@@ -46,7 +47,9 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
       if(bingoCards[i].buy && !bingoCard.bought) bingoCardsToBuy.push(bingoCard.id)
     }
 
-    if(!bingoCardsToBuy.length) return;
+    if(!bingoCardsToBuy.length) {
+      return $scope.error = "No cards selected";
+    }
 
     var data = {
       cards: bingoCardsToBuy,
