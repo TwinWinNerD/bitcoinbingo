@@ -5,7 +5,7 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li ng-if="currentUser">
-                <a href="/"><i class="fa fa-btc"></i> {{currentUser.balance | satoshiToBits}}</a>
+                <a href="/"><i class="fa fa-btc"></i> {{currentUser.balance | satoshiToMBTC}}</a>
             </li>
             <li ng-if="!currentUser">
                 <a ui-sref="login" href="login">
