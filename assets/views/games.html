@@ -23,11 +23,11 @@
                                 <tr ng-repeat="game in idleGames" ng-click="go(game)" style="cursor: pointer;"
                                         ng-class="game.trClass">
                                     <td>{{game.id}}</td>
-                                    <td>{{game.table.tableType}}</td>
-                                    <td>{{game.table.cardPrice | satoshiToMBTC}}</td>
+                                    <td>{{tables[game.table].tableType}}</td>
+                                    <td>{{tables[game.table].cardPrice | satoshiToMBTC}}</td>
                                     <td>{{game.users.length}}</td>
                                     <td>{{game.prizePool | satoshiToMBTC}}</td>
-                                    <td>{{game.table.jackpot | satoshiToMBTC}}</td>
+                                    <td>{{tables[game.table].jackpot | satoshiToMBTC}}</td>
                                     <td>{{game.status}}</td>
                                 </tr>
                             </tbody>

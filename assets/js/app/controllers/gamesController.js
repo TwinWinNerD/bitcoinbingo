@@ -1,5 +1,6 @@
 function GamesController ($scope, $sailsSocket, $location) {
   $scope.idleGames = [];
+  $scope.tables = {};
 
   $sailsSocket.get('/api/game', {
     data: {
@@ -8,7 +9,13 @@ function GamesController ($scope, $sailsSocket, $location) {
   }).then(function (result) {
     for(var i = 0; i < result.data.length; i++) {
       var game = result.data[i];
+      var table = game.table;
+
+      $scope.tables[table.id] = table;
+
       game.trClass = getGameTrClass(game);
+      game.table = table.id;
+
       $scope.idleGames.push(game);
     }
   });
@@ -20,23 +27,22 @@ function GamesController ($scope, $sailsSocket, $location) {
 
         if(game.id === result.id) {
           delete result.data.messages;
-          delete result.data.table;
           delete result.data.bingoCards;
           _.merge(game, result.data);
         }
       }
     }
+
+    if(result.verb === 'created') {
+      var game = result.data;
+      game.trClass = getGameTrClass(game);
+      $scope.idleGames.push(result.data);
+    }
   });
 
   $sailsSocket.subscribe('table', function (result) {
     if(result.verb === 'updated') {
-      for(var i = 0; i < $scope.idleGames.length; i++) {
-        var game = $scope.idleGames[i];
-
-        if(game.table.id === result.id) {
-          _.merge(game.table, result.data);
-        }
-      }
+      $scope.tables[result.id] = result.data;
     }
   });
 
