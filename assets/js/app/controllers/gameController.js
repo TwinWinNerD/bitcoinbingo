@@ -2,6 +2,7 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
   $scope.game = {};
   $scope.bingoCards = [];
   $scope.cardsToBuy = [];
+  $scope.error = null;
 
   $sailsSocket.get('/api/game/' + $stateParams.gameid).then(function (result) {
     $scope.game = result.data;
@@ -14,30 +15,59 @@ function GameController ($scope, $sailsSocket, $stateParams, $location, $filter)
     if(result.id && result.id !== $scope.game.id) return;
 
     if(result.verb === 'updated') {
+      delete result.data.messages;
+      delete result.data.table;
+      delete result.data.bingoCards;
       angular.extend($scope.game, result.data);
     }
   });
 
+  $sailsSocket.subscribe('table', function (result) {
+    if(result.id && result.id !== $scope.game.table.id) return;
+
+    if(result.verb === 'updated') {
+      angular.extend($scope.game.table, result.data);
+    }
+  });
+
   $scope.selectCard = function () {
-    console.log("selectCard");
     if(this.bingoCard.bought) return;
 
     this.bingoCard.buy = !this.bingoCard.buy;
   };
 
   $scope.buySelectedCards = function () {
-    console.log("buySelectedCards");
     var bingoCards = $scope.bingoCards;
-
     var bingoCardsToBuy = [];
 
     for(var i = 0; i < bingoCards.length; i++) {
       var bingoCard = bingoCards[i];
 
-      if(bingoCards[i].buy) bingoCardsToBuy.push(bingoCard)
+      if(bingoCards[i].buy && !bingoCard.bought) bingoCardsToBuy.push(bingoCard.id)
     }
 
-    console.log(bingoCardsToBuy);
+    if(!bingoCardsToBuy.length) return;
+
+    var data = {
+      cards: bingoCardsToBuy,
+      gameId: $scope.game.id
+    };
+
+    $scope.buyingCards = true;
+
+    $sailsSocket.post('/api/bingoCard/buyCards', data)
+      .then(function (result) {
+        $scope.buyingCards = false;
+        if(result.data && result.data.error) {
+          $scope.error = result.data.error;
+        } else if(result.data) {
+          $scope.error = null;
+
+          $scope.bingoCards = _.merge($scope.bingoCards, result.data);
+        }
+      }, function (err) {
+        $scope.error = err;
+      });
   };
 
   $("#amountOfCards").on('slide slideStop', function () {
